@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center">
+    <EditText
+        android:id="@+id/eName"
+        android:layout_width="300dp"
+        android:hint="Name"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/myedittext"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/eEmail"
+        android:layout_width="300dp"
+        android:hint="Email"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/myedittext"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/ePassword"
+        android:layout_width="300dp"
+        android:hint="Password"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
+        android:inputType="textPassword"
+        android:paddingBottom="10dp"
+        android:background="@drawable/myedittext"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"/>
+    <EditText
+        android:id="@+id/eConfirmPassword"
+        android:layout_width="300dp"
+        android:hint="Confirm Password"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:inputType="textPassword"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/myedittext"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btRegister"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/mybutton"
+        android:textColor="#fff"
+        android:text="REGISTER"/>
+
+</LinearLayout>
