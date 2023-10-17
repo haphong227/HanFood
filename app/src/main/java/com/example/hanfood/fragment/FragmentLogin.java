@@ -94,7 +94,7 @@ public class FragmentLogin extends Fragment {
         ePassword = view.findViewById(R.id.ePassword);
         tvForgot = view.findViewById(R.id.tvForgort);
         btLogin = view.findViewById(R.id.btLogin);
-        eEmail.setText("hang2207@gmail.com");
+        eEmail.setText("trinhhang2207@gmail.com");
 //        eEmail.setText("admin@gmail.com");
         ePassword.setText("22072001");
     }

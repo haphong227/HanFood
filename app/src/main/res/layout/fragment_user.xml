@@ -1,0 +1,117 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_bhaina_2"
+            android:text="Settings"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#6C7136"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/img_profile"
+                android:text="Trinh Hang"
+                android:fontFamily="@font/baloo_bhaina_2"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvUsername"
+                android:layout_toRightOf="@id/img_profile"
+                android:text="trinhang2207@gmail.com"
+                android:fontFamily="@font/baloo_bhaina_2"
+                android:textColor="#5D5C5C"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvEditprofile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/ic_edit_profile"
+            android:drawableRight="@drawable/ic_more"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/baloo_bhaina_2"
+            android:text="Edit Profile"
+            android:textColor="#000"
+            android:textSize="@dimen/ListHeader"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvChangepassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_edit_password"
+            android:drawableRight="@drawable/ic_more"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/baloo_bhaina_2"
+            android:text="Change Password"
+            android:textColor="#000"
+            android:textSize="@dimen/ListHeader"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_order_history"
+            android:drawableRight="@drawable/ic_more"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/baloo_bhaina_2"
+            android:text="History Order"
+            android:textColor="#000"
+            android:textSize="@dimen/ListHeader"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_logout"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/baloo_bhaina_2"
+            android:text="Logout"
+            android:textColor="#000"
+            android:textSize="@dimen/ListHeader"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>
