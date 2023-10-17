@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         adapter = new TabLayoutAdapter(this.getSupportFragmentManager());
         adapter.addFragment(new FragmentLogin(), "Login");
         adapter.addFragment(new FragmentRegister(), "Register");
+
         viewPager.setAdapter(adapter);
         tableLayout.setupWithViewPager(viewPager);
 
