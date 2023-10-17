@@ -2,52 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
+
     <EditText
         android:id="@+id/eEmail"
         android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/myedittext"
+        android:drawableStart="@drawable/icon_email"
+        android:drawablePadding="16dp"
+        android:fontFamily="@font/baloo_bhaina_2"
         android:hint="Email"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:drawableStart="@drawable/icon_email"
-        android:drawablePadding="16dp"
-        android:background="@drawable/myedittext"
-        android:layout_height="wrap_content"/>
+        android:paddingBottom="10dp" />
+
     <EditText
         android:id="@+id/ePassword"
         android:layout_width="300dp"
-        android:hint="Password"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:inputType="textPassword"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/myedittext"
         android:drawableStart="@drawable/icon_password"
         android:drawablePadding="16dp"
-        android:layout_marginTop="20dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/myedittext"
-        android:layout_height="wrap_content"/>
+        android:fontFamily="@font/baloo_bhaina_2"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tvForgort"
             android:layout_width="wrap_content"
-            android:text="Forgot Password"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="40dp"
             android:layout_marginTop="5dp"
-            android:layout_height="wrap_content"/>
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/baloo_bhaina_2"
+            android:text="Forgot Password" />
     </RelativeLayout>
+
     <Button
         android:id="@+id/btLogin"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:textColor="#fff"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/mybutton"
-        android:text="LOGIN"/>
+        android:fontFamily="@font/baloo_bhai"
+        android:text="LOGIN"
+        android:textSize="@dimen/ListHeader"
+        android:textColor="#fff" />
 </LinearLayout>
