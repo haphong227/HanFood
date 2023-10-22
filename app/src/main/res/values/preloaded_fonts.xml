@@ -3,5 +3,13 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/baloo_bhai</item>
         <item>@font/baloo_bhaina_2</item>
+        <item>@font/balsamiq_sans</item>
+        <item>@font/balsamiq_sans_bold</item>
+        <item>@font/bellota_light</item>
+        <item>@font/open_sans</item>
+        <item>@font/open_sans_bold</item>
+        <item>@font/open_sans_extrabold</item>
+        <item>@font/open_sans_light</item>
+        <item>@font/open_sans_semibold</item>
     </array>
 </resources>

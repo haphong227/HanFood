@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mCategory"
+        android:title="Category"
+        android:icon="@drawable/icon_food"
+        app:cnb_iconColor="@color/white"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white"/>
+    <item
+        android:id="@+id/mFood"
+        android:title="Food"
+        android:icon="@drawable/icon_cart"
+        app:cnb_iconColor="@color/white"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white"/>
+<!--    <item-->
+<!--        android:id="@+id/mNotification"-->
+<!--        android:title="Notification"-->
+<!--        android:icon="@drawable/icon_noti"-->
+<!--        app:cnb_iconColor="@color/white"-->
+<!--        app:cnb_backgroundColor="@color/blue"-->
+<!--        app:cnb_textColor="@color/white"/>-->
+    <item
+        android:id="@+id/mProfile"
+        android:title="Profile"
+        android:icon="@drawable/icon_user"
+        app:cnb_iconColor="@color/white"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white"/>
+</menu>

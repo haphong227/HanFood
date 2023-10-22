@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_cart"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="490dp"/>
+        android:layout_height="490dp"
+        android:layout_margin="10dp" />
 
     <RelativeLayout
         android:id="@+id/linear1"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/tvTong"
+            android:background="@color/blue" />
+
         <TextView
             android:id="@+id/tvTong"
-            android:layout_above="@id/btBuy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/btBuy"
             android:background="#ffffff"
             android:gravity="center"
             android:padding="8dp"
-            android:text="Tổng tiền hàng: 0 ₫"
+            android:text="Tổng tiền hàng: 0 VNĐ"
+            android:textColor="#000"
             android:textSize="20sp" />
+
         <Button
             android:id="@+id/btBuy"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/blue"
-            android:textColor="#fff"
-            android:text="Mua Ngay" />
+            android:text="Mua Ngay"
+            android:textColor="#fff" />
     </RelativeLayout>
 
 

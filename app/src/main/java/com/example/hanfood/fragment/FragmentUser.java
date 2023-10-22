@@ -31,7 +31,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentUser extends Fragment implements View.OnClickListener {
     FirebaseUser firebaseUser;
-    FirebaseAuth firebaseAuth;
     DatabaseReference mRef;
     CircleImageView img_profile;
     TextView tvUsername, tvEmail, tvEditprofile, tvChangepassword, tvHistory, tvLogout;
@@ -96,6 +95,15 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 } else if (img != null) {
                     Picasso.get().load(img).into(img_profile);
                 }
+
+//                if (snapshot.exists()) {
+//                    name = snapshot.child("name").getValue().toString();
+//                    email = snapshot.child("email").getValue().toString();
+//                    img = snapshot.child("image").getValue().toString();
+//
+//                    tvEmail.setText(email);
+//                    tvUsername.setText(name);
+//                }
             }
 
             @Override

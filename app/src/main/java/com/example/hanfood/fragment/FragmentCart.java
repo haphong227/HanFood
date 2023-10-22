@@ -15,7 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hanfood.PaymentActivity;
 import com.example.hanfood.R;
+import com.example.hanfood.adapter.CartAdapter;
+import com.example.hanfood.model.Cart;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,8 +38,8 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
     TextView tvTong;
     RecyclerView recyclerView_cart;
     Button btBuy;
-//    CartAdapter cartAdapter;
-//    ArrayList<Cart> cartArrayList;
+    CartAdapter cartAdapter;
+    ArrayList<Cart> cartArrayList;
     private FirebaseUser auth;
     private DatabaseReference myRef;
     double total=0;
@@ -84,18 +87,18 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
         myRef.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                double totalAmount = 0;
-//                cartArrayList = new ArrayList<>();
-//                for (DataSnapshot data : snapshot.getChildren()) {
-//                    Cart cart = data.getValue(Cart.class);
-//                    cartArrayList.add(cart);
-//                    totalAmount += Double.parseDouble(cart.getTotalPrice());
-//                }
-//                total=totalAmount;
-//                cartAdapter = new CartAdapter(cartArrayList, getContext());
-//                recyclerView_cart.setAdapter(cartAdapter);
-//                recyclerView_cart.setHasFixedSize(true);
-//                tvTong.setText("Tổng tiền:" + String.valueOf(decimalFormat.format(totalAmount)) + " đ");
+                double totalAmount = 0;
+                cartArrayList = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Cart cart = data.getValue(Cart.class);
+                    cartArrayList.add(cart);
+                    totalAmount += Double.parseDouble(cart.getTotalPrice());
+                }
+                total=totalAmount;
+                cartAdapter = new CartAdapter(cartArrayList, getContext());
+                recyclerView_cart.setAdapter(cartAdapter);
+                recyclerView_cart.setHasFixedSize(true);
+                tvTong.setText("Tổng tiền:" + String.valueOf(decimalFormat.format(totalAmount)) + " VNĐ");
             }
 
             @Override
@@ -108,15 +111,15 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-//        if(view == btBuy){
-//            if (total > 0) {
-//                Intent i = new Intent(getContext(), PaymentActivity.class);
-//                i.putExtra("idOrder",TAG+randomKey );
-//                i.putExtra("total",total );
-//                startActivity(i);
-//            } else {
-//                Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
+        if(view == btBuy){
+            if (total > 0) {
+                Intent i = new Intent(getContext(), PaymentActivity.class);
+                i.putExtra("idOrder",TAG+randomKey );
+                i.putExtra("total",total );
+                startActivity(i);
+            } else {
+                Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:background="@color/blue"
-        android:orientation="vertical"></RelativeLayout>
+        android:orientation="vertical">
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/img"
@@ -28,8 +29,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/baloo_bhai"
         android:lineSpacingMultiplier="1.0"
+        android:fontFamily="@font/baloo_bhai"
         android:text="Welcome To HanFood"
         android:textColor="#fff"
         android:textSize="30sp"
@@ -44,7 +45,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/baloo_bhai"
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
@@ -52,7 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:minHeight="?actionBarSize"
-                android:fontFamily="@font/baloo_bhai"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/blue"
                 app:tabTextColor="#000"

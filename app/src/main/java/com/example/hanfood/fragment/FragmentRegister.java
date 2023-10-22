@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.hanfood.AdminNewCategoryActivity;
 import com.example.hanfood.R;
 import com.example.hanfood.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class FragmentRegister extends Fragment {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
@@ -66,10 +69,27 @@ public class FragmentRegister extends Fragment {
                         if (!task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Đăng ký thất bại!", Toast.LENGTH_SHORT).show();
                         } else {
-                            User user = new User(null, email, password, name, null, auth.getUid(), null);
-                            String key = databaseReference.push().getKey();
-                            databaseReference.child(key).setValue(user);
-                            Toast.makeText(getActivity(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+//                            User user = new User(null, email, password, name, null, auth.getUid(), null);
+//                            String key = databaseReference.push().getKey();
+//                            databaseReference.child(key).setValue(user);
+//                            Toast.makeText(getActivity(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+
+                            HashMap<String, Object> user = new HashMap<>();
+                            user.put("address", null);
+                            user.put("email", email);
+                            user.put("password", password);
+                            user.put("name", name);
+                            user.put("phone", null);
+                            user.put("idUser", auth.getUid());
+                            user.put("image", null);
+                            databaseReference.child(auth.getUid()).updateChildren(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getActivity(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     }
                 });

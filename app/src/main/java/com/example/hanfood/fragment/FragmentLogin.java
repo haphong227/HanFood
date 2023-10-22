@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.hanfood.AdminCategoryActivity;
+import com.example.hanfood.AdminMainActivity;
 import com.example.hanfood.MainActivity;
 import com.example.hanfood.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,8 +23,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class FragmentLogin extends Fragment {
     EditText eEmail, ePassword;
@@ -74,7 +72,7 @@ public class FragmentLogin extends Fragment {
                         Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         Intent intent;
                         if (email.equalsIgnoreCase("admin@gmail.com")) {
-                            intent = new Intent(getActivity(), AdminCategoryActivity.class);
+                            intent = new Intent(getActivity(), AdminMainActivity.class);
                         } else {
                             intent = new Intent(getActivity(), MainActivity.class);
                         }
@@ -94,7 +92,7 @@ public class FragmentLogin extends Fragment {
         ePassword = view.findViewById(R.id.ePassword);
         tvForgot = view.findViewById(R.id.tvForgort);
         btLogin = view.findViewById(R.id.btLogin);
-        eEmail.setText("trinhhang2207@gmail.com");
+        eEmail.setText("hang2207@gmail.com");
 //        eEmail.setText("admin@gmail.com");
         ePassword.setText("22072001");
     }

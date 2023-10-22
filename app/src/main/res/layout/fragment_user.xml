@@ -13,10 +13,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/baloo_bhaina_2"
             android:text="Settings"
             android:textColor="#000"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -40,10 +39,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@id/img_profile"
                 android:text="Trinh Hang"
-                android:fontFamily="@font/baloo_bhaina_2"
                 android:textStyle="bold"
                 android:textColor="#000"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tvEmail"
@@ -52,9 +50,8 @@
                 android:layout_below="@id/tvUsername"
                 android:layout_toRightOf="@id/img_profile"
                 android:text="trinhang2207@gmail.com"
-                android:fontFamily="@font/baloo_bhaina_2"
                 android:textColor="#5D5C5C"
-                android:textSize="16sp" />
+                android:textSize="13sp" />
 
         </RelativeLayout>
 
@@ -66,10 +63,10 @@
             android:drawableLeft="@drawable/ic_edit_profile"
             android:drawableRight="@drawable/ic_more"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/baloo_bhaina_2"
             android:text="Edit Profile"
+            android:gravity="center_vertical"
             android:textColor="#000"
-            android:textSize="@dimen/ListHeader"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -80,10 +77,10 @@
             android:drawableLeft="@drawable/ic_edit_password"
             android:drawableRight="@drawable/ic_more"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/baloo_bhaina_2"
             android:text="Change Password"
+            android:gravity="center_vertical"
             android:textColor="#000"
-            android:textSize="@dimen/ListHeader"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -94,10 +91,10 @@
             android:drawableLeft="@drawable/ic_order_history"
             android:drawableRight="@drawable/ic_more"
             android:drawablePadding="20dp"
-            android:fontFamily="@font/baloo_bhaina_2"
             android:text="History Order"
+            android:gravity="center_vertical"
             android:textColor="#000"
-            android:textSize="@dimen/ListHeader"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -106,11 +103,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_logout"
+            android:gravity="center_vertical"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/baloo_bhaina_2"
             android:text="Logout"
             android:textColor="#000"
-            android:textSize="@dimen/ListHeader"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>
