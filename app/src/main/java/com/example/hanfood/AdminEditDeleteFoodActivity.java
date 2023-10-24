@@ -193,7 +193,7 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
             food.put("nameFood", name);
             food.put("imageFood", imageF);
             food.put("desFood", des);
-            food.put("priceFood", priceFood);
+            food.put("priceFood", Double.parseDouble(priceFood));
             food.put("percentSale", Double.parseDouble(percent));
             food.put("quantityFood", Integer.parseInt(sl));
             myRef.child("").updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -210,8 +210,6 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
                 }
             });
         }
-
-
     }
 
     private void change() {
@@ -227,7 +225,7 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
                         food.put("nameFood", name);
                         food.put("imageFood", url);
                         food.put("desFood", des);
-                        food.put("priceFood", priceFood);
+                        food.put("priceFood", Double.parseDouble(priceFood));
                         food.put("percentSale", Double.parseDouble(percent));
                         food.put("quantityFood", Integer.parseInt(sl));
                         myRef.child("").updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {

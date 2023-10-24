@@ -46,11 +46,11 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     FoodAdapter adapter;
     ArrayList<Food> dataFood = new ArrayList<>();
     DatabaseReference myFood;
-    DatabaseReference databaseReference;
+    DatabaseReference myRef;
     private FirebaseUser auth;
-    String name, idFood, price, des, img, idCate;
+    String name, idFood, des, img, idCate;
     int quantity = 0;
-    double priceFoodSale = 0, percentSale = 0;
+    double priceFoodSale = 0, percentSale = 0, price = 0;
     int totalQuantity = 0;
     double totalPrice = 0;
     ArrayList<Food> dsfoodall = new ArrayList<>();
@@ -88,7 +88,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     private void displayDetailFood() {
         idFood = getIntent().getStringExtra("idFood");
         name = getIntent().getStringExtra("nameFood");
-        price = getIntent().getStringExtra("priceFood");
+        price = getIntent().getDoubleExtra("priceFood", 22);
         priceFoodSale = getIntent().getDoubleExtra("priceFoodSale", 22);
         percentSale = getIntent().getDoubleExtra("percentSale", 22);
         des = getIntent().getStringExtra("desFood");
@@ -103,10 +103,10 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         if (percentSale == 0) {
             tvPrice.setVisibility(View.GONE);
             tvPercentSale.setVisibility(View.GONE);
-            tvPriceSale.setText(decimalFormat.format(Double.parseDouble(price)) + " VNĐ");
+            tvPriceSale.setText(decimalFormat.format(price) + " VNĐ");
         } else {
             tvPercentSale.setText("Giảm " + decimalFormat.format(percentSale) + "%");
-            tvPrice.setText(decimalFormat.format(Double.parseDouble(price)) + " VNĐ");
+            tvPrice.setText(decimalFormat.format(price) + " VNĐ");
             tvPriceSale.setText(decimalFormat.format(priceFoodSale) + " VNĐ");
             tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //gach ngang chu
 
@@ -152,17 +152,17 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         if (view == sub) {
-            if (totalQuantity > 1) {
+            if (totalQuantity > 0) {
                 totalQuantity--;
                 tvSl.setText(String.valueOf(totalQuantity));
-                totalPrice = Double.parseDouble(price) * totalQuantity;
+                totalPrice = price * totalQuantity;
             }
         }
         if (view == add) {
             if (totalQuantity < 10) {
                 totalQuantity++;
                 tvSl.setText(String.valueOf(totalQuantity));
-                totalPrice = Double.parseDouble(price) * totalQuantity;
+                totalPrice = price * totalQuantity;
             }
         }
         if (view == btAdd) {
@@ -181,16 +181,17 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
 //            Intent is = new Intent(this, MainActivity.class);
 //            startActivity(is);
 //        }
-        databaseReference = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
+        myRef = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
 
         final HashMap<String, Object> cart = new HashMap<>();
         cart.put("idFood", idFood);
         cart.put("productImg", img);
         cart.put("productName", name);
         cart.put("productPrice", price);
-        cart.put("totalQuantity", tvSl.getText().toString());
-        cart.put("totalPrice", String.valueOf(totalPrice));
-        databaseReference.child(name).updateChildren(cart)
+        cart.put("productPriceSalse", priceFoodSale);
+        cart.put("totalQuantity", Integer.parseInt(tvSl.getText().toString()));
+        cart.put("totalPrice", totalPrice);
+        myRef.child(name).updateChildren(cart)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

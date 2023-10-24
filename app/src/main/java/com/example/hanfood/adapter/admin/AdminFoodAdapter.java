@@ -56,8 +56,8 @@ public class AdminFoodAdapter extends RecyclerView.Adapter<AdminFoodAdapter.Home
         holder.txtDes.setText(food.getDesFood());
         holder.txtQuantity.setText("Số lượng: " + String.valueOf(food.getQuantityFood()));
 
-        String price = decimalFormat.format(Double.parseDouble(food.getPriceFood()))+ " VNĐ";
-        double priceFood = Double.parseDouble(food.getPriceFood());
+        String price = decimalFormat.format(food.getPriceFood())+ " VNĐ";
+        double priceFood = food.getPriceFood();
         double priceSale = priceFood - food.getPercentSale()*priceFood/100;
         String priceFoodSale = decimalFormat.format(priceSale)+ " VNĐ";
 

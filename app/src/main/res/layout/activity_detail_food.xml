@@ -29,7 +29,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,9 +174,7 @@
                 android:id="@+id/recycleView_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sep_review_title"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="70dp" />
+                android:layout_below="@+id/sep_review_title" />
         </LinearLayout>
 
     </ScrollView>
@@ -187,14 +186,14 @@
         android:background="#fff"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="15dp">
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/sub"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="25dp"
             android:src="@drawable/icon_sub" />
 
         <TextView
@@ -218,10 +217,10 @@
             android:id="@+id/btAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginRight="15dp"
             android:backgroundTint="@color/blue"
-            android:text="Thêm Vào Giỏ Hàng"
+            android:text="Add to cart"
             android:textColor="#fff" />
     </LinearLayout>
 </RelativeLayout>

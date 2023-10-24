@@ -35,14 +35,14 @@ public class AdminNewFoodActivity extends AppCompatActivity implements View.OnCl
     ImageView imgFood, back;
     EditText nameFood, price, percentSale, desFood, quantity;
     Button btAdd;
-    String name, des, priceFood, priceFoodSale;
+    String name, des, priceFoodSale;
     String idCate, nameCate = "";
 
     private static final String TAG = "Food";
     private String saveCurDate, saveCurTime;
     private final static int galleryPick = 1;
     int sl;
-    double percent;
+    double percent=0, priceFood=0;
     private String downloadImgUrl, randomKey;
 
     private Uri imageUri;
@@ -108,7 +108,7 @@ public class AdminNewFoodActivity extends AppCompatActivity implements View.OnCl
     private void validateData() {
         name = nameFood.getText().toString().trim();
         des = desFood.getText().toString().trim();
-        priceFood = price.getText().toString().trim();
+        priceFood = Double.parseDouble(price.getText().toString().trim());
         percent = Double.parseDouble(percentSale.getText().toString().trim());
         sl = Integer.parseInt(quantity.getText().toString().trim());
         if (imageUri == null) {

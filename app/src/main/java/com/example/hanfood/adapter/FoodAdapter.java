@@ -53,8 +53,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
         Food food = list.get(position);
         holder.txtName.setText(food.getNameFood());
 
-        price = decimalFormat.format(Double.parseDouble(food.getPriceFood())) + " VNĐ";
-        double priceFood = Double.parseDouble(food.getPriceFood());
+        price = decimalFormat.format(food.getPriceFood()) + " VNĐ";
+        double priceFood = food.getPriceFood();
         double priceSale = priceFood - food.getPercentSale() * priceFood / 100;
         priceFoodSale = decimalFormat.format(priceSale);
 

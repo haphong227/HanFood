@@ -8,14 +8,14 @@ public class Food implements Serializable {
     private String idCate;
     private String imageFood;
     private String nameFood;
-    private String priceFood;
-    private Double percentSale;
+    private double priceFood;
+    private double percentSale;
     private int quantityFood;
 
     public Food() {
     }
 
-    public Food(String desFood, String idFood, String idCate, String imageFood, String nameFood, String priceFood, Double percentSale, int quantityFood) {
+    public Food(String desFood, String idFood, String idCate, String imageFood, String nameFood, double priceFood, double percentSale, int quantityFood) {
         this.desFood = desFood;
         this.idFood = idFood;
         this.idCate = idCate;
@@ -66,21 +66,20 @@ public class Food implements Serializable {
         this.nameFood = nameFood;
     }
 
-    public String getPriceFood() {
+    public double getPriceFood() {
         return priceFood;
     }
 
-    public void setPriceFood(String priceFood) {
+    public void setPriceFood(double priceFood) {
         this.priceFood = priceFood;
     }
 
-
-    public Double getPercentSale() {
-        return percentSale;
+    public void setPercentSale(double percentSale) {
+        this.percentSale = percentSale;
     }
 
-    public void setPercentSale(Double percentSale) {
-        this.percentSale = percentSale;
+    public double getPercentSale() {
+        return percentSale;
     }
 
     public int getQuantityFood() {

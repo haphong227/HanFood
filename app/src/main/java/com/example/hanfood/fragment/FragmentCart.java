@@ -55,9 +55,7 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView_cart = view.findViewById(R.id.recycleView_cart);
-        tvTong = view.findViewById(R.id.tvTong);
-        btBuy = view.findViewById(R.id.btBuy);
+        initView(view);
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,8 +64,6 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
         saveCurTime = curTime.format(c.getTime());
         randomKey = saveCurDate + "-" + saveCurTime;
 
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_cart.setLayoutManager(linearLayoutManager);
         auth = FirebaseAuth.getInstance().getCurrentUser();
@@ -75,9 +71,7 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
             displayCart();
         }
 
-
         btBuy.setOnClickListener(this);
-
     }
 
     private void displayCart() {
@@ -92,19 +86,18 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Cart cart = data.getValue(Cart.class);
                     cartArrayList.add(cart);
-                    totalAmount += Double.parseDouble(cart.getTotalPrice());
+                    totalAmount += cart.getTotalPrice();
                 }
                 total=totalAmount;
                 cartAdapter = new CartAdapter(cartArrayList, getContext());
                 recyclerView_cart.setAdapter(cartAdapter);
                 recyclerView_cart.setHasFixedSize(true);
-                tvTong.setText("Tổng tiền:" + String.valueOf(decimalFormat.format(totalAmount)) + " VNĐ");
+                tvTong.setText("Tổng tiền: " + String.valueOf(decimalFormat.format(totalAmount)) + " VNĐ");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -122,4 +115,12 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
             }
         }
     }
+
+
+    private void initView(View view) {
+        recyclerView_cart = view.findViewById(R.id.recycleView_cart);
+        tvTong = view.findViewById(R.id.tvTong);
+        btBuy = view.findViewById(R.id.btBuy);
+    }
+
 }
