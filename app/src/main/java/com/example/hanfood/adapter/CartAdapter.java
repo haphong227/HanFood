@@ -72,7 +72,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.HomeViewHolder
             holder.product_priceSale.setText(decimalFormat.format(cart.getProductPrice()) + " VNĐ");
         }
 
-//        holder.sub_total.setText(decimalFormat.format(Double.parseDouble(cart.getTotalPrice())));
         Picasso.get().load(cart.getProductImg())
                 .into(holder.img);
 

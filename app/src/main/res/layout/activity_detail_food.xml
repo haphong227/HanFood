@@ -12,18 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#fff"
+        android:background="@color/blue"
         android:elevation="10dp">
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="Food"
-            android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tiltleToolbar" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -186,7 +185,8 @@
         android:background="#fff"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="15dp"
+        android:paddingTop="17dp"
+        android:elevation="5dp"
         android:paddingBottom="20dp">
 
         <ImageView
@@ -220,7 +220,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="15dp"
             android:backgroundTint="@color/blue"
-            android:text="Add to cart"
+            android:text="Thêm vào giỏ"
             android:textColor="#fff" />
     </LinearLayout>
 </RelativeLayout>

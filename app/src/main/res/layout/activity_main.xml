@@ -23,7 +23,7 @@
             android:layout_marginTop="7dp"
             android:textColor="#000"
             android:textStyle="bold"
-            android:textSize="40sp"
+            android:textSize="@dimen/tiltleToolbar"
             app:itemIconTint="@color/navigation"
             app:itemTextColor="@color/navigation" />
     </androidx.appcompat.widget.Toolbar>

@@ -17,10 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="New Food"
+            android:text="Món ăn mới"
             android:textColor="@color/white"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/tiltleToolbar"
+             />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -103,7 +103,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/mybutton"
         android:gravity="center"
-        android:text="Add"
+        android:text="Thêm"
         android:textColor="#fff"
         android:textSize="18sp"/>
 

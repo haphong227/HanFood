@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class FragmentCart extends Fragment implements View.OnClickListener{
+public class FragmentCart extends Fragment implements View.OnClickListener {
     TextView tvTong;
     RecyclerView recyclerView_cart;
     Button btBuy;
@@ -42,8 +42,8 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
     ArrayList<Cart> cartArrayList;
     private FirebaseUser auth;
     private DatabaseReference myRef;
-    double total=0;
-    String TAG="Order";
+    double total = 0;
+    String TAG = "Order";
     private String saveCurDate, saveCurTime, randomKey;
 
     @Nullable
@@ -67,7 +67,7 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_cart.setLayoutManager(linearLayoutManager);
         auth = FirebaseAuth.getInstance().getCurrentUser();
-        if (auth!=null){
+        if (auth != null) {
             displayCart();
         }
 
@@ -88,11 +88,11 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
                     cartArrayList.add(cart);
                     totalAmount += cart.getTotalPrice();
                 }
-                total=totalAmount;
+                total = totalAmount;
                 cartAdapter = new CartAdapter(cartArrayList, getContext());
                 recyclerView_cart.setAdapter(cartAdapter);
                 recyclerView_cart.setHasFixedSize(true);
-                tvTong.setText("Tổng tiền: " + String.valueOf(decimalFormat.format(totalAmount)) + " VNĐ");
+                tvTong.setText("Tổng tiền: " + decimalFormat.format(totalAmount) + " VNĐ");
             }
 
             @Override
@@ -104,11 +104,11 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view == btBuy){
+        if (view == btBuy) {
             if (total > 0) {
                 Intent i = new Intent(getContext(), PaymentActivity.class);
-                i.putExtra("idOrder",TAG+randomKey );
-                i.putExtra("total",total );
+                i.putExtra("idOrder", TAG + randomKey);
+                i.putExtra("total", total);
                 startActivity(i);
             } else {
                 Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();

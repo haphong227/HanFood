@@ -16,7 +16,6 @@
             android:id="@+id/imgFood"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@drawable/hanfood_intro"
             android:scaleType="centerCrop" />
         <TextView
             android:id="@+id/tvDeal"

@@ -19,10 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="7dp"
-            android:textStyle="bold"
             android:textColor="#000"
-            android:textSize="40sp"
+            android:textSize="@dimen/tiltleToolbar"
             app:itemIconTint="@color/navigation"
             app:itemTextColor="@color/navigation" />
     </androidx.appcompat.widget.Toolbar>

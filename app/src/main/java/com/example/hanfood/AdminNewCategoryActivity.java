@@ -102,7 +102,7 @@ public class AdminNewCategoryActivity extends AppCompatActivity implements View.
 
     private void storeCategory() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
         saveCurDate = curDate.format(c.getTime());
         SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
         saveCurTime = curTime.format(c.getTime());

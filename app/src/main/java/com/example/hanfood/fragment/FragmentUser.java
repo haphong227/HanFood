@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.hanfood.ChangePasswordActivity;
@@ -33,7 +34,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     FirebaseUser firebaseUser;
     DatabaseReference mRef;
     CircleImageView img_profile;
-    TextView tvUsername, tvEmail, tvEditprofile, tvChangepassword, tvHistory, tvLogout;
+    CardView tvEditprofile;
+    TextView tvUsername, tvEmail, tvChangepassword, tvHistory, tvLogout;
     String name, email, img;
 
     @Nullable

@@ -63,7 +63,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         displayDetailFood();
 
         setSupportActionBar(toolbar);
-        Drawable drawable = getResources().getDrawable(R.drawable.icon_back);
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(drawable);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -176,12 +176,10 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void addToCart() {
-        auth = FirebaseAuth.getInstance().getCurrentUser();
 //        if(auth!=null){
 //            Intent is = new Intent(this, MainActivity.class);
 //            startActivity(is);
 //        }
-        myRef = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
 
         final HashMap<String, Object> cart = new HashMap<>();
         cart.put("idFood", idFood);
@@ -220,5 +218,9 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         tvSl = findViewById(R.id.tvSl);
         tvQuantity = findViewById(R.id.tvQuantity);
         recyclerView_review = findViewById(R.id.recycleView_review);
+
+        auth = FirebaseAuth.getInstance().getCurrentUser();
+        myRef = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
+
     }
 }

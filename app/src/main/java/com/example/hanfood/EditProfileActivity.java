@@ -3,8 +3,10 @@ package com.example.hanfood;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +37,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    public static ImageView back;
+    Toolbar toolbar;
 
     EditText eName, ePhone, eEmail, eAddress;
     Button btUpdateProfile;
@@ -57,8 +59,21 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_edit_profile);
         initView();
 
+        setSupportActionBar(toolbar);
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(drawable);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+
         displayUser();
-        back.setOnClickListener(this);
         imgprofile.setOnClickListener(this);
         btUpdateProfile.setOnClickListener(this);
     }
@@ -101,9 +116,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        if (view == back) {
-            finish();
-        }
         if (view == imgprofile) {
             selectImage();
         }
@@ -204,7 +216,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         btUpdateProfile = findViewById(R.id.btUpdateProfile);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        back = findViewById(R.id.back);
+        toolbar = findViewById(R.id.toolbar);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         uID = firebaseUser.getUid();

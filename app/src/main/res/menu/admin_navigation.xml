@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/mCategory"
-        android:title="Category"
+        android:title="Danh mục"
         android:icon="@drawable/icon_food"
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"
         app:cnb_textColor="@color/white"/>
     <item
         android:id="@+id/mFood"
-        android:title="Food"
+        android:title="Món ăn"
         android:icon="@drawable/icon_cart"
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"
@@ -24,7 +24,7 @@
 <!--        app:cnb_textColor="@color/white"/>-->
     <item
         android:id="@+id/mProfile"
-        android:title="Profile"
+        android:title="Tài khoản"
         android:icon="@drawable/icon_user"
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"

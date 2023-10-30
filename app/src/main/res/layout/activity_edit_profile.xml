@@ -6,31 +6,23 @@
     android:background="@color/blue"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/blue">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/blue"
+        android:elevation="10dp">
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Update Profile"
+            android:layout_gravity="center"
+            android:text="Cập nhật thông tin"
             android:textColor="@color/white"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_back" />
-    </RelativeLayout>
+            android:textSize="@dimen/tiltleToolbar" />
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -39,7 +31,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="100dp"
             android:background="@drawable/bgupdateprofile"
             android:gravity="center"
             android:orientation="vertical">
@@ -54,16 +46,6 @@
                 android:textStyle="bold"
                 android:visibility="invisible" />
 
-
-            <EditText
-                android:id="@+id/eName"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/myedittext"
-                android:hint="Tên"
-                android:paddingLeft="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -71,7 +53,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/icon_avatar"
             app:civ_border_color="#fff"
             app:civ_border_width="5dp" />
@@ -94,53 +76,77 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HỌ VÀ TÊN:"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/eName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="EMAIL:"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/eEmail"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/myedittext"
-            android:hint="Email"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            app:passwordToggleEnabled="true" />
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="SỐ ĐIỆN THOẠI:"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/ePhone"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/myedittext"
-            android:hint="Số điện thoại"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:text="ĐỊA CHỈ:"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/eAddress"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/myedittext"
-            android:hint="Địa chỉ"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btUpdateProfile"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/mybutton"
-            android:text="UPDATE"
+            android:text="Cập nhật"
             android:textColor="#fff" />
 
     </LinearLayout>

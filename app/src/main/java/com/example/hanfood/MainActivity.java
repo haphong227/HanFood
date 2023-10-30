@@ -28,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
 
-        tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Home");
-        tvTitle.setTextSize(30);
+        tvTitle.setText("Trang chủ");
         Intent intent = getIntent();
         emailuser = intent.getStringExtra("email");
 
@@ -43,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (i) {
                     case R.id.mFood:
                         toolbar.setVisibility(View.VISIBLE);
-                        tvTitle.setText("Home");
+                        tvTitle.setText("Trang chủ");
                         fragment = new FragmentHome();
                         break;
                     case R.id.mCart:
                         toolbar.setVisibility(View.VISIBLE);
-                        tvTitle.setText("Cart");
+                        tvTitle.setText("Giỏ hàng");
                         fragment = new FragmentCart();
                         break;
 //                    case R.id.mNotification:
@@ -69,5 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         toolbar = findViewById(R.id.toolBar);
         nav = findViewById(R.id.nav);
+        tvTitle = findViewById(R.id.tvTitle);
     }
 }

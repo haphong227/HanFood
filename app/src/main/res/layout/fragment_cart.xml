@@ -42,7 +42,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/blue"
-            android:text="Đặt hàng"
+            android:text="Đặt món"
             android:textColor="#fff" />
     </RelativeLayout>
 

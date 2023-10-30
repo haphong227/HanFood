@@ -7,78 +7,85 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="30dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textColor="#000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <!--        <TextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Settings"-->
+        <!--            android:textColor="#000"-->
+        <!--            android:textSize="30sp"-->
+        <!--            android:textStyle="bold" />-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/tvEditprofile"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_profile"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/ic_launcher"
-                app:civ_border_color="#6C7136"
-                app:civ_border_width="2dp" />
-
-            <TextView
-                android:id="@+id/tvUsername"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_toRightOf="@id/img_profile"
-                android:text="Trinh Hang"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:textSize="15sp" />
+                android:padding="30dp">
 
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvUsername"
-                android:layout_toRightOf="@id/img_profile"
-                android:text="trinhang2207@gmail.com"
-                android:textColor="#5D5C5C"
-                android:textSize="13sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:civ_border_color="#6C7136"
+                    app:civ_border_width="2dp" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@id/img_profile"
+                    android:text="Trinh Hang"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvEditprofile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableLeft="@drawable/ic_edit_profile"
-            android:drawableRight="@drawable/ic_more"
-            android:drawablePadding="16dp"
-            android:text="Edit Profile"
-            android:gravity="center_vertical"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvUsername"
+                    android:layout_toRightOf="@id/img_profile"
+                    android:text="trinhang2207@gmail.com"
+                    android:textColor="#5D5C5C"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvEditprofile"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:drawableLeft="@drawable/ic_edit_profile"-->
+        <!--            android:drawableRight="@drawable/ic_more"-->
+        <!--            android:drawablePadding="16dp"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            android:text="Thông tin cá nhân"-->
+        <!--            android:textColor="#000"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
         <TextView
             android:id="@+id/tvChangepassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
             android:drawableLeft="@drawable/ic_edit_password"
             android:drawableRight="@drawable/ic_more"
             android:drawablePadding="16dp"
-            android:text="Change Password"
             android:gravity="center_vertical"
+            android:text="Đổi mật khẩu"
             android:textColor="#000"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -87,12 +94,14 @@
             android:id="@+id/tvHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
             android:drawableLeft="@drawable/ic_order_history"
             android:drawableRight="@drawable/ic_more"
             android:drawablePadding="20dp"
-            android:text="History Order"
             android:gravity="center_vertical"
+            android:text="Lịch sử mua hàng"
             android:textColor="#000"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -101,11 +110,13 @@
             android:id="@+id/tvLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
             android:drawableLeft="@drawable/ic_logout"
-            android:gravity="center_vertical"
             android:drawablePadding="16dp"
-            android:text="Logout"
+            android:gravity="center_vertical"
+            android:text="Đăng xuất"
             android:textColor="#000"
             android:textSize="15sp"
             android:textStyle="bold" />

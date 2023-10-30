@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -36,11 +37,12 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FragmentProfile extends Fragment implements View.OnClickListener{
+public class FragmentProfile extends Fragment implements View.OnClickListener {
+    CardView tvEditprofile;
     FirebaseUser firebaseUser;
     DatabaseReference mRef;
     CircleImageView img_profile;
-    TextView tvUsername, tvEmail, tvEditprofile, tvChangepassword, tvHistory, tvLogout;
+    TextView tvUsername, tvEmail, tvChangepassword, tvHistory, tvLogout;
     String name, email, img;
 
     @Nullable

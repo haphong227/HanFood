@@ -49,7 +49,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ChangePasswordActivity.this, MainActivity.class));
+//                startActivity(new Intent(ChangePasswordActivity.this, MainActivity.class));
                 finish();
             }
         });

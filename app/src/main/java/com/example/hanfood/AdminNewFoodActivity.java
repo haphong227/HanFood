@@ -89,7 +89,6 @@ public class AdminNewFoodActivity extends AppCompatActivity implements View.OnCl
         desFood = findViewById(R.id.desFood);
         imgFood = findViewById(R.id.imgFood);
         quantity = findViewById(R.id.quantity);
-        back = findViewById(R.id.back);
         btAdd = findViewById(R.id.btAdd);
 
     }
@@ -122,7 +121,7 @@ public class AdminNewFoodActivity extends AppCompatActivity implements View.OnCl
 
     private void storeCategory() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
         saveCurDate = curDate.format(c.getTime());
         SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
         saveCurTime = curTime.format(c.getTime());

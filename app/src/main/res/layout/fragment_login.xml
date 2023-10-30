@@ -25,7 +25,7 @@
         android:background="@drawable/myedittext"
         android:drawableStart="@drawable/icon_password"
         android:drawablePadding="16dp"
-        android:hint="Password"
+        android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -42,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="40dp"
-            android:text="Forgot Password" />
+            android:text="Quên mật khẩu" />
     </RelativeLayout>
 
     <Button
@@ -53,7 +53,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/mybutton"
-        android:text="LOGIN"
+        android:text="Đăng nhập"
         android:textSize="18sp"
         android:textColor="#fff" />
 </LinearLayout>
