@@ -69,13 +69,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:padding="5dp"
                     android:layout_marginBottom="10dp"
                     android:layout_toRightOf="@id/note"
                     android:background="@drawable/bogoc"
                     android:hint="Bạn có gì muốn nhắn tới nhà hàng không?"
+                    android:padding="5dp"
                     android:textSize="13sp" />
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Thanh toán"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -144,7 +155,8 @@
                     android:layout_height="wrap_content"
                     android:text="Tổng cộng"
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPrice"
@@ -176,7 +188,8 @@
                     android:layout_height="wrap_content"
                     android:text="Thanh toán bằng"
                     android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/img"
@@ -218,7 +231,6 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Mã đơn hàng"
-                        android:textColor="#000"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -239,7 +251,6 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Thời gian đặt"
-                        android:textColor="#000"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -260,7 +271,6 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Tên"
-                        android:textColor="#000"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -282,7 +292,6 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Số điện thoại"
-                        android:textColor="#000"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -304,7 +313,6 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Địa chỉ"
-                        android:textColor="#000"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 

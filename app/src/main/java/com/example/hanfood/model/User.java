@@ -1,7 +1,7 @@
 package com.example.hanfood.model;
 
 public class User {
-    private String address;
+    private String birthday;
     private String email;
     private String password;
     private String name;
@@ -12,8 +12,8 @@ public class User {
     public User() {
     }
 
-    public User(String address, String email, String password, String name, String phone, String idUser, String image) {
-        this.address = address;
+    public User(String birthday, String email, String password, String name, String phone, String idUser, String image) {
+        this.birthday = birthday;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -28,6 +28,14 @@ public class User {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getEmail() {
@@ -62,13 +70,6 @@ public class User {
         this.image = image;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getPassword() {
         return password;

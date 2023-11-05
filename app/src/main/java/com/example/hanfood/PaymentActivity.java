@@ -43,7 +43,7 @@ import java.util.Locale;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
-    TextView titlePage, tvAddress, tvTong, tvTmpPrice, tvShip, tvQuantityFood, tvChangeAddress;
+    TextView titlePage, tvTong, tvTmpPrice, tvShip, tvQuantityFood, tvChangeAddress, tvAddress, tvName, tvPhone;
     EditText edNote;
     RecyclerView recyclerView_cart;
     Button btPay;
@@ -57,7 +57,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     int tongSl = 0;
     private static final String TAG = "Bill";
     String randomKey = "";
-    String idOrder;
+    String idOrder, idAddress, nameUser, phoneNumber, address2;
     DecimalFormat decimalFormat;
     String content = "";
 
@@ -76,51 +76,54 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(PaymentActivity.this, MainActivity.class));
                 finish();
             }
         });
 
         idOrder = getIntent().getStringExtra("idOrder");
-        total = getIntent().getDoubleExtra("total", 22);
+        idAddress = getIntent().getStringExtra("idAddress");
+        nameUser = getIntent().getStringExtra("nameUser");
+        phoneNumber = getIntent().getStringExtra("phoneNumber");
+        address = getIntent().getStringExtra("address");
+
+//        address = tvAddress.getText().toString();
+        tvName.setText(nameUser );
+        if (phoneNumber!= null) tvPhone.setText(" | " + phoneNumber);
+        tvAddress.setText(address2);
 
         decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
 
-        tvTong.setText(decimalFormat.format(total) + " VNĐ");
-        tvTmpPrice.setText(decimalFormat.format(total) + " VNĐ");
-
         displayCart();
-        getInforUser();
+//        getInforUser();
 
         btPay.setOnClickListener(this);
         tvChangeAddress.setOnClickListener(this);
     }
 
-    private void getInforUser() {
-        myUser = FirebaseDatabase.getInstance().getReference("User");
-        myUser.child("").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                    User user = dataSnapshot1.getValue(User.class);
-                    if (user.getIdUser().equalsIgnoreCase(auth.getUid())) {
-                        address = user.getAddress();
-                        email = user.getEmail();
-                        phone = user.getPhone();
-                        name = user.getName();
-                    }
-                }
-                tvAddress.setText(address);
-                Log.i("id", auth.getUid());
-                Log.i("địa chỉ", "" + snapshot.child("address").getValue());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
+//    private void getInforUser() {
+//        myUser.child("").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+//                    User user = dataSnapshot1.getValue(User.class);
+//                    if (user.getIdUser().equalsIgnoreCase(auth.getUid())) {
+//                        email = user.getEmail();
+//                        phone = user.getPhone();
+//                        name = user.getName();
+//                    }
+//                }
+//                Log.i("id", auth.getUid());
+//                Log.i("địa chỉ", "" + snapshot.child("address").getValue());
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     private void displayCart() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PaymentActivity.this, LinearLayoutManager.VERTICAL, false);
@@ -137,6 +140,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                     Cart cart = data.getValue(Cart.class);
                     cartArrayList.add(cart);
                     sl += cart.getTotalQuantity();
+                    total += cart.getTotalPrice();
                 }
                 cartAdapter = new ListFoodAdapter(cartArrayList, PaymentActivity.this);
                 recyclerView_cart.setAdapter(cartAdapter);
@@ -145,6 +149,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 tongSl = sl;
 
                 tvQuantityFood.setText("Tạm tính (" + cartArrayList.size() + " món)");
+                tvTong.setText(decimalFormat.format(total) + " VNĐ");
+                tvTmpPrice.setText(decimalFormat.format(total) + " VNĐ");
             }
 
             @Override
@@ -168,98 +174,100 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view == btPay) {
-            note = edNote.getText().toString();
-            edNote.setText(note);
+            if (address.isEmpty()) {
+                Toast.makeText(this, "Vui lòng chọn địa chỉ giao hàng!", Toast.LENGTH_SHORT).show();
+            } else {
+                String saveCurrentTime, savecurrentDate, savecurrentDate2;
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+                savecurrentDate = curDate.format(c.getTime());
+                SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
+                saveCurrentTime = curTime.format(c.getTime());
+                SimpleDateFormat curDate2 = new SimpleDateFormat("yyyy-MM-dd");
+                savecurrentDate2 = curDate2.format(c.getTime());
+                randomKey = savecurrentDate2 + "-" + saveCurrentTime;
 
-            String saveCurrentTime, savecurrentDate, savecurrentDate2;
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
-            savecurrentDate = curDate.format(c.getTime());
-            SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
-            saveCurrentTime = curTime.format(c.getTime());
-            SimpleDateFormat curDate2 = new SimpleDateFormat("yyyy-MM-dd");
-            savecurrentDate2 = curDate2.format(c.getTime());
-            randomKey = savecurrentDate2 + "-" + saveCurrentTime;
+                HashMap<String, Object> bill = new HashMap<>();
+                bill.put("idBill", TAG + randomKey);
+                bill.put("idUser", auth.getUid());
+                bill.put("idOrder", idOrder);
+                bill.put("currentTime", saveCurrentTime);
+                bill.put("currentDate", savecurrentDate);
+                bill.put("address", address);
+                bill.put("email", email);
+                bill.put("name", nameUser);
+                bill.put("note", note);
+                bill.put("phone", phoneNumber);
+                bill.put("quantity", tongSl);
+                bill.put("cartArrayList", cartArrayList);
+                bill.put("price", total);
+                bill.put("stateOrder", "Đã xác nhận");
+                myBill = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
+                myBill.child(TAG + randomKey).updateChildren(bill)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
 
-            HashMap<String, Object> bill = new HashMap<>();
-            bill.put("idBill", TAG + randomKey);
-            bill.put("idUser", auth.getUid());
-            bill.put("idOrder", idOrder);
-            bill.put("currentTime", saveCurrentTime);
-            bill.put("currentDate", savecurrentDate);
-            bill.put("address", address);
-            bill.put("email", email);
-            bill.put("name", name);
-            bill.put("note", note);
-            bill.put("phone", phone);
-            bill.put("quantity", tongSl);
-            bill.put("cartArrayList", cartArrayList);
-            bill.put("price", total);
-            bill.put("stateOrder", "Đã xác nhận");
-            myBill = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
-            myBill.child(TAG + randomKey).updateChildren(bill)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                //update số lượng của sản phẩm còn lại sau khi mua hàng
+                                for (Cart cart : cartArrayList) {
+                                    String idFood = cart.getIdFood();
+                                    myFood = FirebaseDatabase.getInstance().getReference().child("Food").child(idFood);
+                                    myFood.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                String quantity = snapshot.child("quantityFood").getValue().toString();
+                                                int newQuantity = Integer.parseInt(quantity) - cart.getTotalQuantity();
+                                                HashMap<String, Object> food = new HashMap<>();
+                                                food.put("quantityFood", newQuantity);
+                                                myFood.updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            System.out.println("update soluong");
+                                                            startActivity(new Intent(PaymentActivity.this, MainActivity.class));
+                                                            finish();
+                                                        }
 
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            //update số lượng của sản phẩm còn lại sau khi mua hàng
-                            for (Cart cart : cartArrayList) {
-                                String idFood = cart.getIdFood();
-                                myFood = FirebaseDatabase.getInstance().getReference().child("Food").child(idFood);
-                                myFood.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (snapshot.exists()) {
-                                            String quantity = snapshot.child("quantityFood").getValue().toString();
-                                            int newQuantity = Integer.parseInt(quantity) - cart.getTotalQuantity();
-                                            HashMap<String, Object> food = new HashMap<>();
-                                            food.put("quantityFood", newQuantity);
-                                            myFood.updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        System.out.println("update soluong");
-                                                        finish();
                                                     }
-
-                                                }
-                                            });
+                                                });
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
-                                    }
-                                });
+                                        }
+                                    });
 
+                                }
+
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.setTimeInMillis(System.currentTimeMillis());
+                                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                                Intent intent = new Intent(PaymentActivity.this,
+                                        MyReceiver.class);
+                                intent.putExtra("myAction", "mDoNotify");
+                                intent.putExtra("Name", name);
+                                intent.putExtra("Description", decimalFormat.format(total) + " VNĐ");
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(PaymentActivity.this,
+                                        0, intent, 0);
+                                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+                                removeCart();
+
+                                Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(PaymentActivity.this, MainActivity.class);
+                                i.putExtra("idOrder", idOrder);
+                                finish();
                             }
-
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTimeInMillis(System.currentTimeMillis());
-                            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-                            Intent intent = new Intent(PaymentActivity.this,
-                                    MyReceiver.class);
-                            intent.putExtra("myAction", "mDoNotify");
-                            intent.putExtra("Name", name);
-                            intent.putExtra("Description", decimalFormat.format(total) + " VNĐ");
-                            PendingIntent pendingIntent = PendingIntent.getBroadcast(PaymentActivity.this,
-                                    0, intent, 0);
-                            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-                            removeCart();
-
-                            Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(PaymentActivity.this, MainActivity.class);
-                            i.putExtra("idOrder", idOrder);
-                            finish();
-                        }
-                    });
+                        });
+            }
 
         }
         if (view == tvChangeAddress) {
-//            startActivity(new Intent(PaymentActivity.this, MapActivity.class));
+            startActivity(new Intent(PaymentActivity.this, AddressActivity.class));
         }
 
     }
@@ -267,6 +275,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         titlePage = findViewById(R.id.toolbar_title);
+        tvName = findViewById(R.id.tvName);
+        tvPhone = findViewById(R.id.tvPhone);
         tvAddress = findViewById(R.id.tvAddress);
         tvTong = findViewById(R.id.tvTong);
         tvTmpPrice = findViewById(R.id.tvTmpPrice);
@@ -276,5 +286,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         tvChangeAddress = findViewById(R.id.tvChangeAddress);
         recyclerView_cart = findViewById(R.id.recycleView_cart);
         btPay = findViewById(R.id.btPay);
+
+        myUser = FirebaseDatabase.getInstance().getReference("User");
+
     }
 }

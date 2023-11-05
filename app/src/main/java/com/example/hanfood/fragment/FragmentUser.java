@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.hanfood.AddressActivity;
 import com.example.hanfood.ChangePasswordActivity;
 import com.example.hanfood.EditProfileActivity;
 import com.example.hanfood.HistoryOrderActivity;
 import com.example.hanfood.LoginActivity;
+import com.example.hanfood.MapsActivity;
 import com.example.hanfood.R;
 import com.example.hanfood.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +37,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     DatabaseReference mRef;
     CircleImageView img_profile;
     CardView tvEditprofile;
-    TextView tvUsername, tvEmail, tvChangepassword, tvHistory, tvLogout;
+    TextView tvUsername, tvEmail, tvChangepassword, tvHistory, tvLogout, tvMap, tvAddress;
     String name, email, img;
 
     @Nullable
@@ -53,6 +55,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         tvChangepassword.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
+        tvMap.setOnClickListener(this);
+        tvAddress.setOnClickListener(this);
 
         return view;
     }
@@ -68,6 +72,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         }
         if (view == tvHistory) {
             startActivity(new Intent(getActivity(), HistoryOrderActivity.class));
+        }
+        if (view == tvMap) {
+            startActivity(new Intent(getActivity(), MapsActivity.class));
+        }if (view == tvAddress) {
+            startActivity(new Intent(getActivity(), AddressActivity.class));
         }
         if (view == tvLogout) {
             FirebaseAuth.getInstance().signOut();
@@ -91,21 +100,16 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                     }
                 }
                 tvEmail.setText(email);
-                tvUsername.setText(name);
+                if (name == null){
+                    tvUsername.setText(email.substring(0, email.length() - 10));
+                }else {
+                    tvUsername.setText(name);
+                }
                 if (img == null) {
                     Picasso.get().load("https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg").into(img_profile);
                 } else if (img != null) {
                     Picasso.get().load(img).into(img_profile);
                 }
-
-//                if (snapshot.exists()) {
-//                    name = snapshot.child("name").getValue().toString();
-//                    email = snapshot.child("email").getValue().toString();
-//                    img = snapshot.child("image").getValue().toString();
-//
-//                    tvEmail.setText(email);
-//                    tvUsername.setText(name);
-//                }
             }
 
             @Override
@@ -123,6 +127,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         tvChangepassword = view.findViewById(R.id.tvChangepassword);
         tvHistory = view.findViewById(R.id.tvHistory);
         tvLogout = view.findViewById(R.id.tvLogout);
+        tvMap = view.findViewById(R.id.tvMap);
+        tvAddress = view.findViewById(R.id.tvAddress);
     }
 
 }

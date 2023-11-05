@@ -11,9 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#fff"
+        android:background="@color/blue"
         android:elevation="10dp">
-        <!--        app:menu="@menu/toolbars"-->
 
         <TextView
             android:id="@+id/tvTitle"
@@ -21,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="7dp"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textStyle="bold"
             android:textSize="@dimen/tiltleToolbar"
             app:itemIconTint="@color/navigation"

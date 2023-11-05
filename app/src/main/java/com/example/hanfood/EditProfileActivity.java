@@ -5,12 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
 
-    EditText eName, ePhone, eEmail, eAddress;
+    EditText eName, ePhone, eEmail, eSex, eBirthday;
     Button btUpdateProfile;
     CircleImageView imgprofile;
     private Uri filePath;
@@ -49,9 +53,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
-    String email, name, phone, address, img, pass, uID;
-    String emailU, nameU, phoneU, addressU;
-    DatabaseReference mRef;
+    String email, name, phone, img, pass, uID, birth;
+    String emailU, nameU, phoneU, birthU, sexU;
+    DatabaseReference mRef, myAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         displayUser();
         imgprofile.setOnClickListener(this);
         btUpdateProfile.setOnClickListener(this);
+        eBirthday.setOnClickListener(this);
     }
 
     private void displayUser() {
@@ -87,7 +92,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     if (user.getIdUser().equalsIgnoreCase(uID)) {
                         System.out.println(firebaseUser.getUid() + "\nhihihihihihihihi111111111 \n");
                         name = user.getName();
-                        address = user.getAddress();
+                        birth = user.getBirthday();
                         email = user.getEmail();
                         phone = user.getPhone();
                         pass = user.getPassword();
@@ -95,7 +100,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         System.out.println("ảnh:     " + user.getImage());
                     }
                 }
-                eAddress.setText(address);
+                eBirthday.setText(birth);
                 eEmail.setText(email);
                 eName.setText(name);
                 ePhone.setText(phone);
@@ -116,6 +121,25 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
+        if (view == eBirthday){
+            final Calendar c=Calendar.getInstance();
+            int year=c.get(Calendar.YEAR);
+            int month=c.get(Calendar.MONTH);
+            int day=c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog dialog=new DatePickerDialog(EditProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+                    String date="";
+                    if (m>8){
+                        date=d+"/"+(m+1)+"/"+y;
+                    }else {
+                        date=d+"/0"+(m+1)+"/"+y;
+                    }
+                    eBirthday.setText(date);
+                }
+            },year,month,day);
+            dialog.show();
+        }
         if (view == imgprofile) {
             selectImage();
         }
@@ -123,8 +147,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             emailU = eEmail.getText().toString().trim();
             phoneU = ePhone.getText().toString().trim();
             nameU = eName.getText().toString().trim();
-            addressU = eAddress.getText().toString().trim();
-            if (emailU.isEmpty() || phoneU.isEmpty() || nameU.isEmpty() || addressU.isEmpty()) {
+            birthU = eBirthday.getText().toString().trim();
+            if (emailU.isEmpty() || phoneU.isEmpty() || nameU.isEmpty() || birthU.isEmpty()) {
                 Toast.makeText(EditProfileActivity.this, "Vui lòng nhập đầy đủ các trường", Toast.LENGTH_SHORT).show();
             } else if (!emailU.matches("^[a-zA-Z][a-z0-9_\\.]{4,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$")) {
                 Toast.makeText(EditProfileActivity.this, "Email Không Hợp Lệ", Toast.LENGTH_SHORT).show();
@@ -135,7 +159,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             } else {
                 HashMap<String, Object> user = new HashMap<>();
                 user.put("name", nameU);
-                user.put("address", addressU);
+                user.put("birthday", birthU);
                 user.put("phone", phoneU);
                 user.put("email", emailU);
                 user.put("password", pass);
@@ -149,10 +173,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
                 });
+
             }
         }
 
     }
+
+
 
     private void change() {
         StorageReference imageFolder = storageReference.child("ImageProfile/" + uID + ".jpg");
@@ -165,7 +192,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         String url = uri.toString();
                         HashMap<String, Object> user = new HashMap<>();
                         user.put("name", nameU);
-                        user.put("address", addressU);
+                        user.put("birthday", birthU);
                         user.put("phone", phoneU);
                         user.put("email", emailU);
                         user.put("password", pass);
@@ -211,7 +238,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         eName = findViewById(R.id.eName);
         ePhone = findViewById(R.id.ePhone);
         eEmail = findViewById(R.id.eEmail);
-        eAddress = findViewById(R.id.eAddress);
+//        eSex = findViewById(R.id.eSex);
+        eBirthday = findViewById(R.id.eBirthday);
         imgprofile = findViewById(R.id.img);
         btUpdateProfile = findViewById(R.id.btUpdateProfile);
         storage = FirebaseStorage.getInstance();
@@ -221,5 +249,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         uID = firebaseUser.getUid();
         mRef = FirebaseDatabase.getInstance().getReference("User");
+        myAddress = FirebaseDatabase.getInstance().getReference("Address/" + uID);
     }
 }

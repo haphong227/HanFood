@@ -5,15 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center">
-    <EditText
-        android:id="@+id/eName"
-        android:layout_width="300dp"
-        android:hint="Tên"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/myedittext"
-        android:layout_height="wrap_content"/>
+<!--    <EditText-->
+<!--        android:id="@+id/eName"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:hint="Tên"-->
+<!--        android:paddingLeft="20dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:background="@drawable/myedittext"-->
+<!--        android:layout_height="wrap_content"/>-->
     <EditText
         android:id="@+id/eEmail"
         android:layout_width="300dp"
@@ -36,17 +36,6 @@
         android:background="@drawable/myedittext"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"/>
-    <EditText
-        android:id="@+id/eConfirmPassword"
-        android:layout_width="300dp"
-        android:hint="Nhập lại mật khẩu"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:inputType="textPassword"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/myedittext"
-        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btRegister"
