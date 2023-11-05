@@ -31,7 +31,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     DatabaseReference myRef;
     FirebaseUser firebaseUser;
 
-    String email, name, pass, phone, address, img;
+    String email, name, pass, phone, address, img, birth;
     String oldPass, newPass, confirm;
 
     @Override
@@ -89,7 +89,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                         } else {
                             System.out.println(firebaseUser.getUid() + "\nhihiihihihihihihi \n");
                             name = user.getName();
-                            address = user.getAddress();
+                            birth = user.getBirthday();
                             email = user.getEmail();
                             phone = user.getPhone();
                             pass = user.getPassword();
@@ -104,7 +104,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                                     Toast.makeText(ChangePasswordActivity.this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show();
                                 } else {
 
-                                    User user1 = new User(address, email, newPass, name, phone, firebaseUser.getUid(), img);
+                                    User user1 = new User(birth, email, newPass, name, phone, firebaseUser.getUid(), img);
                                     System.out.println("Mat khau moi:" + newPass + "\n");
 
                                     FirebaseUser firebaseUser1 = FirebaseAuth.getInstance().getCurrentUser();
