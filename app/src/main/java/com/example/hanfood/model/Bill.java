@@ -9,7 +9,6 @@ public class Bill implements Serializable {
     String CurrentDate;
     String email;
     String idBill;
-    String idOrder;
     String idUser;
     String name;
     String note;
@@ -17,18 +16,17 @@ public class Bill implements Serializable {
     double price;
     int quantity;
     String stateOrder;
-    ArrayList<Cart> cartArrayList;
+    ArrayList<ItemFood> itemFoodArrayList;
 
     public Bill() {
     }
 
-    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idOrder, String idUser, String name, String note, String phone, double price, int quantity, String stateOrder, ArrayList<Cart> cartArrayList) {
+    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idUser, String name, String note, String phone, double price, int quantity, String stateOrder, ArrayList<ItemFood> itemFoodArrayList) {
         this.address = address;
         CurrentTime = currentTime;
         CurrentDate = currentDate;
         this.email = email;
         this.idBill = idBill;
-        this.idOrder = idOrder;
         this.idUser = idUser;
         this.name = name;
         this.note = note;
@@ -36,16 +34,9 @@ public class Bill implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.stateOrder = stateOrder;
-        this.cartArrayList = cartArrayList;
+        this.itemFoodArrayList = itemFoodArrayList;
     }
 
-    public String getIdOrder() {
-        return idOrder;
-    }
-
-    public void setIdOrder(String idOrder) {
-        this.idOrder = idOrder;
-    }
 
     public String getName() {
         return name;
@@ -143,11 +134,11 @@ public class Bill implements Serializable {
         this.stateOrder = stateOrder;
     }
 
-    public ArrayList<Cart> getCartArrayList() {
-        return cartArrayList;
+    public ArrayList<ItemFood> getItemFoodArrayList() {
+        return itemFoodArrayList;
     }
 
-    public void setCartArrayList(ArrayList<Cart> cartArrayList) {
-        this.cartArrayList = cartArrayList;
+    public void setItemFoodArrayList(ArrayList<ItemFood> itemFoodArrayList) {
+        this.itemFoodArrayList = itemFoodArrayList;
     }
 }

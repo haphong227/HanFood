@@ -20,8 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hanfood.adapter.ListFoodAdapter;
-import com.example.hanfood.model.Cart;
-import com.example.hanfood.model.User;
+import com.example.hanfood.model.ItemFood;
 import com.example.hanfood.notification.MyReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,8 +47,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     RecyclerView recyclerView_cart;
     Button btPay;
 
-    ListFoodAdapter cartAdapter;
-    ArrayList<Cart> cartArrayList;
+    ListFoodAdapter listFoodAdapter;
+    ArrayList<ItemFood> itemFoodArrayList;
     private FirebaseUser auth;
     private DatabaseReference myCart, myUser, myBill, myFood, myNoti;
     String address, email, phone, name, note;
@@ -57,9 +56,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     int tongSl = 0;
     private static final String TAG = "Bill";
     String randomKey = "";
-    String idOrder, idAddress, nameUser, phoneNumber, address2;
+    String  idAddress, nameUser, phoneNumber, address2;
     DecimalFormat decimalFormat;
-    String content = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +79,15 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        idOrder = getIntent().getStringExtra("idOrder");
         idAddress = getIntent().getStringExtra("idAddress");
         nameUser = getIntent().getStringExtra("nameUser");
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         address = getIntent().getStringExtra("address");
 
-//        address = tvAddress.getText().toString();
         tvName.setText(nameUser );
         if (phoneNumber!= null) tvPhone.setText(" | " + phoneNumber);
-        tvAddress.setText(address2);
+        tvAddress.setText(address);
+        address2 = tvAddress.getText().toString();
 
         decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
@@ -130,25 +127,25 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         recyclerView_cart.setLayoutManager(linearLayoutManager);
 
         auth = FirebaseAuth.getInstance().getCurrentUser();
-        myCart = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
+        myCart = FirebaseDatabase.getInstance().getReference("ItemFood/" + auth.getUid());
         myCart.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int sl = 0;
-                cartArrayList = new ArrayList<>();
+                itemFoodArrayList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Cart cart = data.getValue(Cart.class);
-                    cartArrayList.add(cart);
-                    sl += cart.getTotalQuantity();
-                    total += cart.getTotalPrice();
+                    ItemFood itemFood = data.getValue(ItemFood.class);
+                    itemFoodArrayList.add(itemFood);
+                    sl += itemFood.getTotalQuantity();
+                    total += itemFood.getTotalPrice();
                 }
-                cartAdapter = new ListFoodAdapter(cartArrayList, PaymentActivity.this);
-                recyclerView_cart.setAdapter(cartAdapter);
+                listFoodAdapter = new ListFoodAdapter(itemFoodArrayList, PaymentActivity.this);
+                recyclerView_cart.setAdapter(listFoodAdapter);
                 recyclerView_cart.setHasFixedSize(true);
 
                 tongSl = sl;
 
-                tvQuantityFood.setText("Tạm tính (" + cartArrayList.size() + " món)");
+                tvQuantityFood.setText("Tạm tính (" + itemFoodArrayList.size() + " món)");
                 tvTong.setText(decimalFormat.format(total) + " VNĐ");
                 tvTmpPrice.setText(decimalFormat.format(total) + " VNĐ");
             }
@@ -174,7 +171,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view == btPay) {
-            if (address.isEmpty()) {
+            note = edNote.getText().toString();
+            if (address2.isEmpty()) {
                 Toast.makeText(this, "Vui lòng chọn địa chỉ giao hàng!", Toast.LENGTH_SHORT).show();
             } else {
                 String saveCurrentTime, savecurrentDate, savecurrentDate2;
@@ -190,16 +188,14 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 HashMap<String, Object> bill = new HashMap<>();
                 bill.put("idBill", TAG + randomKey);
                 bill.put("idUser", auth.getUid());
-                bill.put("idOrder", idOrder);
                 bill.put("currentTime", saveCurrentTime);
                 bill.put("currentDate", savecurrentDate);
                 bill.put("address", address);
-                bill.put("email", email);
                 bill.put("name", nameUser);
                 bill.put("note", note);
                 bill.put("phone", phoneNumber);
                 bill.put("quantity", tongSl);
-                bill.put("cartArrayList", cartArrayList);
+                bill.put("itemFoodArrayList", itemFoodArrayList);
                 bill.put("price", total);
                 bill.put("stateOrder", "Đã xác nhận");
                 myBill = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
@@ -209,15 +205,15 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 //update số lượng của sản phẩm còn lại sau khi mua hàng
-                                for (Cart cart : cartArrayList) {
-                                    String idFood = cart.getIdFood();
+                                for (ItemFood itemFood : itemFoodArrayList) {
+                                    String idFood = itemFood.getIdFood();
                                     myFood = FirebaseDatabase.getInstance().getReference().child("Food").child(idFood);
                                     myFood.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.exists()) {
                                                 String quantity = snapshot.child("quantityFood").getValue().toString();
-                                                int newQuantity = Integer.parseInt(quantity) - cart.getTotalQuantity();
+                                                int newQuantity = Integer.parseInt(quantity) - itemFood.getTotalQuantity();
                                                 HashMap<String, Object> food = new HashMap<>();
                                                 food.put("quantityFood", newQuantity);
                                                 myFood.updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -258,8 +254,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                 removeCart();
 
                                 Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(PaymentActivity.this, MainActivity.class);
-                                i.putExtra("idOrder", idOrder);
+//                                Intent i = new Intent(PaymentActivity.this, MainActivity.class);
                                 finish();
                             }
                         });

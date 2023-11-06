@@ -2,7 +2,7 @@ package com.example.hanfood.model;
 
 import java.io.Serializable;
 
-public class Cart implements Serializable {
+public class ItemFood implements Serializable {
     String idFood;
     String productImg;
     String productName;
@@ -12,10 +12,10 @@ public class Cart implements Serializable {
     int totalQuantity;
 
 
-    public Cart() {
+    public ItemFood() {
     }
 
-    public Cart(String idFood, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity) {
+    public ItemFood(String idFood, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity) {
         this.idFood = idFood;
         this.productImg = productImg;
         this.productName = productName;

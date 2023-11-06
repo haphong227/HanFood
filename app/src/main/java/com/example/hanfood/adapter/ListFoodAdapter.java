@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanfood.R;
-import com.example.hanfood.model.Cart;
+import com.example.hanfood.model.ItemFood;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeViewHolder> {
-    private List<Cart> list;
+    private List<ItemFood> list;
     Context context;
 
-    public ListFoodAdapter(List<Cart> list, Context context) {
+    public ListFoodAdapter(List<ItemFood> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -41,23 +41,23 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
 
-        Cart cart = list.get(position);
-        holder.tvName.setText(cart.getProductName());
-        holder.tvQuantity.setText(cart.getTotalQuantity() + "x   ");
+        ItemFood itemFood = list.get(position);
+        holder.tvName.setText(itemFood.getProductName());
+        holder.tvQuantity.setText(itemFood.getTotalQuantity() + "x   ");
 //        holder.tvPrice.setText(decimalFormat.format(cart.getTotalPrice()) + " VNĐ");
 //        holder.tvPriceSale.setText(decimalFormat.format(cart.getProductPriceSalse()) + " VNĐ");
 
-        if (cart.getProductPriceSalse() < cart.getProductPrice()) {
-            holder.tvPrice.setText(decimalFormat.format(cart.getProductPrice()) + " VNĐ");
+        if (itemFood.getProductPriceSalse() < itemFood.getProductPrice()) {
+            holder.tvPrice.setText(decimalFormat.format(itemFood.getProductPrice()) + " VNĐ");
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.tvPriceSale.setText(decimalFormat.format(cart.getProductPriceSalse()) + " VNĐ");
+            holder.tvPriceSale.setText(decimalFormat.format(itemFood.getProductPriceSalse()) + " VNĐ");
 
         } else {
             holder.tvPrice.setVisibility(View.GONE);
-            holder.tvPriceSale.setText(decimalFormat.format(cart.getProductPrice()) + " VNĐ");
+            holder.tvPriceSale.setText(decimalFormat.format(itemFood.getProductPrice()) + " VNĐ");
         }
 
-        Picasso.get().load(cart.getProductImg())
+        Picasso.get().load(itemFood.getProductImg())
                 .into(holder.imgFood);
     }
 

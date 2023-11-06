@@ -56,18 +56,11 @@ public class DetailBillActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         idBill = getIntent().getStringExtra("id");
-        idOrder = getIntent().getStringExtra("idOrder");
-        address = getIntent().getStringExtra("address");
-        price = getIntent().getDoubleExtra("price", 22);
 
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
-
-        tvAddress.setText(address);
-        tvPrice.setText(decimalFormat.format(price) + " VNĐ");
-        tvTmpPrice.setText(decimalFormat.format(price) + " VNĐ");
-        tvidBill.setText(idBill);
 
         LinearLayoutManager manager = new LinearLayoutManager(DetailBillActivity.this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
@@ -79,18 +72,24 @@ public class DetailBillActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
-                    if (bill.getIdOrder().equalsIgnoreCase(idOrder)) {
+                    if (bill.getIdBill().equalsIgnoreCase(idBill)) {
                         date = bill.getCurrentDate() + " " + bill.getCurrentTime();
+                        address = bill.getAddress();
+                        price = bill.getPrice();
                         name = bill.getName();
                         phone = bill.getPhone();
                         note = bill.getNote();
-                        cartAdapter = new ListFoodAdapter(bill.getCartArrayList(), DetailBillActivity.this);
-                        tvQuantityFood.setText("Tạm tính (" + bill.getCartArrayList().size() + " món)");
+                        cartAdapter = new ListFoodAdapter(bill.getItemFoodArrayList(), DetailBillActivity.this);
+                        tvQuantityFood.setText("Tạm tính (" + bill.getItemFoodArrayList().size() + " món)");
                     }
                 }
                 tvDate.setText(date);
                 tvName.setText(name);
                 tvPhone.setText(phone);
+                tvAddress.setText(address);
+                tvPrice.setText(decimalFormat.format(price) + " VNĐ");
+                tvTmpPrice.setText(decimalFormat.format(price) + " VNĐ");
+                tvidBill.setText(idBill);
 
                 if (note.equalsIgnoreCase("")){
                     tvNote.setVisibility(View.GONE);

@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanfood.PaymentActivity;
 import com.example.hanfood.R;
-import com.example.hanfood.adapter.CartAdapter;
-import com.example.hanfood.model.Cart;
+import com.example.hanfood.adapter.ItemFoodCartAdapter;
+import com.example.hanfood.model.ItemFood;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,13 +38,11 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
     TextView tvTong;
     RecyclerView recyclerView_cart;
     Button btBuy;
-    CartAdapter cartAdapter;
-    ArrayList<Cart> cartArrayList;
+    ItemFoodCartAdapter cartAdapter;
+    ArrayList<ItemFood> cartArrayList;
     private FirebaseUser auth;
     private DatabaseReference myRef;
     double total = 0;
-    String TAG = "Order";
-    private String saveCurDate, saveCurTime, randomKey;
 
     @Nullable
     @Override
@@ -56,13 +54,6 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
-        saveCurDate = curDate.format(c.getTime());
-        SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
-        saveCurTime = curTime.format(c.getTime());
-        randomKey = saveCurDate + "-" + saveCurTime;
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_cart.setLayoutManager(linearLayoutManager);
@@ -77,19 +68,19 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
     private void displayCart() {
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
-        myRef = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
+        myRef = FirebaseDatabase.getInstance().getReference("ItemFood/" + auth.getUid());
         myRef.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 double totalAmount = 0;
                 cartArrayList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Cart cart = data.getValue(Cart.class);
+                    ItemFood cart = data.getValue(ItemFood.class);
                     cartArrayList.add(cart);
                     totalAmount += cart.getTotalPrice();
                 }
                 total = totalAmount;
-                cartAdapter = new CartAdapter(cartArrayList, getContext());
+                cartAdapter = new ItemFoodCartAdapter(cartArrayList, getContext());
                 recyclerView_cart.setAdapter(cartAdapter);
                 recyclerView_cart.setHasFixedSize(true);
                 tvTong.setText("Tổng tiền: " + decimalFormat.format(totalAmount) + " VNĐ");
@@ -107,8 +98,6 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
         if (view == btBuy) {
             if (total > 0) {
                 Intent i = new Intent(getContext(), PaymentActivity.class);
-                i.putExtra("idOrder", TAG + randomKey);
-                i.putExtra("total", total);
                 startActivity(i);
             } else {
                 Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();

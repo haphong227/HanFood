@@ -181,15 +181,15 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
 //            startActivity(is);
 //        }
 
-        final HashMap<String, Object> cart = new HashMap<>();
-        cart.put("idFood", idFood);
-        cart.put("productImg", img);
-        cart.put("productName", name);
-        cart.put("productPrice", price);
-        cart.put("productPriceSalse", priceFoodSale);
-        cart.put("totalQuantity", Integer.parseInt(tvSl.getText().toString()));
-        cart.put("totalPrice", totalPrice);
-        myRef.child(name).updateChildren(cart)
+        final HashMap<String, Object> itemFood = new HashMap<>();
+        itemFood.put("idFood", idFood);
+        itemFood.put("productImg", img);
+        itemFood.put("productName", name);
+        itemFood.put("productPrice", price);
+        itemFood.put("productPriceSalse", priceFoodSale);
+        itemFood.put("totalQuantity", Integer.parseInt(tvSl.getText().toString()));
+        itemFood.put("totalPrice", totalPrice);
+        myRef.child(name).updateChildren(itemFood)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -220,7 +220,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         recyclerView_review = findViewById(R.id.recycleView_review);
 
         auth = FirebaseAuth.getInstance().getCurrentUser();
-        myRef = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
+        myRef = FirebaseDatabase.getInstance().getReference("ItemFood/" + auth.getUid());
 
     }
 }

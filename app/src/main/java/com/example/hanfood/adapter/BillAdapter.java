@@ -54,15 +54,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
         holder.tvIdBill.setText(String.valueOf(bill.getIdBill()));
         holder.tvQuantity.setText(String.valueOf(bill.getQuantity() + " món"));
         holder.tvPrice.setText("Tổng tiền: " + decimalFormat.format(bill.getPrice()) + " VNĐ");
-        holder.tvTime.setText(bill.getCurrentDate() +" "+ bill.getCurrentTime());
+        holder.tvTime.setText(bill.getCurrentDate() + " " + bill.getCurrentTime());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailBillActivity.class);
                 i.putExtra("id", bill.getIdBill());
-                i.putExtra("idOrder", bill.getIdOrder());
-                i.putExtra("address", bill.getAddress());
-                i.putExtra("price", bill.getPrice());
                 context.startActivity(i);
             }
         });
