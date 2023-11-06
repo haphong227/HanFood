@@ -51,7 +51,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     ArrayList<ItemFood> itemFoodArrayList;
     private FirebaseUser auth;
     private DatabaseReference myCart, myUser, myBill, myFood, myNoti;
-    String address, email, phone, name, note;
+    String address, note;
     double total = 0;
     int tongSl = 0;
     private static final String TAG = "Bill";
@@ -245,7 +245,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                 Intent intent = new Intent(PaymentActivity.this,
                                         MyReceiver.class);
                                 intent.putExtra("myAction", "mDoNotify");
-                                intent.putExtra("Name", name);
+                                intent.putExtra("Name", auth.getEmail());
                                 intent.putExtra("Description", decimalFormat.format(total) + " VNĐ");
                                 PendingIntent pendingIntent = PendingIntent.getBroadcast(PaymentActivity.this,
                                         0, intent, 0);
