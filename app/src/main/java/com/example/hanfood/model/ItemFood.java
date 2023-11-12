@@ -3,19 +3,20 @@ package com.example.hanfood.model;
 import java.io.Serializable;
 
 public class ItemFood implements Serializable {
-    String idFood;
-    String productImg;
-    String productName;
-    double productPrice;
-    double productPriceSalse;
-    double totalPrice;
-    int totalQuantity;
+    private String idFood;
+    private String productImg;
+    private String productName;
+    private double productPrice;
+    private double productPriceSalse;
+    private double totalPrice;
+    private int totalQuantity;
+    private boolean evaluate;
 
 
     public ItemFood() {
     }
 
-    public ItemFood(String idFood, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity) {
+    public ItemFood(String idFood, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity, boolean evaluate) {
         this.idFood = idFood;
         this.productImg = productImg;
         this.productName = productName;
@@ -23,6 +24,7 @@ public class ItemFood implements Serializable {
         this.productPriceSalse = productPriceSalse;
         this.totalPrice = totalPrice;
         this.totalQuantity = totalQuantity;
+        this.evaluate = evaluate;
     }
 
     public double getProductPriceSalse() {
@@ -81,5 +83,11 @@ public class ItemFood implements Serializable {
         this.productImg = productImg;
     }
 
+    public boolean isEvaluate() {
+        return evaluate;
+    }
 
+    public void setEvaluate(boolean evaluate) {
+        this.evaluate = evaluate;
+    }
 }

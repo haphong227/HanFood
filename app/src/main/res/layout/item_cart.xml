@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="50.000 VNĐ"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/blue_100"
                         android:textSize="14sp" />
 
                     <TextView

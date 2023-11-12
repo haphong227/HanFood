@@ -2,26 +2,28 @@ package com.example.hanfood.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Bill implements Serializable {
-    String address;
-    String CurrentTime;
-    String CurrentDate;
-    String email;
-    String idBill;
-    String idUser;
-    String name;
-    String note;
-    String phone;
-    double price;
-    int quantity;
-    String stateOrder;
-    ArrayList<ItemFood> itemFoodArrayList;
+    private String address;
+    private String CurrentTime;
+    private String CurrentDate;
+    private String email;
+    private String idBill;
+    private String idUser;
+    private String name;
+    private String note;
+    private String phone;
+    private double price;
+    private int quantity;
+    private String stateOrder;
+    private boolean evaluate;
+    private ArrayList<ItemFood> itemFoodArrayList;
 
     public Bill() {
     }
 
-    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idUser, String name, String note, String phone, double price, int quantity, String stateOrder, ArrayList<ItemFood> itemFoodArrayList) {
+    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idUser, String name, String note, String phone, double price, int quantity, String stateOrder, boolean evaluate, ArrayList<ItemFood> itemFoodArrayList) {
         this.address = address;
         CurrentTime = currentTime;
         CurrentDate = currentDate;
@@ -34,9 +36,9 @@ public class Bill implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.stateOrder = stateOrder;
+        this.evaluate = evaluate;
         this.itemFoodArrayList = itemFoodArrayList;
     }
-
 
     public String getName() {
         return name;
@@ -134,6 +136,14 @@ public class Bill implements Serializable {
         this.stateOrder = stateOrder;
     }
 
+    public boolean isEvaluate() {
+        return evaluate;
+    }
+
+    public void setEvaluate(boolean evaluate) {
+        this.evaluate = evaluate;
+    }
+
     public ArrayList<ItemFood> getItemFoodArrayList() {
         return itemFoodArrayList;
     }
@@ -141,4 +151,15 @@ public class Bill implements Serializable {
     public void setItemFoodArrayList(ArrayList<ItemFood> itemFoodArrayList) {
         this.itemFoodArrayList = itemFoodArrayList;
     }
+
+    public static Comparator<Bill> BillIdCompare = new Comparator<Bill>() {
+        // Comparing attributes of Bill
+        @Override
+        public int compare(Bill b1, Bill b2) {
+            String Bill1 = b1.getIdBill().toUpperCase();
+            String Bill2 = b2.getIdBill().toUpperCase();
+            return Bill1.compareTo(Bill2);
+        }
+
+    };
 }

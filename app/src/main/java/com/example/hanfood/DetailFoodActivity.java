@@ -40,7 +40,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     Toolbar toolbar;
     TextView titlePage;
     ImageView img_food, sub, add;
-    TextView tvPrice, tvName, tvDes, tvSl, tvQuantity, tvPriceSale, tvPercentSale;
+    TextView tvPrice, tvName, tvDes, tvSl, tvQuantity, tvPriceSale, tvPercentSale, tvQuantitySold, tvComment, tvRate;
     RecyclerView recyclerView_review;
     Button btAdd;
     FoodAdapter adapter;
@@ -49,10 +49,11 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     DatabaseReference myRef;
     private FirebaseUser auth;
     String name, idFood, des, img, idCate;
-    int quantity = 0;
+    int quantity = 0, quantitySold=0;
     double priceFoodSale = 0, percentSale = 0, price = 0;
     int totalQuantity = 0;
     double totalPrice = 0;
+    float rate = 0;
     ArrayList<Food> dsfoodall = new ArrayList<>();
 
     @Override
@@ -60,7 +61,6 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_food);
         initView();
-        displayDetailFood();
 
         setSupportActionBar(toolbar);
         Drawable drawable = getResources().getDrawable(R.drawable.ic_back);
@@ -75,50 +75,73 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
                 finish();
             }
         });
-        titlePage.setText(name);
+
+        idFood = getIntent().getStringExtra("idFood");
 
         sub.setOnClickListener(this);
         add.setOnClickListener(this);
         btAdd.setOnClickListener(this);
+        tvComment.setOnClickListener(this);
 
-        displayListFood();
+        getInforFood(); //hien thong tin chi tiet mon an
+        displayListFood(); //hien listfood goi y
     }
 
-
-    private void displayDetailFood() {
-        idFood = getIntent().getStringExtra("idFood");
-        name = getIntent().getStringExtra("nameFood");
-        price = getIntent().getDoubleExtra("priceFood", 22);
-        priceFoodSale = getIntent().getDoubleExtra("priceFoodSale", 22);
-        percentSale = getIntent().getDoubleExtra("percentSale", 22);
-        des = getIntent().getStringExtra("desFood");
-        img = getIntent().getStringExtra("imageFood");
-        idCate = getIntent().getStringExtra("idCate");
-        quantity = getIntent().getIntExtra("quantityFood", 22);
-        System.out.println(quantity);
+    private void getInforFood() {
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
 
-        tvName.setText(name);
-        if (percentSale == 0) {
-            tvPrice.setVisibility(View.GONE);
-            tvPercentSale.setVisibility(View.GONE);
-            tvPriceSale.setText(decimalFormat.format(price) + " VNĐ");
-        } else {
-            tvPercentSale.setText("Giảm " + decimalFormat.format(percentSale) + "%");
-            tvPrice.setText(decimalFormat.format(price) + " VNĐ");
-            tvPriceSale.setText(decimalFormat.format(priceFoodSale) + " VNĐ");
-            tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //gach ngang chu
+        myFood = FirebaseDatabase.getInstance().getReference("Food");
+        myFood.child("").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Food food = data.getValue(Food.class);
+                    if (food.getIdFood().equalsIgnoreCase(idFood)) {
+                        name = food.getNameFood();
+                        price = food.getPriceFood();
+                        percentSale = food.getPercentSale();
+                        des = food.getDesFood();
+                        img = food.getImageFood();
+                        idCate = food.getIdCate();
+                        quantity = food.getQuantityFood();
+                        rate = food.getRate();
+                        quantitySold = food.getQuantityFoodSold();
+                    }
+                    priceFoodSale = price - percentSale * price / 100;
 
-        }
-        tvDes.setText(des);
-        if (quantity > 0) {
-            tvQuantity.setVisibility(View.GONE);
-        } else {
-            tvQuantity.setText("SOLD OUT!");
-            tvQuantity.setTextColor(Color.RED);
-        }
-        Picasso.get().load(img).into(img_food);
+                    titlePage.setText(name);
+                    tvName.setText(name);
+                    if (percentSale == 0) {
+                        tvPrice.setVisibility(View.GONE);
+                        tvPercentSale.setVisibility(View.GONE);
+                        tvPriceSale.setText(decimalFormat.format(price) + " VNĐ");
+                    } else {
+                        tvPercentSale.setText("Giảm " + decimalFormat.format(percentSale) + "%");
+                        tvPrice.setText(decimalFormat.format(price) + " VNĐ");
+                        tvPriceSale.setText(decimalFormat.format(priceFoodSale) + " VNĐ");
+                        tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //gach ngang chu
+
+                    }
+                    tvDes.setText(des);
+                    if (quantity > 0) {
+                        tvQuantity.setVisibility(View.GONE);
+                    } else {
+                        tvQuantity.setText("SOLD OUT!");
+                        tvQuantity.setTextColor(Color.RED);
+                    }
+                    Picasso.get().load(img).into(img_food);
+                    tvRate.setText(String.valueOf(rate));
+                    tvQuantitySold.setText(quantitySold + " đã bán");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DetailFoodActivity.this, "No Data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void displayListFood() {
@@ -126,7 +149,6 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         recyclerView_review.setLayoutManager(manager);
         adapter = new FoodAdapter(dataFood, DetailFoodActivity.this);
 
-        myFood = FirebaseDatabase.getInstance().getReference("Food");
         myFood.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -155,14 +177,22 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
             if (totalQuantity > 0) {
                 totalQuantity--;
                 tvSl.setText(String.valueOf(totalQuantity));
-                totalPrice = price * totalQuantity;
+                if (percentSale == 0){
+                    totalPrice = price * totalQuantity;
+                }else {
+                    totalPrice = priceFoodSale * totalQuantity;
+                }
             }
         }
         if (view == add) {
             if (totalQuantity < 10) {
                 totalQuantity++;
                 tvSl.setText(String.valueOf(totalQuantity));
-                totalPrice = price * totalQuantity;
+                if (percentSale == 0){
+                    totalPrice = price * totalQuantity;
+                }else {
+                    totalPrice = priceFoodSale * totalQuantity;
+                }
             }
         }
         if (view == btAdd) {
@@ -173,14 +203,14 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
                 Toast.makeText(this, "Vui lòng chọn số lượng sản phẩm!", Toast.LENGTH_SHORT).show();
             }
         }
+        if (view == tvComment) {
+            Intent i = new Intent(DetailFoodActivity.this, CommentActivity.class);
+            i.putExtra("idFood", idFood);
+            startActivity(i);
+        }
     }
 
     private void addToCart() {
-//        if(auth!=null){
-//            Intent is = new Intent(this, MainActivity.class);
-//            startActivity(is);
-//        }
-
         final HashMap<String, Object> itemFood = new HashMap<>();
         itemFood.put("idFood", idFood);
         itemFood.put("productImg", img);
@@ -189,7 +219,8 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         itemFood.put("productPriceSalse", priceFoodSale);
         itemFood.put("totalQuantity", Integer.parseInt(tvSl.getText().toString()));
         itemFood.put("totalPrice", totalPrice);
-        myRef.child(name).updateChildren(itemFood)
+        itemFood.put("evaluate", false);
+        myRef.child(idFood).updateChildren(itemFood)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -217,6 +248,9 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         add = findViewById(R.id.add);
         tvSl = findViewById(R.id.tvSl);
         tvQuantity = findViewById(R.id.tvQuantity);
+        tvQuantitySold = findViewById(R.id.tvQuantitySold);
+        tvComment = findViewById(R.id.tvComment);
+        tvRate = findViewById(R.id.tvRate);
         recyclerView_review = findViewById(R.id.recycleView_review);
 
         auth = FirebaseAuth.getInstance().getCurrentUser();

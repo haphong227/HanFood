@@ -75,9 +75,9 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
                 double totalAmount = 0;
                 cartArrayList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    ItemFood cart = data.getValue(ItemFood.class);
-                    cartArrayList.add(cart);
-                    totalAmount += cart.getTotalPrice();
+                    ItemFood itemFood = data.getValue(ItemFood.class);
+                    cartArrayList.add(itemFood);
+                    totalAmount += itemFood.getTotalPrice();
                 }
                 total = totalAmount;
                 cartAdapter = new ItemFoodCartAdapter(cartArrayList, getContext());

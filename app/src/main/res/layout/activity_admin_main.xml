@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#fff"
+        android:background="@color/blue"
         android:elevation="10dp">
 
         <TextView
@@ -19,7 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textColor="#000"
+            android:layout_marginTop="7dp"
+            android:textColor="#fff"
             android:textSize="@dimen/tiltleToolbar"
             app:itemIconTint="@color/navigation"
             app:itemTextColor="@color/navigation" />

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context=".EvaluateActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/blue"
+        android:elevation="10dp">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Đánh giá món ăn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tiltleToolbar" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/rcv_evaluate"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imgFood"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hanfood_intro" />
+
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/imgFood"
+            android:lines="1"
+            android:text="Nem nướng Nha Trang"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgFood"
+            android:layout_marginTop="10dp"
+            android:text="Chất lượng sản phẩm"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgFood"
+            android:layout_toRightOf="@id/tvRate"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressTint="#FFC107"
+            android:rating="5"
+            android:stepSize="1" />
+
+        <EditText
+            android:id="@+id/edComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvRate"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_comment"
+            android:gravity="top"
+            android:hint="Bạn hãy nhận xét về món ăn này!"
+            android:lines="10" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/blue"
+        android:text="Gửi"
+        android:textColor="@color/white" />
+
+</LinearLayout>

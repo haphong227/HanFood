@@ -10,12 +10,14 @@ public class Food implements Serializable {
     private String nameFood;
     private double priceFood;
     private double percentSale;
+    private float rate;
     private int quantityFood;
+    private int quantityFoodSold;
 
     public Food() {
     }
 
-    public Food(String desFood, String idFood, String idCate, String imageFood, String nameFood, double priceFood, double percentSale, int quantityFood) {
+    public Food(String desFood, String idFood, String idCate, String imageFood, String nameFood, double priceFood, double percentSale, float rate, int quantityFood, int quantityFoodSold) {
         this.desFood = desFood;
         this.idFood = idFood;
         this.idCate = idCate;
@@ -23,7 +25,9 @@ public class Food implements Serializable {
         this.nameFood = nameFood;
         this.priceFood = priceFood;
         this.percentSale = percentSale;
+        this.rate = rate;
         this.quantityFood = quantityFood;
+        this.quantityFoodSold = quantityFoodSold;
     }
 
     public String getDesFood() {
@@ -88,5 +92,21 @@ public class Food implements Serializable {
 
     public void setQuantityFood(int quantityFood) {
         this.quantityFood = quantityFood;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    public int getQuantityFoodSold() {
+        return quantityFoodSold;
+    }
+
+    public void setQuantityFoodSold(int quantityFoodSold) {
+        this.quantityFoodSold = quantityFoodSold;
     }
 }

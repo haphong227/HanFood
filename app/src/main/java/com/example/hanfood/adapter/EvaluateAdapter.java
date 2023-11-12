@@ -6,12 +6,16 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hanfood.EditEvaluateActivity;
 import com.example.hanfood.EvaluateActivity;
 import com.example.hanfood.R;
 import com.example.hanfood.model.ItemFood;
@@ -22,11 +26,12 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeViewHolder> {
+public class EvaluateAdapter extends RecyclerView.Adapter<EvaluateAdapter.HomeViewHolder> {
     private List<ItemFood> list;
     Context context;
+    private float rate = 0;
 
-    public ListFoodAdapter(List<ItemFood> list, Context context) {
+    public EvaluateAdapter(List<ItemFood> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -34,7 +39,7 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
     @NonNull
     @Override
     public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_evaluate, parent, false);
         return new HomeViewHolder(view);
     }
 
@@ -46,8 +51,6 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
         ItemFood itemFood = list.get(position);
         holder.tvName.setText(itemFood.getProductName());
         holder.tvQuantity.setText(itemFood.getTotalQuantity() + "x   ");
-//        holder.tvPrice.setText(decimalFormat.format(cart.getTotalPrice()) + " VNĐ");
-//        holder.tvPriceSale.setText(decimalFormat.format(cart.getProductPriceSalse()) + " VNĐ");
 
         if (itemFood.getProductPriceSalse() < itemFood.getProductPrice()) {
             holder.tvPrice.setText(decimalFormat.format(itemFood.getProductPrice()) + " VNĐ");
@@ -62,14 +65,19 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
         Picasso.get().load(itemFood.getProductImg())
                 .into(holder.imgFood);
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(context, EvaluateActivity.class);
-//                i.putExtra("idFood", itemFood.getIdFood());
-//                context.startActivity(i);
-//            }
-//        });
+        if (itemFood.isEvaluate()==false){
+            holder.btRate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, EvaluateActivity.class);
+                    i.putExtra("idFood", itemFood.getIdFood());
+                    i.putExtra("position", position);
+                    context.startActivity(i);
+                }
+            });
+        }
+        else holder.btRate.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -80,6 +88,7 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
     public class HomeViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvQuantity, tvPrice, tvPriceSale;
         ImageView imgFood;
+        Button btRate;
 
         public HomeViewHolder(@NonNull View view) {
             super(view);
@@ -88,8 +97,8 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
             tvPrice = view.findViewById(R.id.tvPrice);
             tvPriceSale = view.findViewById(R.id.tvPriceSale);
             imgFood = view.findViewById(R.id.imgFood);
+            btRate = view.findViewById(R.id.btRate);
         }
-
     }
 
 }

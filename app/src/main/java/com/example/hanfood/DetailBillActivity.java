@@ -6,15 +6,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.hanfood.adapter.EvaluateAdapter;
 import com.example.hanfood.adapter.ListFoodAdapter;
 import com.example.hanfood.model.Bill;
+import com.example.hanfood.model.ItemFood;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,17 +31,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
-public class DetailBillActivity extends AppCompatActivity {
+public class DetailBillActivity extends AppCompatActivity{
     Toolbar toolbar;
     TextView tvAddress, tvidBill, tvDate, tvPrice, tvName, tvPhone, tvTmpPrice, tvShip, tvQuantityFood, tvNote;
     ImageView imgNote;
     RecyclerView recyclerView;
-    ListFoodAdapter cartAdapter;
+    EvaluateAdapter evaluateAdapter;
     DatabaseReference myRef;
     FirebaseUser auth;
-    String address, idBill, idOrder, date, name, phone, note;
+    String address, idBill, date, name, phone, note;
+    ArrayList<ItemFood> itemFoodArrayList = new ArrayList<>();
+    boolean evaluate;
     double price;
 
     @Override
@@ -53,12 +63,16 @@ public class DetailBillActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(DetailBillActivity.this, HistoryOrderActivity.class));
             }
         });
 
-        idBill = getIntent().getStringExtra("id");
+        idBill = getIntent().getStringExtra("idBill");
 
+        displayDetailBill();
+    }
+
+    private void displayDetailBill() {
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
 
@@ -73,16 +87,20 @@ public class DetailBillActivity extends AppCompatActivity {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
                     if (bill.getIdBill().equalsIgnoreCase(idBill)) {
-                        date = bill.getCurrentDate() + " " + bill.getCurrentTime();
+                        date = bill.getCurrentTime() + " " + bill.getCurrentDate();
                         address = bill.getAddress();
                         price = bill.getPrice();
                         name = bill.getName();
                         phone = bill.getPhone();
                         note = bill.getNote();
-                        cartAdapter = new ListFoodAdapter(bill.getItemFoodArrayList(), DetailBillActivity.this);
-                        tvQuantityFood.setText("Tạm tính (" + bill.getItemFoodArrayList().size() + " món)");
+                        evaluate = bill.isEvaluate();
+                        itemFoodArrayList = bill.getItemFoodArrayList();
                     }
                 }
+                evaluateAdapter = new EvaluateAdapter(itemFoodArrayList, DetailBillActivity.this);
+                recyclerView.setAdapter(evaluateAdapter);
+                recyclerView.setHasFixedSize(true);
+
                 tvDate.setText(date);
                 tvName.setText(name);
                 tvPhone.setText(phone);
@@ -90,15 +108,14 @@ public class DetailBillActivity extends AppCompatActivity {
                 tvPrice.setText(decimalFormat.format(price) + " VNĐ");
                 tvTmpPrice.setText(decimalFormat.format(price) + " VNĐ");
                 tvidBill.setText(idBill);
+                tvQuantityFood.setText("Tạm tính (" + itemFoodArrayList.size() + " món)");
 
-                if (note.equalsIgnoreCase("")){
+                if (note.equalsIgnoreCase("")) {
                     tvNote.setVisibility(View.GONE);
                     imgNote.setVisibility(View.GONE);
-                }else {
+                } else {
                     tvNote.setText(note);
                 }
-                recyclerView.setAdapter(cartAdapter);
-                recyclerView.setHasFixedSize(true);
             }
 
             @Override
@@ -107,6 +124,7 @@ public class DetailBillActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
@@ -124,4 +142,6 @@ public class DetailBillActivity extends AppCompatActivity {
         tvNote = findViewById(R.id.tvNote);
         imgNote = findViewById(R.id.note);
     }
+
+
 }

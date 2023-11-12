@@ -2,6 +2,7 @@ package com.example.hanfood.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
         decimalFormat.applyPattern("#,###,###,###");
         Food food = list.get(position);
         holder.txtName.setText(food.getNameFood());
+        holder.tvRate.setText(String.valueOf(food.getRate()));
+        holder.tvQuantitySold.setText(String.valueOf(food.getQuantityFoodSold()) + " đã bán");
 
         price = decimalFormat.format(food.getPriceFood()) + " VNĐ";
         double priceFood = food.getPriceFood();
@@ -65,25 +68,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
         } else {
             holder.txtPrice.setText(price);
             holder.txtPrice.setPaintFlags(holder.txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //gach ngang chu
-            holder.txtpriceSale.setText(priceFoodSale);
+            holder.txtpriceSale.setText(priceFoodSale + " VNĐ");
             holder.percentSale.setText("Giảm " + decimalFormat.format(food.getPercentSale()) + "%");
         }
 
-        Picasso.get().load(food.getImageFood())
-                .into(holder.img);
+        Picasso.get().load(food.getImageFood()).into(holder.img);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailFoodActivity.class);
-                i.putExtra("nameFood", food.getNameFood());
                 i.putExtra("idFood", food.getIdFood());
-                i.putExtra("desFood", food.getDesFood());
-                i.putExtra("priceFood", food.getPriceFood());
-                i.putExtra("priceFoodSale", priceSale);
-                i.putExtra("percentSale", food.getPercentSale());
-                i.putExtra("imageFood", food.getImageFood());
-                i.putExtra("idCate", food.getIdCate());
-                i.putExtra("quantityFood", food.getQuantityFood());
                 context.startActivity(i);
             }
         });
@@ -96,7 +90,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txtName, txtPrice, txtpriceSale, percentSale;
+        TextView txtName, txtPrice, txtpriceSale, percentSale, tvRate, tvQuantitySold;
         CardView cardView;
 
         public HomeViewHolder(@NonNull View view) {
@@ -106,6 +100,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
             txtPrice = view.findViewById(R.id.txtprice);
             txtpriceSale = view.findViewById(R.id.txtpriceSale);
             percentSale = view.findViewById(R.id.percentSale);
+            tvRate = view.findViewById(R.id.tvRate);
+            tvQuantitySold = view.findViewById(R.id.tvQuantitySold);
             cardView = view.findViewById(R.id.cardView);
         }
     }

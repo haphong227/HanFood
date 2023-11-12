@@ -16,6 +16,15 @@
         android:theme="@style/Theme.HanFood"
         tools:targetApi="31">
         <activity
+            android:name=".EditEvaluateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EvaluateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommentActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditAddressActivity"
             android:exported="false" />
         <!--

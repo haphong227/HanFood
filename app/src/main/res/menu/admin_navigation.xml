@@ -10,8 +10,8 @@
         app:cnb_textColor="@color/white"/>
     <item
         android:id="@+id/mFood"
-        android:title="Món ăn"
-        android:icon="@drawable/icon_cart"
+        android:title="Đơn hàng"
+        android:icon="@drawable/icon_order"
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"
         app:cnb_textColor="@color/white"/>

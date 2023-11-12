@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,7 @@ public class HistoryOrderActivity extends AppCompatActivity {
     ArrayList<Bill> billArrayList = new ArrayList<>();
     private FirebaseUser auth;
     private DatabaseReference myBill;
+    private  int quantityFoodSold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

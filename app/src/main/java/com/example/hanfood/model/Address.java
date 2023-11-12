@@ -3,11 +3,11 @@ package com.example.hanfood.model;
 import java.io.Serializable;
 
 public class Address implements Serializable {
-    String idUser;
-    String idAddress;
-    String nameUser;
-    String phoneNumber;
-    String address;
+    private String idUser;
+    private String idAddress;
+    private String nameUser;
+    private String phoneNumber;
+    private String address;
 
     public Address() {
     }

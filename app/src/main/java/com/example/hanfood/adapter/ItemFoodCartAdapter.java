@@ -154,7 +154,7 @@ public class ItemFoodCartAdapter extends RecyclerView.Adapter<ItemFoodCartAdapte
     }
 
     private void saveData(int position) {
-        double price;
+        double price=0;
         if (list.get(position).getProductPrice() > list.get(position).getProductPriceSalse()) {
             price = list.get(position).getProductPriceSalse();
         } else price = list.get(position).getProductPrice();

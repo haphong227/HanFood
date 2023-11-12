@@ -56,7 +56,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     int tongSl = 0;
     private static final String TAG = "Bill";
     String randomKey = "";
-    String  idAddress, nameUser, phoneNumber, address2;
+    String idAddress, nameUser, phoneNumber, address2;
     DecimalFormat decimalFormat;
 
     @Override
@@ -84,8 +84,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         address = getIntent().getStringExtra("address");
 
-        tvName.setText(nameUser );
-        if (phoneNumber!= null) tvPhone.setText(" | " + phoneNumber);
+        tvName.setText(nameUser);
+        if (phoneNumber != null) tvPhone.setText(" | " + phoneNumber);
         tvAddress.setText(address);
         address2 = tvAddress.getText().toString();
 
@@ -93,34 +93,11 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         decimalFormat.applyPattern("#,###,###,###");
 
         displayCart();
-//        getInforUser();
 
         btPay.setOnClickListener(this);
         tvChangeAddress.setOnClickListener(this);
     }
 
-//    private void getInforUser() {
-//        myUser.child("").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-//                    User user = dataSnapshot1.getValue(User.class);
-//                    if (user.getIdUser().equalsIgnoreCase(auth.getUid())) {
-//                        email = user.getEmail();
-//                        phone = user.getPhone();
-//                        name = user.getName();
-//                    }
-//                }
-//                Log.i("id", auth.getUid());
-//                Log.i("địa chỉ", "" + snapshot.child("address").getValue());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     private void displayCart() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PaymentActivity.this, LinearLayoutManager.VERTICAL, false);
@@ -192,12 +169,14 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 bill.put("currentDate", savecurrentDate);
                 bill.put("address", address);
                 bill.put("name", nameUser);
+                bill.put("email", auth.getEmail());
                 bill.put("note", note);
                 bill.put("phone", phoneNumber);
                 bill.put("quantity", tongSl);
                 bill.put("itemFoodArrayList", itemFoodArrayList);
                 bill.put("price", total);
                 bill.put("stateOrder", "Đã xác nhận");
+                bill.put("evaluate", false);
                 myBill = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
                 myBill.child(TAG + randomKey).updateChildren(bill)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -216,6 +195,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                                 int newQuantity = Integer.parseInt(quantity) - itemFood.getTotalQuantity();
                                                 HashMap<String, Object> food = new HashMap<>();
                                                 food.put("quantityFood", newQuantity);
+                                                myFood = FirebaseDatabase.getInstance().getReference().child("Food").child(idFood);
                                                 myFood.updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {

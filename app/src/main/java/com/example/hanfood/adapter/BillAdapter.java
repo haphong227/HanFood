@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hanfood.DetailBillActivity;
 import com.example.hanfood.R;
 import com.example.hanfood.model.Bill;
+import com.example.hanfood.model.ItemFood;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -24,7 +25,8 @@ import java.util.Locale;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder> {
     private ArrayList<Bill> list;
     Context context;
-    String state = "";
+    private String state = "", listFood = "";
+
 
     public BillAdapter(ArrayList<Bill> list, Context context) {
         this.list = list;
@@ -46,23 +48,38 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
 
         Bill bill = list.get(position);
         state = bill.getStateOrder();
-//        if (state.equalsIgnoreCase("Đã xác nhận")){
-//        holder.tvStateOrder.setText(state.toUpperCase());
-//            holder.tvStateOrder.setTextColor(R.color.teal_700);
-//        }
         holder.tvStateOrder.setText(state);
         holder.tvIdBill.setText(String.valueOf(bill.getIdBill()));
-        holder.tvQuantity.setText(String.valueOf(bill.getQuantity() + " món"));
-        holder.tvPrice.setText("Tổng tiền: " + decimalFormat.format(bill.getPrice()) + " VNĐ");
+        holder.tvPrice.setText(decimalFormat.format(bill.getPrice()) + " VNĐ");
         holder.tvTime.setText(bill.getCurrentDate() + " " + bill.getCurrentTime());
+        holder.tvName.setText(bill.getName());
+        holder.tvPhone.setText(bill.getPhone());
+        holder.tvAddress.setText(bill.getAddress());
+
+        //hien thi danh sach mon an
+        for (ItemFood itemFood : bill.getItemFoodArrayList()) {
+            String name = itemFood.getProductName();
+            double price = itemFood.getProductPriceSalse();
+            int quantity = itemFood.getTotalQuantity();
+            listFood = listFood + name + " (" + decimalFormat.format(price) + " VNĐ)" + " - số lượng " + quantity + "\n";
+        }
+        holder.tvListFood.setText(listFood);
+        listFood = "";
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailBillActivity.class);
-                i.putExtra("id", bill.getIdBill());
+                i.putExtra("idBill", bill.getIdBill());
                 context.startActivity(i);
             }
         });
+
+        if (bill.isEvaluate()==true){
+            holder.cardView.setBackgroundColor(0xFFECF2F8);
+        }else {
+            holder.cardView.setBackgroundColor(0xFFFFFFFF);
+        }
     }
 
     @Override
@@ -71,17 +88,20 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
-        TextView tvQuantity, tvPrice, tvTime, tvStateOrder, tvIdBill;
+        TextView tvPrice, tvTime, tvStateOrder, tvIdBill, tvName, tvPhone, tvAddress, tvListFood;
         CardView cardView;
 
         public HomeViewHolder(@NonNull View view) {
             super(view);
             tvIdBill = view.findViewById(R.id.tvIdBill);
-            tvQuantity = view.findViewById(R.id.tvQuantity);
             tvPrice = view.findViewById(R.id.tvPrice);
             tvTime = view.findViewById(R.id.tvTime);
             cardView = view.findViewById(R.id.card_view);
             tvStateOrder = view.findViewById(R.id.tvStateOrder);
+            tvName = view.findViewById(R.id.tvName);
+            tvPhone = view.findViewById(R.id.tvPhone);
+            tvAddress = view.findViewById(R.id.tvAddress);
+            tvListFood = view.findViewById(R.id.tvListFood);
         }
     }
 }
