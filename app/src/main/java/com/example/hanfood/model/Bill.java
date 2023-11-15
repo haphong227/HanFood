@@ -10,6 +10,7 @@ public class Bill implements Serializable {
     private String CurrentDate;
     private String email;
     private String idBill;
+    private String idOrder;
     private String idUser;
     private String name;
     private String note;
@@ -17,18 +18,18 @@ public class Bill implements Serializable {
     private double price;
     private int quantity;
     private String stateOrder;
-    private boolean evaluate;
     private ArrayList<ItemFood> itemFoodArrayList;
 
     public Bill() {
     }
 
-    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idUser, String name, String note, String phone, double price, int quantity, String stateOrder, boolean evaluate, ArrayList<ItemFood> itemFoodArrayList) {
+    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idOrder, String idUser, String name, String note, String phone, double price, int quantity, String stateOrder, ArrayList<ItemFood> itemFoodArrayList) {
         this.address = address;
         CurrentTime = currentTime;
         CurrentDate = currentDate;
         this.email = email;
         this.idBill = idBill;
+        this.idOrder = idOrder;
         this.idUser = idUser;
         this.name = name;
         this.note = note;
@@ -36,9 +37,9 @@ public class Bill implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.stateOrder = stateOrder;
-        this.evaluate = evaluate;
         this.itemFoodArrayList = itemFoodArrayList;
     }
+
 
     public String getName() {
         return name;
@@ -120,6 +121,14 @@ public class Bill implements Serializable {
         this.idUser = idUser;
     }
 
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -136,13 +145,6 @@ public class Bill implements Serializable {
         this.stateOrder = stateOrder;
     }
 
-    public boolean isEvaluate() {
-        return evaluate;
-    }
-
-    public void setEvaluate(boolean evaluate) {
-        this.evaluate = evaluate;
-    }
 
     public ArrayList<ItemFood> getItemFoodArrayList() {
         return itemFoodArrayList;

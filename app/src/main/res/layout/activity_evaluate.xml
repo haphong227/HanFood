@@ -74,7 +74,6 @@
             android:isIndicator="false"
             android:numStars="5"
             android:progressTint="#FFC107"
-            android:rating="5"
             android:stepSize="1" />
 
         <EditText
@@ -86,7 +85,7 @@
             android:background="@drawable/bg_comment"
             android:gravity="top"
             android:hint="Bạn hãy nhận xét về món ăn này!"
-            android:lines="10" />
+            android:lines="5" />
     </RelativeLayout>
 
 

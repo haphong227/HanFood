@@ -50,6 +50,11 @@
             android:text="Tìm kiếm"
             android:textColor="@color/white" />
 
+        <Spinner
+            android:id="@+id/spSearch"
+            android:layout_below="@+id/eSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
     <!--    <ScrollView-->
     <!--        android:layout_width="match_parent"-->

@@ -3,13 +3,9 @@ package com.example.hanfood;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,16 +14,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hanfood.adapter.EvaluateAdapter;
-import com.example.hanfood.adapter.ItemFoodCartAdapter;
-import com.example.hanfood.adapter.ListFoodAdapter;
 import com.example.hanfood.model.Bill;
 import com.example.hanfood.model.Comment;
 import com.example.hanfood.model.Food;
 import com.example.hanfood.model.ItemFood;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,23 +35,19 @@ import java.util.HashMap;
 
 public class EvaluateActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
-    RecyclerView rcv_evaluate;
 
     TextView tvName;
     EditText edComment;
     ImageView imgFood;
     RatingBar ratingBar;
     Button btSend;
-    EvaluateAdapter evaluateAdapter;
-    ArrayList<ItemFood> itemFoodArrayList;
     ArrayList<Comment> commentArrayList;
     FirebaseUser auth;
-    DatabaseReference myRef, myCmt, myFood;
-    String idBill = "", idFood = "";
+    DatabaseReference myRef, myCmt;
+    String idOrder = "", idFood = "";
     String img, name, content;
     String TAG = "Comment";
     float rate = 0, avgRate = 0;
-    int position=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +55,8 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_evaluate);
         initView();
 
-        idBill = getIntent().getStringExtra("idBill");
+        idOrder = getIntent().getStringExtra("idOrder");
         idFood = getIntent().getStringExtra("idFood");
-        position = getIntent().getIntExtra("position", 2);
-        System.out.println(position);
 
         setSupportActionBar(toolbar);
         Drawable drawable = getResources().getDrawable(R.drawable.ic_back);
@@ -128,37 +113,42 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if (view == btSend) {
-            String saveCurrentTime, savecurrentDate, savecurrentDate2, randomKey;
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
-            savecurrentDate = curDate.format(c.getTime());
-            SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
-            saveCurrentTime = curTime.format(c.getTime());
-            SimpleDateFormat curDate2 = new SimpleDateFormat("yyyy-MM-dd");
-            savecurrentDate2 = curDate2.format(c.getTime());
-            randomKey = savecurrentDate2 + "-" + saveCurrentTime;
+            if (rate == 0 || edComment.getText().toString().trim().equalsIgnoreCase("")) {
+                Toast.makeText(this, "Vui lòng điền đủ thông tin để đánh giá!", Toast.LENGTH_SHORT).show();
+            } else {
+                String saveCurrentTime, savecurrentDate, savecurrentDate2, randomKey;
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+                savecurrentDate = curDate.format(c.getTime());
+                SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
+                saveCurrentTime = curTime.format(c.getTime());
+                SimpleDateFormat curDate2 = new SimpleDateFormat("yyyy-MM-dd");
+                savecurrentDate2 = curDate2.format(c.getTime());
+                randomKey = savecurrentDate2 + "-" + saveCurrentTime;
 
-            HashMap<String, Object> commnent = new HashMap<>();
-            commnent.put("idComment", TAG + randomKey);
-            commnent.put("idUser", auth.getUid());
-            commnent.put("idFood", idFood);
-            commnent.put("content", edComment.getText().toString());
-            commnent.put("currentTime", saveCurrentTime);
-            commnent.put("currentDate", savecurrentDate);
-            commnent.put("rate", rate);
-            myCmt = FirebaseDatabase.getInstance().getReference("Comment/" + idFood);
-            myCmt.child(TAG + randomKey).updateChildren(commnent).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(EvaluateActivity.this, "Bạn đã đánh giá sản phẩm!", Toast.LENGTH_SHORT).show();
-                    updateRateFood();
-                    updateEvaluate();
-                    finish();
-                }
-            });
+                HashMap<String, Object> commnent = new HashMap<>();
+                commnent.put("idComment", TAG + randomKey);
+                commnent.put("idUser", auth.getUid());
+                commnent.put("idFood", idFood);
+                commnent.put("content", edComment.getText().toString());
+                commnent.put("currentTime", saveCurrentTime);
+                commnent.put("currentDate", savecurrentDate);
+                commnent.put("rate", rate);
+                myCmt = FirebaseDatabase.getInstance().getReference("Comment/" + idFood);
+                myCmt.child(TAG + randomKey).updateChildren(commnent).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(EvaluateActivity.this, "Bạn đã đánh giá món ăn!", Toast.LENGTH_SHORT).show();
+                        updateRateFood();
+                        updateEvaluate();
+                        finish();
+                    }
+                });
+            }
         }
     }
 
+    //cap nhat so sao cua mon an sau khi danh gia
     private void updateRateFood() {
         myCmt = FirebaseDatabase.getInstance().getReference("Comment/" + idFood);
         myCmt.child("").addValueEventListener(new ValueEventListener() {
@@ -196,33 +186,25 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    //cap nhat trang thai cho san pham trong bill khi da danh gia
     private void updateEvaluate() {
         myRef = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
-        myRef.child("").addValueEventListener(new ValueEventListener() {
+        myRef.child("").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                itemFoodArrayList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
-                    if (bill.getIdBill().equalsIgnoreCase(idBill)) {
-                        itemFoodArrayList = bill.getItemFoodArrayList();
-                        System.out.println(bill.getItemFoodArrayList().size());
-                    }
-                }
-                for (ItemFood itemFood : itemFoodArrayList) {
-                    String idFood = itemFood.getIdFood();
-                    HashMap<String, Object> food = new HashMap<>();
-                    food.put("evaluate", true);
-                    myRef = FirebaseDatabase.getInstance().getReference().child("Bill/" + auth.getUid() +"/"+idBill +"/itemFoodArrayList");
-                    myRef.child(String.valueOf(position)).updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                System.out.println("Đã đánh giá món ăn");
+                    if (bill.getIdOrder().equalsIgnoreCase(idOrder)) {
+                        for (ItemFood itemFood : bill.getItemFoodArrayList()) {
+                            //danh gia thanh cong -> setEvaluate true
+                            if (itemFood.getIdFood().equalsIgnoreCase(idFood)) {
+                                itemFood.setEvaluate(true);
+                                myRef.child(idOrder).setValue(bill);
                             }
                         }
-                    });
+                    }
                 }
+
             }
 
             @Override

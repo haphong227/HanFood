@@ -194,7 +194,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ho
         HashMap<String, Object> bill1 = new HashMap<>();
         bill1.put("stateOrder", "Đã xác nhận");
         myRef = FirebaseDatabase.getInstance().getReference("Bill/" + list.get(position).getIdUser());
-        myRef.child(list.get(position).getIdBill()).updateChildren(bill1).addOnCompleteListener(new OnCompleteListener<Void>() {
+        myRef.child(list.get(position).getIdOrder()).updateChildren(bill1).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -209,7 +209,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ho
         bill1.put("stateOrder", "Đã giao thành công");
 
         myRef = FirebaseDatabase.getInstance().getReference("Bill/" + list.get(position).getIdUser());
-        myRef.child(list.get(position).getIdBill()).updateChildren(bill1).addOnCompleteListener(new OnCompleteListener<Void>() {
+        myRef.child(list.get(position).getIdOrder()).updateChildren(bill1).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

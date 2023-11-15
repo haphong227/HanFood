@@ -75,11 +75,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
             }
         });
 
-        if (bill.isEvaluate()==true){
-            holder.cardView.setBackgroundColor(0xFFECF2F8);
-        }else {
-            holder.cardView.setBackgroundColor(0xFFFFFFFF);
-        }
     }
 
     @Override

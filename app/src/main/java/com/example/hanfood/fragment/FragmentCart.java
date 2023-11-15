@@ -19,6 +19,8 @@ import com.example.hanfood.PaymentActivity;
 import com.example.hanfood.R;
 import com.example.hanfood.adapter.ItemFoodCartAdapter;
 import com.example.hanfood.model.ItemFood;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class FragmentCart extends Fragment implements View.OnClickListener {
@@ -96,9 +99,28 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == btBuy) {
+            String TAG = "Order";
+            String saveCurrentTime, savecurrentDate, randomKey;
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
+            saveCurrentTime = curTime.format(c.getTime());
+            SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
+            savecurrentDate = curDate.format(c.getTime());
+            randomKey = savecurrentDate + "-" + saveCurrentTime;
+
             if (total > 0) {
-                Intent i = new Intent(getContext(), PaymentActivity.class);
-                startActivity(i);
+                HashMap<String, Object> itemFood = new HashMap<>();
+                itemFood.put("idOrder", TAG + randomKey);
+                for (ItemFood food : cartArrayList) {
+                    myRef = FirebaseDatabase.getInstance().getReference("ItemFood/" + auth.getUid());
+                    myRef.child(food.getIdFood()).updateChildren(itemFood).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent i = new Intent(getContext(), PaymentActivity.class);
+                            startActivity(i);
+                        }
+                    });
+                }
             } else {
                 Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
             }

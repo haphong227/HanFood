@@ -47,7 +47,7 @@ public class HistoryOrderActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(HistoryOrderActivity.this,MainActivity.class));
+                startActivity(new Intent(HistoryOrderActivity.this,MainActivity.class));
                 finish();
             }
         });

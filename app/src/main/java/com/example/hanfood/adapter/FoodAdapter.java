@@ -51,9 +51,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
+
+        final DecimalFormat decimalFormat2 = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        decimalFormat2.applyPattern("#.#");
+
         Food food = list.get(position);
         holder.txtName.setText(food.getNameFood());
-        holder.tvRate.setText(String.valueOf(food.getRate()));
+        holder.tvRate.setText(decimalFormat2.format(food.getRate()));
         holder.tvQuantitySold.setText(String.valueOf(food.getQuantityFoodSold()) + " đã bán");
 
         price = decimalFormat.format(food.getPriceFood()) + " VNĐ";

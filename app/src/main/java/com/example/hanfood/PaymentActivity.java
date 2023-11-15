@@ -55,7 +55,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     double total = 0;
     int tongSl = 0;
     private static final String TAG = "Bill";
-    String randomKey = "";
+    String randomKey = "", idOrder = "";
     String idAddress, nameUser, phoneNumber, address2;
     DecimalFormat decimalFormat;
 
@@ -83,6 +83,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         nameUser = getIntent().getStringExtra("nameUser");
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         address = getIntent().getStringExtra("address");
+//        idOrder = getIntent().getStringExtra("idOrder");
+//        System.out.println(idOrder);
 
         tvName.setText(nameUser);
         if (phoneNumber != null) tvPhone.setText(" | " + phoneNumber);
@@ -112,6 +114,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 itemFoodArrayList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     ItemFood itemFood = data.getValue(ItemFood.class);
+                    idOrder = itemFood.getIdOrder();
                     itemFoodArrayList.add(itemFood);
                     sl += itemFood.getTotalQuantity();
                     total += itemFood.getTotalPrice();
@@ -164,6 +167,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
                 HashMap<String, Object> bill = new HashMap<>();
                 bill.put("idBill", TAG + randomKey);
+                bill.put("idOrder", idOrder);
                 bill.put("idUser", auth.getUid());
                 bill.put("currentTime", saveCurrentTime);
                 bill.put("currentDate", savecurrentDate);
@@ -178,7 +182,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 bill.put("stateOrder", "Đã xác nhận");
                 bill.put("evaluate", false);
                 myBill = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
-                myBill.child(TAG + randomKey).updateChildren(bill)
+                System.out.println(idOrder);
+                myBill.child(idOrder).updateChildren(bill)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
 
                             @Override
@@ -234,7 +239,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                 removeCart();
 
                                 Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-//                                Intent i = new Intent(PaymentActivity.this, MainActivity.class);
+                                Intent i = new Intent(PaymentActivity.this, MainActivity.class);
+                                startActivity(i);
                                 finish();
                             }
                         });
@@ -242,7 +248,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
         }
         if (view == tvChangeAddress) {
-            startActivity(new Intent(PaymentActivity.this, AddressActivity.class));
+            Intent i = new Intent(PaymentActivity.this, AddressActivity.class);
+            startActivity(i);
         }
 
     }
@@ -263,6 +270,5 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         btPay = findViewById(R.id.btPay);
 
         myUser = FirebaseDatabase.getInstance().getReference("User");
-
     }
 }

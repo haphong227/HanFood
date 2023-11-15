@@ -121,7 +121,7 @@ public class AdminNewFoodActivity extends AppCompatActivity implements View.OnCl
 
     private void storeCategory() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
         saveCurDate = curDate.format(c.getTime());
         SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
         saveCurTime = curTime.format(c.getTime());
@@ -169,6 +169,7 @@ public class AdminNewFoodActivity extends AppCompatActivity implements View.OnCl
         food.put("priceFood", priceFood);
         food.put("percentSale", percent);
         food.put("quantityFood", sl);
+        food.put("quantityFoodSold", 0);
         food.put("imageFood", downloadImgUrl);
         myRef.child(TAG + randomKey).updateChildren(food)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ItemFood implements Serializable {
     private String idFood;
+    private String idOrder;
     private String productImg;
     private String productName;
     private double productPrice;
@@ -16,8 +17,9 @@ public class ItemFood implements Serializable {
     public ItemFood() {
     }
 
-    public ItemFood(String idFood, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity, boolean evaluate) {
+    public ItemFood(String idFood, String idOrder, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity, boolean evaluate) {
         this.idFood = idFood;
+        this.idOrder = idOrder;
         this.productImg = productImg;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -25,6 +27,14 @@ public class ItemFood implements Serializable {
         this.totalPrice = totalPrice;
         this.totalQuantity = totalQuantity;
         this.evaluate = evaluate;
+    }
+
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
     }
 
     public double getProductPriceSalse() {

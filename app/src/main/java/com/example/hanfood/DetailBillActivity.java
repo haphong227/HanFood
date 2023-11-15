@@ -45,7 +45,6 @@ public class DetailBillActivity extends AppCompatActivity{
     FirebaseUser auth;
     String address, idBill, date, name, phone, note;
     ArrayList<ItemFood> itemFoodArrayList = new ArrayList<>();
-    boolean evaluate;
     double price;
 
     @Override
@@ -70,6 +69,7 @@ public class DetailBillActivity extends AppCompatActivity{
         idBill = getIntent().getStringExtra("idBill");
 
         displayDetailBill();
+
     }
 
     private void displayDetailBill() {
@@ -93,7 +93,6 @@ public class DetailBillActivity extends AppCompatActivity{
                         name = bill.getName();
                         phone = bill.getPhone();
                         note = bill.getNote();
-                        evaluate = bill.isEvaluate();
                         itemFoodArrayList = bill.getItemFoodArrayList();
                     }
                 }

@@ -71,6 +71,7 @@ public class EvaluateAdapter extends RecyclerView.Adapter<EvaluateAdapter.HomeVi
                 public void onClick(View view) {
                     Intent i = new Intent(context, EvaluateActivity.class);
                     i.putExtra("idFood", itemFood.getIdFood());
+                    i.putExtra("idOrder", itemFood.getIdOrder());
                     i.putExtra("position", position);
                     context.startActivity(i);
                 }

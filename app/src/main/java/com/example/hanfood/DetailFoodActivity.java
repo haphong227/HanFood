@@ -32,7 +32,9 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -90,6 +92,8 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     private void getInforFood() {
         final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
+        final DecimalFormat decimalFormat2 = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        decimalFormat2.applyPattern("#.#");
 
         myFood = FirebaseDatabase.getInstance().getReference("Food");
         myFood.child("").addValueEventListener(new ValueEventListener() {
@@ -131,7 +135,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
                         tvQuantity.setTextColor(Color.RED);
                     }
                     Picasso.get().load(img).into(img_food);
-                    tvRate.setText(String.valueOf(rate));
+                    tvRate.setText(decimalFormat2.format(rate));
                     tvQuantitySold.setText(quantitySold + " đã bán");
                 }
 
@@ -211,6 +215,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void addToCart() {
+
         final HashMap<String, Object> itemFood = new HashMap<>();
         itemFood.put("idFood", idFood);
         itemFood.put("productImg", img);
