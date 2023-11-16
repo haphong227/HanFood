@@ -225,7 +225,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         itemFood.put("totalQuantity", Integer.parseInt(tvSl.getText().toString()));
         itemFood.put("totalPrice", totalPrice);
         itemFood.put("evaluate", false);
-        myRef.child(idFood).updateChildren(itemFood)
+        myRef.child(name).updateChildren(itemFood)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

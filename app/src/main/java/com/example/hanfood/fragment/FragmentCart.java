@@ -113,7 +113,7 @@ public class FragmentCart extends Fragment implements View.OnClickListener {
                 itemFood.put("idOrder", TAG + randomKey);
                 for (ItemFood food : cartArrayList) {
                     myRef = FirebaseDatabase.getInstance().getReference("ItemFood/" + auth.getUid());
-                    myRef.child(food.getIdFood()).updateChildren(itemFood).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    myRef.child(food.getProductName()).updateChildren(itemFood).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Intent i = new Intent(getContext(), PaymentActivity.class);
