@@ -9,37 +9,23 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hanfood.model.Bill;
 import com.example.hanfood.model.Food;
 import com.example.hanfood.model.User;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CombinedData;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
@@ -63,7 +50,8 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     DatabaseReference myRef, myBill, myUser;
     CombinedChart combinedChart;
     String toD = "", fromD = "";
-    Date to, from;
+    String to;
+    String from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,15 +124,27 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void addBill(String idUser) throws ParseException {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        to = dateFormat.parse(toD);
-//        from = dateFormat.parse(fromD);
-//
-//        System.out.println(to);
-//        System.out.println(from);
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+            // Chuyển đổi từ chuỗi ngày sang Date
+            Date fromDate = inputFormat.parse(fromD);
+            Date toDate = inputFormat.parse(toD);
+
+            // Chuyển đổi thành chuỗi ngày mới
+            from = outputFormat.format(fromDate);
+            to = outputFormat.format(toDate);
+
+            System.out.println("Chuỗi ngày chuyển đổi từ " + fromD + ": " + from);
+            System.out.println("Chuỗi ngày chuyển đổi từ " + toD + ": " + to);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         myBill = FirebaseDatabase.getInstance().getReference("Bill/" + idUser);
-        myBill.orderByChild("currentDate").startAt(toD).endAt(fromD).addValueEventListener(new ValueEventListener() {
+        myBill.orderByChild("currentDate").startAt(from).endAt(to).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Bill> billList = new ArrayList<>();
@@ -293,29 +293,27 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             if (toD.isEmpty() || fromD.isEmpty()) {
                 Toast.makeText(this, "Vui lòng chọn ngày thống kê!", Toast.LENGTH_SHORT).show();
             } else {
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//
-//                // Chuyển đổi chuỗi ngày thành đối tượng Date
-//                Date date1 = null;
-//                try {
-//                    date1 = sdf.parse(toD);
-//                } catch (ParseException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                Date date2 = null;
-//                try {
-//                    date2 = sdf.parse(fromD);
-//                } catch (ParseException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                // Tính khoảng cách giữa hai đối tượng Date
-//                long diffInMilliseconds = Math.abs(date2.getTime() - date1.getTime());
-//                if (TimeUnit.DAYS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS) > 30) {
-//                    Toast.makeText(this, "2 ngày chỉ có thể cách nhau 30 ngày!", Toast.LENGTH_SHORT).show();
-//                } else {
-////                            statistisByFood();
-                statistisByDate();
-//                }
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+                try {
+                    // Chuyển đổi chuỗi ngày thành đối tượng Date
+                    Date date1 = sdf.parse(fromD);
+                    Date date2 = sdf.parse(toD);
+
+                    // Tính khoảng cách giữa hai đối tượng Date
+                    long diffInMilliseconds = Math.abs(date2.getTime() - date1.getTime());
+                    long daysBetween = TimeUnit.DAYS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS);
+
+                    if (daysBetween > 30) {
+                        Toast.makeText(this, "Hai ngày chỉ có thể cách nhau 30 ngày!", Toast.LENGTH_SHORT).show();
+                    } else {
+//                        statistisByFood();
+                        statistisByDate();
+                    }
+
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         if (view == toDate) {

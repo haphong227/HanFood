@@ -170,7 +170,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 bill.put("idOrder", idOrder);
                 bill.put("idUser", auth.getUid());
                 bill.put("currentTime", saveCurrentTime);
-                bill.put("currentDate", savecurrentDate);
+                bill.put("currentDate", savecurrentDate2);
                 bill.put("address", address);
                 bill.put("name", nameUser);
                 bill.put("email", auth.getEmail());
