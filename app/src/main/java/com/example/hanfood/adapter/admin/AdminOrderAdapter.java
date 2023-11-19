@@ -76,7 +76,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ho
         //hien thi danh sach mon an
         for (ItemFood itemFood : bill.getItemFoodArrayList()) {
             String name = itemFood.getProductName();
-            double price = itemFood.getProductPriceSalse();
+            double price = itemFood.getProductPriceSale();
             int quantity = itemFood.getTotalQuantity();
             listFood = listFood + name + " (" + decimalFormat.format(price) + " VNĐ)" + " - số lượng " + quantity + "\n";
         }

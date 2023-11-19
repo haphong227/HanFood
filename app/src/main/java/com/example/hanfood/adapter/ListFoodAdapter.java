@@ -49,10 +49,10 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
 //        holder.tvPrice.setText(decimalFormat.format(cart.getTotalPrice()) + " VNĐ");
 //        holder.tvPriceSale.setText(decimalFormat.format(cart.getProductPriceSalse()) + " VNĐ");
 
-        if (itemFood.getProductPriceSalse() < itemFood.getProductPrice()) {
+        if (itemFood.getProductPriceSale() < itemFood.getProductPrice()) {
             holder.tvPrice.setText(decimalFormat.format(itemFood.getProductPrice()) + " VNĐ");
             holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.tvPriceSale.setText(decimalFormat.format(itemFood.getProductPriceSalse()) + " VNĐ");
+            holder.tvPriceSale.setText(decimalFormat.format(itemFood.getProductPriceSale()) + " VNĐ");
 
         } else {
             holder.tvPrice.setVisibility(View.GONE);

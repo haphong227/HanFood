@@ -8,7 +8,7 @@ public class ItemFood implements Serializable {
     private String productImg;
     private String productName;
     private double productPrice;
-    private double productPriceSalse;
+    private double productPriceSale;
     private double totalPrice;
     private int totalQuantity;
     private boolean evaluate;
@@ -17,13 +17,13 @@ public class ItemFood implements Serializable {
     public ItemFood() {
     }
 
-    public ItemFood(String idFood, String idOrder, String productImg, String productName, double productPrice, double productPriceSalse, double totalPrice, int totalQuantity, boolean evaluate) {
+    public ItemFood(String idFood, String idOrder, String productImg, String productName, double productPrice, double productPriceSale, double totalPrice, int totalQuantity, boolean evaluate) {
         this.idFood = idFood;
         this.idOrder = idOrder;
         this.productImg = productImg;
         this.productName = productName;
         this.productPrice = productPrice;
-        this.productPriceSalse = productPriceSalse;
+        this.productPriceSale = productPriceSale;
         this.totalPrice = totalPrice;
         this.totalQuantity = totalQuantity;
         this.evaluate = evaluate;
@@ -37,12 +37,12 @@ public class ItemFood implements Serializable {
         this.idOrder = idOrder;
     }
 
-    public double getProductPriceSalse() {
-        return productPriceSalse;
+    public double getProductPriceSale() {
+        return productPriceSale;
     }
 
-    public void setProductPriceSalse(double productPriceSalse) {
-        this.productPriceSalse = productPriceSalse;
+    public void setProductPriceSale(double productPriceSale) {
+        this.productPriceSale = productPriceSale;
     }
 
     public String getIdFood() {

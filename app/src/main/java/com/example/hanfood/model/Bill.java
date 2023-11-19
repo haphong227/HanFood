@@ -160,7 +160,7 @@ public class Bill implements Serializable {
         public int compare(Bill b1, Bill b2) {
             String Bill1 = b1.getIdBill().toUpperCase();
             String Bill2 = b2.getIdBill().toUpperCase();
-            return Bill1.compareTo(Bill2);
+            return Bill2.compareTo(Bill1);
         }
 
     };

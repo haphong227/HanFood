@@ -221,7 +221,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
         itemFood.put("productImg", img);
         itemFood.put("productName", name);
         itemFood.put("productPrice", price);
-        itemFood.put("productPriceSalse", priceFoodSale);
+        itemFood.put("productPriceSale", priceFoodSale);
         itemFood.put("totalQuantity", Integer.parseInt(tvSl.getText().toString()));
         itemFood.put("totalPrice", totalPrice);
         itemFood.put("evaluate", false);

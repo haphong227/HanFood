@@ -59,10 +59,10 @@ public class ItemFoodCartAdapter extends RecyclerView.Adapter<ItemFoodCartAdapte
 
         holder.product_name.setText(itemFood.getProductName());
         holder.tvSl.setText(String.valueOf(itemFood.getTotalQuantity()));
-        if (itemFood.getProductPriceSalse() < itemFood.getProductPrice()) {
+        if (itemFood.getProductPriceSale() < itemFood.getProductPrice()) {
             holder.product_price.setText(decimalFormat.format(itemFood.getProductPrice()) + " VNĐ");
             holder.product_price.setPaintFlags(holder.product_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.product_priceSale.setText(decimalFormat.format(itemFood.getProductPriceSalse()) + " VNĐ");
+            holder.product_priceSale.setText(decimalFormat.format(itemFood.getProductPriceSale()) + " VNĐ");
 
         } else {
             holder.product_price.setVisibility(View.GONE);
@@ -155,8 +155,8 @@ public class ItemFoodCartAdapter extends RecyclerView.Adapter<ItemFoodCartAdapte
 
     private void saveData(int position) {
         double price=0;
-        if (list.get(position).getProductPrice() > list.get(position).getProductPriceSalse()) {
-            price = list.get(position).getProductPriceSalse();
+        if (list.get(position).getProductPrice() > list.get(position).getProductPriceSale()) {
+            price = list.get(position).getProductPriceSale();
         } else price = list.get(position).getProductPrice();
         HashMap<String, Object> food = new HashMap<>();
         food.put("totalQuantity", totalQuantity);

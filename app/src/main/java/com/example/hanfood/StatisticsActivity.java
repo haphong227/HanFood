@@ -36,9 +36,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -150,7 +154,9 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
                 List<Bill> billList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
-                    billList.add(bill);
+                    if (bill.getStateOrder().equalsIgnoreCase("Đã giao thành công")) {
+                        billList.add(bill);
+                    }
                 }
                 billChart(billList);
             }
@@ -171,7 +177,9 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
                 List<Bill> billList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
-                    billList.add(bill);
+                    if (bill.getStateOrder().equalsIgnoreCase("Đã giao thành công")) {
+                        billList.add(bill);
+                    }
                 }
                 billChart(billList);
             }
@@ -190,12 +198,41 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
         List<Entry> lineEntries = new ArrayList<>();
         List<String> labels = new ArrayList<>();
+        Map<String, Float> totalPriceMap = new HashMap<>();
 
         for (int i = 0; i < billList.size(); i++) {
             Bill bill = billList.get(i);
-            lineEntries.add(new Entry(i, (float) bill.getPrice()));
-            labels.add(bill.getCurrentDate());
+            String currentDate = bill.getCurrentDate();
+            float totalPrice = (float) bill.getPrice();
+
+            if (totalPriceMap.containsKey(currentDate)) {
+                // Nếu đã có currentDate trong Map, cộng tổng giá
+                totalPrice += totalPriceMap.get(currentDate);
+            }
+            totalPriceMap.put(currentDate, totalPrice);
         }
+
+//      Chuyển đổi Map thành danh sách Entry
+        List<Map.Entry<String, Float>> sortedEntries = new ArrayList<>(totalPriceMap.entrySet());
+
+//      Sắp xếp danh sách Entry theo key (currentDate)
+        Collections.sort(sortedEntries, new Comparator<Map.Entry<String, Float>>() {
+            @Override
+            public int compare(Map.Entry<String, Float> entry1, Map.Entry<String, Float> entry2) {
+                return entry1.getKey().compareTo(entry2.getKey());
+            }
+        });
+
+//      Duyệt qua danh sách đã sắp xếp để tạo danh sách lineEntries và labels
+        for (int index = 0; index < sortedEntries.size(); index++) {
+            Map.Entry<String, Float> entry = sortedEntries.get(index);
+            String currentDate = entry.getKey();
+            float totalPrice = entry.getValue();
+
+            lineEntries.add(new Entry(index, totalPrice));
+            labels.add(currentDate);
+        }
+
 
         LineDataSet lineDataSet = new LineDataSet(lineEntries, "Doanh thu theo ngày");
         lineDataSet.setLineWidth(2.0f);
@@ -275,14 +312,6 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         combinedChart.invalidate();
     }
 
-    private void initView() {
-        toolbar = findViewById(R.id.toolbar);
-        titlePage = findViewById(R.id.toolbar_title);
-        combinedChart = findViewById(R.id.barChart);
-        toDate = findViewById(R.id.toDate);
-        fromDate = findViewById(R.id.fromDate);
-        btStatistics = findViewById(R.id.btStatistics);
-    }
 
     @Override
     public void onClick(View view) {
@@ -359,4 +388,14 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             dialog.show();
         }
     }
+
+    private void initView() {
+        toolbar = findViewById(R.id.toolbar);
+        titlePage = findViewById(R.id.toolbar_title);
+        combinedChart = findViewById(R.id.barChart);
+        toDate = findViewById(R.id.toDate);
+        fromDate = findViewById(R.id.fromDate);
+        btStatistics = findViewById(R.id.btStatistics);
+    }
+
 }
