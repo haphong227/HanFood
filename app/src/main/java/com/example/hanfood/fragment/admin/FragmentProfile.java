@@ -25,6 +25,7 @@ import com.example.hanfood.EditProfileActivity;
 import com.example.hanfood.HistoryOrderActivity;
 import com.example.hanfood.LoginActivity;
 import com.example.hanfood.R;
+import com.example.hanfood.StatisticsActivity;
 import com.example.hanfood.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,7 +43,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
     FirebaseUser firebaseUser;
     DatabaseReference mRef;
     CircleImageView img_profile;
-    TextView tvUsername, tvEmail, tvChangepassword, tvHistory, tvLogout;
+    TextView tvUsername, tvEmail, tvChangepassword, tvStatistics, tvLogout;
     String name, email, img;
 
     @Nullable
@@ -57,7 +58,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
 
         tvEditprofile.setOnClickListener(this);
         tvChangepassword.setOnClickListener(this);
-//        tvHistory.setOnClickListener(this);
+        tvStatistics.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
 
         return view;
@@ -100,9 +101,9 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
         if (view == tvChangepassword) {
             startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
         }
-//        if (view == tvHistory) {
-//            startActivity(new Intent(getActivity(), HistoryOrderActivity.class));
-//        }
+        if (view == tvStatistics) {
+            startActivity(new Intent(getActivity(), StatisticsActivity.class));
+        }
         if (view == tvLogout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -117,7 +118,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
         tvEmail = view.findViewById(R.id.tvEmail);
         tvEditprofile = view.findViewById(R.id.tvEditprofile);
         tvChangepassword = view.findViewById(R.id.tvChangepassword);
-//        tvHistory = view.findViewById(R.id.tvHistory);
+        tvStatistics = view.findViewById(R.id.tvStatistics);
         tvLogout = view.findViewById(R.id.tvLogout);
     }
 }

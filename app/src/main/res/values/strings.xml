@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">HanFood</string>
     <string name="title_activity_maps">MapsActivity</string>
-    
-    <array name="Category" >
-        <item> </item>
+
+    <array name="Category">
+        <item></item>
     </array>
 </resources>

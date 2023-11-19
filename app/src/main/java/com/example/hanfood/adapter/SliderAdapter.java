@@ -1,4 +1,4 @@
-package com.example.hanfood.adapter.admin;
+package com.example.hanfood.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanfood.R;
 import com.example.hanfood.model.Category;
+import com.example.hanfood.model.Food;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.HomeViewHolder> {
-    private ArrayList<Category> list;
+    private ArrayList<Food> list;
 
-    public SliderAdapter(ArrayList<Category> list) {
+    public SliderAdapter(ArrayList<Food> list) {
         this.list = list;
     }
 
@@ -31,9 +32,9 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.HomeViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        Category category = list.get(position);
-        holder.tvDeal.setText(category.getNameCate());
-        Picasso.get().load(category.getImageCate())
+        Food food = list.get(position);
+        holder.tvDeal.setText(food.getNameFood());
+        Picasso.get().load(food.getImageFood())
                 .into(holder.imgFood);
     }
 

@@ -91,7 +91,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvHistory"
+            android:id="@+id/tvStatistics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -101,7 +101,7 @@
             android:drawableRight="@drawable/ic_more"
             android:drawablePadding="20dp"
             android:gravity="center_vertical"
-            android:text="Lịch sử mua hàng"
+            android:text="Thống kê doanh thu"
             android:textColor="#000"
             android:textSize="15sp"
             android:textStyle="bold" />

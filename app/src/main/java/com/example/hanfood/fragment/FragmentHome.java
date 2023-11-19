@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -25,7 +23,7 @@ import com.example.hanfood.R;
 import com.example.hanfood.SearchFoodActivity;
 import com.example.hanfood.adapter.CategoryAdapter;
 import com.example.hanfood.adapter.FoodAdapter;
-import com.example.hanfood.adapter.admin.SliderAdapter;
+import com.example.hanfood.adapter.SliderAdapter;
 import com.example.hanfood.model.Category;
 import com.example.hanfood.model.Food;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +42,8 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
     CategoryAdapter categoryAdapter;
     FoodAdapter foodAdapter;
     ArrayList<Category> dataCategory;
-    ArrayList<Food> dataFood = new ArrayList<>();
+    ArrayList<Food> dataFood;
+    ArrayList<Food> dataSlide ;
     DatabaseReference myCate, myFood;
 
     //    Slider truot ve anh dau khi o slide cuoi
@@ -110,20 +109,6 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
                 categoryAdapter = new CategoryAdapter(dataCategory, getContext());
                 recyclerView_category.setAdapter(categoryAdapter);
                 recyclerView_category.setHasFixedSize(true);
-
-                //                set adapter cho slider
-                sliderAdapter = new SliderAdapter(dataCategory);
-                viewPager.setAdapter(sliderAdapter);
-//                tu chuyen slide sau 3s
-                viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        handler.removeCallbacks(runnable);
-                        handler.postDelayed(runnable, 3000);
-                    }
-                });
-
             }
 
             @Override
@@ -137,15 +122,32 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataFood = new ArrayList<>();
+                dataSlide = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Food food = data.getValue(Food.class);
                     dataFood.add(food);
+                    if (food.getPercentSale() != 0){
+                        dataSlide.add(food);
+                    }
 
 //                    System.out.println(food.getName()+ ","+food.getPrice()+","+food.getImage()+"\n");
                 }
                 foodAdapter = new FoodAdapter(dataFood, getContext());
                 recyclerView_food.setAdapter(foodAdapter);
                 recyclerView_food.setHasFixedSize(true);
+
+                //                set adapter cho slider
+                sliderAdapter = new SliderAdapter(dataFood);
+                viewPager.setAdapter(sliderAdapter);
+//                tu chuyen slide sau 3s
+                viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        handler.removeCallbacks(runnable);
+                        handler.postDelayed(runnable, 3000);
+                    }
+                });
             }
 
             @Override
