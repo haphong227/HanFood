@@ -55,8 +55,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         tvChangepassword.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
-        tvMap.setOnClickListener(this);
-        tvAddress.setOnClickListener(this);
+//        tvMap.setOnClickListener(this);
+//        tvAddress.setOnClickListener(this);
 
         return view;
     }
@@ -73,12 +73,12 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         if (view == tvHistory) {
             startActivity(new Intent(getActivity(), HistoryOrderActivity.class));
         }
-        if (view == tvMap) {
-            startActivity(new Intent(getActivity(), MapsActivity.class));
-        }
-        if (view == tvAddress) {
-            startActivity(new Intent(getActivity(), AddressActivity.class));
-        }
+//        if (view == tvMap) {
+//            startActivity(new Intent(getActivity(), MapsActivity.class));
+//        }
+//        if (view == tvAddress) {
+//            startActivity(new Intent(getActivity(), AddressActivity.class));
+//        }
         if (view == tvLogout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -124,8 +124,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         tvChangepassword = view.findViewById(R.id.tvChangepassword);
         tvHistory = view.findViewById(R.id.tvHistory);
         tvLogout = view.findViewById(R.id.tvLogout);
-        tvMap = view.findViewById(R.id.tvMap);
-        tvAddress = view.findViewById(R.id.tvAddress);
+//        tvMap = view.findViewById(R.id.tvMap);
+//        tvAddress = view.findViewById(R.id.tvAddress);
     }
 
 }

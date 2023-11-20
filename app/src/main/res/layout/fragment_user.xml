@@ -9,13 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--        <TextView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Settings"-->
-        <!--            android:textColor="#000"-->
-        <!--            android:textSize="30sp"-->
-        <!--            android:textStyle="bold" />-->
         <androidx.cardview.widget.CardView
             android:id="@+id/tvEditprofile"
             android:layout_width="wrap_content"
@@ -60,36 +53,36 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/tvMap"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:drawableLeft="@drawable/ic_maps"
-            android:drawableRight="@drawable/ic_more"
-            android:drawablePadding="16dp"
-            android:gravity="center_vertical"
-            android:text="Map"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:drawableLeft="@drawable/ic_order_history"
-            android:drawableRight="@drawable/ic_more"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="Quản lý địa chỉ"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/tvMap"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:drawableLeft="@drawable/ic_maps"-->
+<!--            android:drawableRight="@drawable/ic_more"-->
+<!--            android:drawablePadding="16dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:text="Map"-->
+<!--            android:textColor="#000"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/tvAddress"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:drawableLeft="@drawable/ic_order_history"-->
+<!--            android:drawableRight="@drawable/ic_more"-->
+<!--            android:drawablePadding="20dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:text="Quản lý địa chỉ"-->
+<!--            android:textColor="#000"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold" />-->
 
         <TextView
             android:id="@+id/tvChangepassword"

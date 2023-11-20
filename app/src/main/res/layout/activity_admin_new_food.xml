@@ -39,59 +39,99 @@
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/nameFood"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="Tên"
-        android:textColor="#000"
-        android:textColorHint="#000" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:hint="Giá gốc"
-        android:textColor="#000"
-        android:textColorHint="#000" />
-    <EditText
-        android:id="@+id/percentSale"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:hint="% sale"
-        android:textColor="#000"
-        android:textColorHint="#000" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TÊN:"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/desFood"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:hint="Mô Tả"
-        android:textColor="#000"
-        android:textColorHint="#000" />
+        <EditText
+            android:id="@+id/nameFood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/quantity"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:hint="Số lượng"
-        android:textColor="#000"
-        android:textColorHint="#000" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GIÁ GỐC:"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GIẢM GIÁ (% SALE):"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/percentSale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MÔ TẢ:"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/desFood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SỐ LƯỢNG:"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btAdd"

@@ -38,18 +38,25 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TÊN:"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/nameCategory"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="Tên"
-        android:textColor="#000"
-        android:textColorHint="#000" />
-
-
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:textSize="15sp" />
     <Button
         android:id="@+id/btAdd"
         android:layout_width="match_parent"

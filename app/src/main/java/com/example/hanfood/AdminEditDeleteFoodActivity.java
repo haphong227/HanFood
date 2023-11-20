@@ -83,6 +83,7 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
 
         btUpdate.setOnClickListener(this);
         btDelete.setOnClickListener(this);
+        imgFood.setOnClickListener(this);
     }
 
     private void displayFood() {
