@@ -40,7 +40,6 @@ import java.util.Locale;
 
 public class DetailFoodActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
-    TextView titlePage;
     ImageView img_food, sub, add;
     TextView tvPrice, tvName, tvDes, tvSl, tvQuantity, tvPriceSale, tvPercentSale, tvQuantitySold, tvComment, tvRate;
     RecyclerView recyclerView_review;
@@ -114,7 +113,6 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
                     }
                     priceFoodSale = price - percentSale * price / 100;
 
-                    titlePage.setText(name);
                     tvName.setText(name);
                     if (percentSale == 0) {
                         tvPrice.setVisibility(View.GONE);
@@ -241,7 +239,6 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
-        titlePage = findViewById(R.id.toolbar_title);
         tvPercentSale = findViewById(R.id.tvPercentSale);
         img_food = findViewById(R.id.img_food);
         tvName = findViewById(R.id.tvName);

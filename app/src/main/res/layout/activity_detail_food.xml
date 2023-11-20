@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Food"
+            android:lines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/tiltleToolbar" />
 
@@ -50,7 +51,7 @@
 
                     <ImageView
                         android:id="@+id/img_food"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:scaleType="centerCrop"
                         tools:src="@drawable/food" />
