@@ -33,7 +33,7 @@ public class SearchFoodActivity extends AppCompatActivity implements View.OnClic
     Toolbar toolbar;
     EditText eSearch;
     ImageView btSearch;
-    Spinner spSearch;
+//    Spinner spSearch;
     ArrayList<Food> arrayListfood = new ArrayList<>();
     RecyclerView recyclerView;
     DatabaseReference myRef, myCate;
@@ -67,55 +67,55 @@ public class SearchFoodActivity extends AppCompatActivity implements View.OnClic
 
         btSearch.setOnClickListener(this);
 
-        spinnerList = new ArrayList<>();
-        myCate = FirebaseDatabase.getInstance().getReference("Category");
-        myCate.child("").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Category category = data.getValue(Category.class);
-                    spinnerList.add(category.getNameCate());
-                }
-                System.out.println("spinner" + spinnerList);
-                spinnerAdapter = new ArrayAdapter<String>(SearchFoodActivity.this,
-                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerList);
-                spSearch.setAdapter(spinnerAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                search = spSearch.getSelectedItem().toString();
-
-//                Toast.makeText(SearchFoodActivity.this, search, Toast.LENGTH_SHORT).show();
-                myCate = FirebaseDatabase.getInstance().getReference("Category");
-                myCate.child("").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            Category category = data.getValue(Category.class);
-                            if (category.getNameCate().equalsIgnoreCase(search)) {
-                                filterCate(category.getIdCate());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        spinnerList = new ArrayList<>();
+//        myCate = FirebaseDatabase.getInstance().getReference("Category");
+//        myCate.child("").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot data : snapshot.getChildren()) {
+//                    Category category = data.getValue(Category.class);
+//                    spinnerList.add(category.getNameCate());
+//                }
+//                System.out.println("spinner" + spinnerList);
+//                spinnerAdapter = new ArrayAdapter<String>(SearchFoodActivity.this,
+//                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerList);
+//                spSearch.setAdapter(spinnerAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//
+//        spSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                search = spSearch.getSelectedItem().toString();
+//
+////                Toast.makeText(SearchFoodActivity.this, search, Toast.LENGTH_SHORT).show();
+//                myCate = FirebaseDatabase.getInstance().getReference("Category");
+//                myCate.child("").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot data : snapshot.getChildren()) {
+//                            Category category = data.getValue(Category.class);
+//                            if (category.getNameCate().equalsIgnoreCase(search)) {
+//                                filterCate(category.getIdCate());
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -187,6 +187,6 @@ public class SearchFoodActivity extends AppCompatActivity implements View.OnClic
         eSearch = findViewById(R.id.eSearch);
         btSearch = findViewById(R.id.btSearch);
         recyclerView = findViewById(R.id.recycleView_search);
-        spSearch = findViewById(R.id.spSearch);
+//        spSearch = findViewById(R.id.spSearch);
     }
 }
