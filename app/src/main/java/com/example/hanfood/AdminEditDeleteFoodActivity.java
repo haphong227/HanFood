@@ -40,7 +40,6 @@ import java.util.HashMap;
 
 public class AdminEditDeleteFoodActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
-    TextView toolbar_title;
     ImageView imgFood, back;
     EditText nameFood, price, percentSale, desFood, quantity;
     Button btUpdate, btDelete;
@@ -104,7 +103,6 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
                     imageF = snapshot.child("imageFood").getValue().toString();
                     System.out.println(name + "+" + des + "+" + priceFood + "+" + imageF + "q" + quantityF);
 
-                    toolbar_title.setText(nameF);
                     nameFood.setText(nameF);
                     desFood.setText(desF);
                     price.setText(priceF);
@@ -270,7 +268,6 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar_title = findViewById(R.id.toolbar_title);
         nameFood = findViewById(R.id.nameFood);
         price = findViewById(R.id.price);
         percentSale = findViewById(R.id.percentSale);

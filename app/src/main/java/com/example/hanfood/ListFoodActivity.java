@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class ListFoodActivity extends AppCompatActivity {
     Toolbar toolbar;
-    TextView toolbar_title;
     RecyclerView recyclerView;
     FoodAdapter foodAdapter;
     ArrayList<Food> dataFood;
@@ -59,7 +58,6 @@ public class ListFoodActivity extends AppCompatActivity {
 
         idCate = getIntent().getStringExtra("idCate");
         nameCate = getIntent().getStringExtra("nameCate");
-        toolbar_title.setText(nameCate);
 
         displayListFood();
     }
@@ -93,7 +91,6 @@ public class ListFoodActivity extends AppCompatActivity {
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar_title = findViewById(R.id.toolbar_title);
         recyclerView = findViewById(R.id.recyclerViewFood);
     }
 }
