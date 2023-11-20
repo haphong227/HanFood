@@ -28,6 +28,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="88dp">
@@ -41,7 +42,6 @@
                 android:id="@+id/inforFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar"
                 android:background="#fff"
                 android:orientation="vertical">
 
@@ -52,7 +52,7 @@
                     <ImageView
                         android:id="@+id/img_food"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="250dp"
                         android:scaleType="centerCrop"
                         tools:src="@drawable/food" />
 
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:background="#DFF44336"
                         android:padding="5dp"
                         android:text="Giảm 10%"
@@ -82,7 +82,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_toLeftOf="@+id/price"
                         android:textColor="@android:color/black"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         tools:text="Bò xốt phô mai" />
 

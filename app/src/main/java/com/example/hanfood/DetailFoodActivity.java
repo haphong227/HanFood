@@ -112,31 +112,29 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
                         quantitySold = food.getQuantityFoodSold();
                     }
                     priceFoodSale = price - percentSale * price / 100;
-
-                    tvName.setText(name);
-                    if (percentSale == 0) {
-                        tvPrice.setVisibility(View.GONE);
-                        tvPercentSale.setVisibility(View.GONE);
-                        tvPriceSale.setText(decimalFormat.format(price) + " VNĐ");
-                    } else {
-                        tvPercentSale.setText("Giảm " + decimalFormat.format(percentSale) + "%");
-                        tvPrice.setText(decimalFormat.format(price) + " VNĐ");
-                        tvPriceSale.setText(decimalFormat.format(priceFoodSale) + " VNĐ");
-                        tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //gach ngang chu
-
-                    }
-                    tvDes.setText(des);
-                    if (quantity > 0) {
-                        tvQuantity.setVisibility(View.GONE);
-                    } else {
-                        tvQuantity.setText("SOLD OUT!");
-                        tvQuantity.setTextColor(Color.RED);
-                    }
-                    Picasso.get().load(img).into(img_food);
-                    tvRate.setText(decimalFormat2.format(rate));
-                    tvQuantitySold.setText(quantitySold + " đã bán");
                 }
-
+                tvName.setText(name);
+                if (percentSale == 0) {
+                    tvPrice.setVisibility(View.GONE);
+                    tvPercentSale.setVisibility(View.GONE);
+                    tvPriceSale.setText(decimalFormat.format(price) + " VNĐ");
+                } else {
+                    System.out.println("percentSale"+percentSale );
+                    tvPercentSale.setText("Giảm " + decimalFormat.format(percentSale) + "%");
+                    tvPrice.setText(decimalFormat.format(price) + " VNĐ");
+                    tvPriceSale.setText(decimalFormat.format(priceFoodSale) + " VNĐ");
+                    tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //gach ngang chu
+                }
+                tvDes.setText(des);
+                if (quantity > 0) {
+                    tvQuantity.setVisibility(View.GONE);
+                } else {
+                    tvQuantity.setText("SOLD OUT!");
+                    tvQuantity.setTextColor(Color.RED);
+                }
+                Picasso.get().load(img).into(img_food);
+                tvRate.setText(decimalFormat2.format(rate));
+                tvQuantitySold.setText(quantitySold + " đã bán");
             }
 
             @Override
