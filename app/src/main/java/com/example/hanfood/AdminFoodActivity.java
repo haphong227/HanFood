@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hanfood.adapter.admin.AdminFoodAdapter;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 public class AdminFoodActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
+    TextView toolbar_title;
     RecyclerView recyclerView;
     FloatingActionButton fabtnFood;
     AdminFoodAdapter foodAdapter;
@@ -59,7 +61,7 @@ public class AdminFoodActivity extends AppCompatActivity implements View.OnClick
 
         idCate = getIntent().getStringExtra("idCate");
         nameCate = getIntent().getStringExtra("nameCate");
-
+        toolbar_title.setText(nameCate);
 
         dataFood = new ArrayList<>();
 
@@ -96,6 +98,7 @@ public class AdminFoodActivity extends AppCompatActivity implements View.OnClick
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recyclerViewFood);
         fabtnFood = findViewById(R.id.fabtnFood);
+        toolbar_title = findViewById(R.id.toolbar_title);
     }
 
     @Override

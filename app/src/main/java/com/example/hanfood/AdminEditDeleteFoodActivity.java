@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hanfood.model.Food;
@@ -39,10 +40,11 @@ import java.util.HashMap;
 
 public class AdminEditDeleteFoodActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
+    TextView toolbar_title;
     ImageView imgFood, back;
     EditText nameFood, price, percentSale, desFood, quantity;
     Button btUpdate, btDelete;
-    private String idFood = "";
+    private String idFood = "", foodName="";
     private DatabaseReference myRef;
     String idCate, nameCate = "";
     String name, des, priceFood, percent, sl;
@@ -72,11 +74,13 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
             public void onClick(View view) {
                 Intent i = new Intent(AdminEditDeleteFoodActivity.this, AdminFoodActivity.class);
                 i.putExtra("idCate", idCate);
+                i.putExtra("nameCate", nameCate);
                 finish();
             }
         });
 
         idCate = getIntent().getStringExtra("idCate");
+        nameCate = getIntent().getStringExtra("nameCate");
         idFood = getIntent().getStringExtra("idFood");
         myRef = FirebaseDatabase.getInstance().getReference().child("Food").child(idFood);
         displayFood();
@@ -100,6 +104,7 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
                     imageF = snapshot.child("imageFood").getValue().toString();
                     System.out.println(name + "+" + des + "+" + priceFood + "+" + imageF + "q" + quantityF);
 
+                    toolbar_title.setText(nameF);
                     nameFood.setText(nameF);
                     desFood.setText(desF);
                     price.setText(priceF);
@@ -265,6 +270,7 @@ public class AdminEditDeleteFoodActivity extends AppCompatActivity implements Vi
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
+        toolbar_title = findViewById(R.id.toolbar_title);
         nameFood = findViewById(R.id.nameFood);
         price = findViewById(R.id.price);
         percentSale = findViewById(R.id.percentSale);

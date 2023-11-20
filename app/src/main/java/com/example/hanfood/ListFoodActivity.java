@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hanfood.adapter.FoodAdapter;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class ListFoodActivity extends AppCompatActivity {
     Toolbar toolbar;
+    TextView toolbar_title;
     RecyclerView recyclerView;
     FoodAdapter foodAdapter;
     ArrayList<Food> dataFood;
@@ -34,6 +36,7 @@ public class ListFoodActivity extends AppCompatActivity {
     String idCate = "";
 
     public String nameCate = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,32 +56,32 @@ public class ListFoodActivity extends AppCompatActivity {
             }
         });
 
-        GridLayoutManager manager = new GridLayoutManager(ListFoodActivity.this, 2);
-        recyclerView.setLayoutManager(manager);
 
         idCate = getIntent().getStringExtra("idCate");
         nameCate = getIntent().getStringExtra("nameCate");
+        toolbar_title.setText(nameCate);
 
-        dataFood = new ArrayList<>();
+        displayListFood();
+    }
 
-        foodAdapter = new FoodAdapter(dataFood, ListFoodActivity.this);
-        recyclerView.setAdapter(foodAdapter);
-        recyclerView.setHasFixedSize(true);
+    private void displayListFood() {
+        GridLayoutManager manager = new GridLayoutManager(ListFoodActivity.this, 2);
+        recyclerView.setLayoutManager(manager);
 
         myFood = FirebaseDatabase.getInstance().getReference("Food/");
         myFood.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    dataFood.clear();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        Food food = data.getValue(Food.class);
-                        if (food.getIdCate().equalsIgnoreCase(idCate)) {
-                            dataFood.add(food);
-                        }
+                dataFood = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Food food = data.getValue(Food.class);
+                    if (food.getIdCate().equalsIgnoreCase(idCate)) {
+                        dataFood.add(food);
                     }
-                    foodAdapter.notifyDataSetChanged();
                 }
+                foodAdapter = new FoodAdapter(dataFood, ListFoodActivity.this);
+                recyclerView.setAdapter(foodAdapter);
+                recyclerView.setHasFixedSize(true);
             }
 
             @Override
@@ -87,8 +90,10 @@ public class ListFoodActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
+        toolbar_title = findViewById(R.id.toolbar_title);
         recyclerView = findViewById(R.id.recyclerViewFood);
     }
 }
