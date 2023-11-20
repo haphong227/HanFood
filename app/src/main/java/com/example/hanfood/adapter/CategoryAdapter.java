@@ -50,8 +50,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.HomeVi
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ListFoodActivity.class);
-                i.putExtra("id", category.getIdCate());
-                i.putExtra("name", category.getNameCate());
+                i.putExtra("idCate", category.getIdCate());
+                i.putExtra("nameCate", category.getNameCate());
                 context.startActivity(i);
             }
         });

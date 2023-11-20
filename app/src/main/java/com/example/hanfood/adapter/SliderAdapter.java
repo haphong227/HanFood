@@ -10,47 +10,43 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanfood.R;
-import com.example.hanfood.model.Category;
-import com.example.hanfood.model.Food;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.HomeViewHolder> {
-    private ArrayList<Food> list;
+    private List<String> imageUrls;
 
-    public SliderAdapter(ArrayList<Food> list) {
-        this.list = list;
+    public SliderAdapter(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     @NonNull
     @Override
     public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_slider, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_slider, parent, false);
         return new HomeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        Food food = list.get(position);
-        holder.tvDeal.setText(food.getNameFood());
-        Picasso.get().load(food.getImageFood())
-                .into(holder.imgFood);
+        String imageUrl = imageUrls.get(position);
+        Picasso.get().load(imageUrl).into(holder.imgFood);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return imageUrls.size();
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder{
         private ImageView imgFood;
-        private TextView tvDeal;
+//        private TextView tvDeal;
 
         public HomeViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFood=itemView.findViewById(R.id.imgFood);
-            tvDeal=itemView.findViewById(R.id.tvDeal);
+//            tvDeal=itemView.findViewById(R.id.tvDeal);
         }
     }
 }

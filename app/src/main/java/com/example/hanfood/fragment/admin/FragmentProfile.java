@@ -58,7 +58,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
 
         tvEditprofile.setOnClickListener(this);
         tvChangepassword.setOnClickListener(this);
-        tvStatistics.setOnClickListener(this);
+//        tvStatistics.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
 
         return view;
@@ -101,9 +101,9 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
         if (view == tvChangepassword) {
             startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
         }
-        if (view == tvStatistics) {
-            startActivity(new Intent(getActivity(), StatisticsActivity.class));
-        }
+//        if (view == tvStatistics) {
+//            startActivity(new Intent(getActivity(), StatisticsActivity.class));
+//        }
         if (view == tvLogout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -118,7 +118,7 @@ public class FragmentProfile extends Fragment implements View.OnClickListener {
         tvEmail = view.findViewById(R.id.tvEmail);
         tvEditprofile = view.findViewById(R.id.tvEditprofile);
         tvChangepassword = view.findViewById(R.id.tvChangepassword);
-        tvStatistics = view.findViewById(R.id.tvStatistics);
+//        tvStatistics = view.findViewById(R.id.tvStatistics);
         tvLogout = view.findViewById(R.id.tvLogout);
     }
 }

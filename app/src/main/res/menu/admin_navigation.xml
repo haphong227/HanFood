@@ -15,13 +15,13 @@
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"
         app:cnb_textColor="@color/white"/>
-<!--    <item-->
-<!--        android:id="@+id/mNotification"-->
-<!--        android:title="Notification"-->
-<!--        android:icon="@drawable/icon_noti"-->
-<!--        app:cnb_iconColor="@color/white"-->
-<!--        app:cnb_backgroundColor="@color/blue"-->
-<!--        app:cnb_textColor="@color/white"/>-->
+    <item
+        android:id="@+id/mStatistics"
+        android:title="Thống kê"
+        android:icon="@drawable/icon_statistics"
+        app:cnb_iconColor="@color/white"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white"/>
     <item
         android:id="@+id/mProfile"
         android:title="Tài khoản"

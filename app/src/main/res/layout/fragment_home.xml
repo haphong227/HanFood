@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="#FFF"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,57 +11,63 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvNameUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/eSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/searchview"
             android:drawableRight="@drawable/ic_search"
             android:drawablePadding="5dp"
             android:enabled="true"
+            android:textSize="14sp"
             android:hint="Tìm kiếm món ăn"
             android:imeOptions="actionSearch"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textStyle="italic" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp" />
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp" />
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView_category"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleView_category"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
             android:text="Danh sách món ăn"
             android:textColor="@color/black"
-            android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView_food"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical"
     tools:context=".SearchFoodActivity">
 
@@ -29,40 +30,48 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/myedittext"
+        android:gravity="center_vertical">
 
         <EditText
             android:id="@+id/eSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:layout_marginRight="30dp"
             android:layout_toLeftOf="@id/btSearch"
             android:hint="Nhập tên món ăn"
-            android:inputType="textPersonName" />
+            android:background="@drawable/bogoc"
+            android:inputType="textPersonName"
+            android:paddingLeft="15dp"
+            android:textSize="14sp" />
 
-        <Button
+        <ImageView
             android:id="@+id/btSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/mybutton"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_search"
             android:text="Tìm kiếm"
             android:textColor="@color/white" />
-
-        <Spinner
-            android:id="@+id/spSearch"
-            android:layout_below="@+id/eSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </RelativeLayout>
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
+
+    <Spinner
+        android:id="@+id/spSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!--    </ScrollView>-->
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 </LinearLayout>

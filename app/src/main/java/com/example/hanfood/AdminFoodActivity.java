@@ -60,6 +60,7 @@ public class AdminFoodActivity extends AppCompatActivity implements View.OnClick
         idCate = getIntent().getStringExtra("idCate");
         nameCate = getIntent().getStringExtra("nameCate");
 
+
         dataFood = new ArrayList<>();
 
         foodAdapter = new AdminFoodAdapter(dataFood, AdminFoodActivity.this);

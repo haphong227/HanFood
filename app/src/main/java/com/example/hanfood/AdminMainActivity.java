@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.hanfood.fragment.admin.FragmentCategory;
 import com.example.hanfood.fragment.admin.FragmentOrder;
 import com.example.hanfood.fragment.admin.FragmentProfile;
+import com.example.hanfood.fragment.admin.FragmentStatistics;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class AdminMainActivity extends AppCompatActivity implements ChipNavigationBar.OnItemSelectedListener{
@@ -57,11 +58,11 @@ public class AdminMainActivity extends AppCompatActivity implements ChipNavigati
                 tvTitle.setText("Đơn hàng");
                 fragment = new FragmentOrder();
                 break;
-//                    case R.id.mNotification:
-//                        toolbar.setVisibility(View.VISIBLE);
-//                        tvTitle.setText("Notification");
-//                        fragment = new FragmentNotification();
-//                        break;
+            case R.id.mStatistics:
+                toolbar.setVisibility(View.VISIBLE);
+                tvTitle.setText("Thống kê doanh thu");
+                fragment = new FragmentStatistics();
+                break;
             case R.id.mProfile:
                 toolbar.setVisibility(View.GONE);
                 fragment = new FragmentProfile();

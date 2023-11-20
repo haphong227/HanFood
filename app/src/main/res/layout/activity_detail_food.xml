@@ -227,6 +227,7 @@
                 android:id="@+id/recycleView_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_below="@+id/sep_review_title" />
         </LinearLayout>
 

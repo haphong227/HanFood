@@ -32,7 +32,7 @@
             android:padding="8dp"
             android:text="Tổng tiền hàng: 0 VNĐ"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btBuy"

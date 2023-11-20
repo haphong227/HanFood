@@ -75,7 +75,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         }
         if (view == tvMap) {
             startActivity(new Intent(getActivity(), MapsActivity.class));
-        }if (view == tvAddress) {
+        }
+        if (view == tvAddress) {
             startActivity(new Intent(getActivity(), AddressActivity.class));
         }
         if (view == tvLogout) {
@@ -100,11 +101,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                     }
                 }
                 tvEmail.setText(email);
-                if (name == null){
-                    tvUsername.setText(email.substring(0, email.length() - 10));
-                }else {
-                    tvUsername.setText(name);
-                }
+                tvUsername.setText(name);
                 if (img == null) {
                     Picasso.get().load("https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg").into(img_profile);
                 } else if (img != null) {

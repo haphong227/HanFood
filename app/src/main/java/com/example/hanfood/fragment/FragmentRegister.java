@@ -97,7 +97,7 @@ public class FragmentRegister extends Fragment {
         user.put("address", null);
         user.put("email", email);
         user.put("password", password);
-        user.put("name", null);
+        user.put("name", name);
         user.put("phone", null);
         user.put("idUser", auth.getUid());
         user.put("image", null);

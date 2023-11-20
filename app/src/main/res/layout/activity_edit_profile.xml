@@ -91,21 +91,6 @@
             android:paddingBottom="10dp"
             android:textSize="15sp" />
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:text="GIỚI TÍNH:"-->
-<!--            android:textSize="12sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/eSex"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:paddingTop="5dp"-->
-<!--            android:paddingBottom="10dp"-->
-<!--            android:textSize="15sp" />-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

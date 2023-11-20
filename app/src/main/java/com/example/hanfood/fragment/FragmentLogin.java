@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.hanfood.AdminMainActivity;
 import com.example.hanfood.MainActivity;
 import com.example.hanfood.R;
+import com.example.hanfood.ResetPasswordActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,7 +46,7 @@ public class FragmentLogin extends Fragment {
         tvForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), ResetPasswordActivity.class));
+                startActivity(new Intent(getActivity(), ResetPasswordActivity.class));
             }
         });
         btLogin.setOnClickListener(new View.OnClickListener() {
@@ -90,10 +91,10 @@ public class FragmentLogin extends Fragment {
     private void initView(View view) {
         eEmail = view.findViewById(R.id.eEmail);
         ePassword = view.findViewById(R.id.ePassword);
-        tvForgot = view.findViewById(R.id.tvForgort);
+        tvForgot = view.findViewById(R.id.tvForgot);
         btLogin = view.findViewById(R.id.btLogin);
-//        eEmail.setText("hang2207@gmail.com");
-        eEmail.setText("admin@gmail.com");
+        eEmail.setText("hang2207@gmail.com");
+//        eEmail.setText("admin@gmail.com");
         ePassword.setText("22072001");
     }
 }
