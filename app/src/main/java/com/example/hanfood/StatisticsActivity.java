@@ -334,7 +334,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
                     long daysBetween = TimeUnit.DAYS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS);
 
                     if (daysBetween > 30) {
-                        Toast.makeText(this, "Hai ngày chỉ có thể cách nhau 30 ngày!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Khoảng thời gian tìm kiếm không được vượt quá 30 ngày!", Toast.LENGTH_SHORT).show();
                     } else {
 //                        statistisByFood();
                         statistisByDate();
