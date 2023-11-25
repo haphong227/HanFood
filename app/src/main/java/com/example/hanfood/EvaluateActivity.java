@@ -174,7 +174,7 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
                 myRef.child("").updateChildren(food).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(EvaluateActivity.this, "Bạn đã update Rate!", Toast.LENGTH_SHORT).show();
+                        System.out.println("Bạn đã update Rate!");
                         finish();
                     }
                 });

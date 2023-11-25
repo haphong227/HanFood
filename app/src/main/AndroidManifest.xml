@@ -19,9 +19,6 @@
             android:name=".ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".StatisticsActivity"
-            android:exported="false" />
-        <activity
             android:name=".EditEvaluateActivity"
             android:exported="false" />
         <activity
@@ -115,9 +112,6 @@
 
         <receiver
             android:name=".notification.MyReceiver"
-            android:exported="false" />
-        <receiver
-            android:name=".notification.StateNotification"
             android:exported="false" />
 
         <meta-data

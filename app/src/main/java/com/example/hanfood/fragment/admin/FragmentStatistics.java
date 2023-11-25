@@ -13,12 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanfood.R;
-import com.example.hanfood.StatisticsActivity;
-import com.example.hanfood.adapter.admin.AdminOrderAdapter;
 import com.example.hanfood.model.Bill;
 import com.example.hanfood.model.User;
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -33,7 +29,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
@@ -53,7 +48,7 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
 
     TextView toDate, fromDate;
     Button btStatistics;
-    DatabaseReference myRef, myBill, myUser;
+    DatabaseReference myBill, myUser;
     CombinedChart combinedChart;
     String toD = "", fromD = "";
     String to;
@@ -69,52 +64,51 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        statistis();
+
+        //chart allBill
+        statistic();
 
         toDate.setOnClickListener(this);
         fromDate.setOnClickListener(this);
         btStatistics.setOnClickListener(this);
     }
 
-    private void statistis() {
+    private void statistic() {
         myUser = FirebaseDatabase.getInstance().getReference("User");
-        myUser.child("").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    User user = data.getValue(User.class);
-                    String idUser = user.getIdUser();
-                    addAllBill(idUser); //lay danh sach bill theo user
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void addAllBill(String idUser) {
-        myBill = FirebaseDatabase.getInstance().getReference("Bill/" + idUser);
-        myBill.child("").addValueEventListener(new ValueEventListener() {
+        myUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Bill> billList = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Bill bill = data.getValue(Bill.class);
-                    if (bill.getStateOrder().equalsIgnoreCase("Đã giao thành công")) {
-                        billList.add(bill);
-                    }
+
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    String idUser = user.getIdUser();
+
+                    myBill = FirebaseDatabase.getInstance().getReference("Bill/" + idUser);
+                    myBill.orderByChild("stateOrder").equalTo("Đã giao thành công").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot billSnapshot) {
+                            for (DataSnapshot data : billSnapshot.getChildren()) {
+                                Bill bill = data.getValue(Bill.class);
+                                billList.add(bill);
+                            }
+                            billChart(billList);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-                billChart(billList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+
             }
         });
+
     }
 
     private void billChart(List<Bill> billList) {
@@ -177,13 +171,6 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
         combinedChart.setData(combinedData);
         combinedChart.setBorderColor(R.color.blue_100);
         combinedChart.invalidate();
-    }
-
-    private void initView(View view) {
-        combinedChart = view.findViewById(R.id.barChart);
-        toDate = view.findViewById(R.id.toDate);
-        fromDate = view.findViewById(R.id.fromDate);
-        btStatistics = view.findViewById(R.id.btStatistics);
     }
 
     @Override
@@ -264,13 +251,15 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
 
     private void statisticsByDate() {
         myUser = FirebaseDatabase.getInstance().getReference("User");
-        myUser.child("").addValueEventListener(new ValueEventListener() {
+        myUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    User user = data.getValue(User.class);
+                List<Bill> billList = new ArrayList<>();
+
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
                     String idUser = user.getIdUser();
-                    addBill(idUser); //lay danh sach bill theo user
+                    addBill(idUser, billList);
                 }
             }
 
@@ -279,9 +268,10 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
 
             }
         });
+
     }
 
-    private void addBill(String idUser) {
+    private void addBill(String idUser, List<Bill> billList) {
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -305,7 +295,6 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
         myBill.orderByChild("currentDate").startAt(from).endAt(to).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Bill> billList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
                     if (bill.getStateOrder().equalsIgnoreCase("Đã giao thành công")) {
@@ -320,5 +309,12 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
                 Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initView(View view) {
+        combinedChart = view.findViewById(R.id.barChart);
+        toDate = view.findViewById(R.id.toDate);
+        fromDate = view.findViewById(R.id.fromDate);
+        btStatistics = view.findViewById(R.id.btStatistics);
     }
 }

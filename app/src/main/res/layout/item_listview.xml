@@ -72,8 +72,6 @@
                     android:text="40.000 VNĐ"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
-
-
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

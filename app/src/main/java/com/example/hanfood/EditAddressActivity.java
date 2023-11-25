@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class EditAddressActivity extends AppCompatActivity implements View.OnClickListener{
+public class EditAddressActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
     EditText eName, ePhone, eAddress;
     Button btUpdate, btDelete;
@@ -73,7 +73,7 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void displayAddress() {
-        myRef.child(idAddress).addValueEventListener(new ValueEventListener() {
+        myRef.child(idAddress).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String phoneNumber = snapshot.child("phoneNumber").getValue().toString();
@@ -94,7 +94,7 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        if (view == btDelete){
+        if (view == btDelete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
             builder.setTitle("Xóa địa chỉ");
             builder.setMessage("Bạn có chắc muốn xóa?");
@@ -103,13 +103,13 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    deleteAddress();
+                    deleteAddress(idAddress);
                 }
             });
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-        if (view == btUpdate){
+        if (view == btUpdate) {
             updateAddress();
         }
 
@@ -149,7 +149,7 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void deleteAddress() {
+    private void deleteAddress(String idAddress) {
         myRef.child(idAddress).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

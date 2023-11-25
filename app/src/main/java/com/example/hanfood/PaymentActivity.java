@@ -241,7 +241,6 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                 Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(PaymentActivity.this, MainActivity.class);
                                 startActivity(i);
-                                finish();
                             }
                         });
             }

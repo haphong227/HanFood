@@ -13,9 +13,10 @@ import com.example.hanfood.fragment.admin.FragmentCategory;
 import com.example.hanfood.fragment.admin.FragmentOrder;
 import com.example.hanfood.fragment.admin.FragmentProfile;
 import com.example.hanfood.fragment.admin.FragmentStatistics;
+import com.example.hanfood.fragment.admin.FragmentStatisticsFood;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-public class AdminMainActivity extends AppCompatActivity implements ChipNavigationBar.OnItemSelectedListener{
+public class AdminMainActivity extends AppCompatActivity implements ChipNavigationBar.OnItemSelectedListener {
     Toolbar toolbar;
     TextView tvTitle;
     public static String emailuser = "";
@@ -62,6 +63,11 @@ public class AdminMainActivity extends AppCompatActivity implements ChipNavigati
                 toolbar.setVisibility(View.VISIBLE);
                 tvTitle.setText("Thống kê doanh thu");
                 fragment = new FragmentStatistics();
+                break;
+            case R.id.mStatisticsFood:
+                toolbar.setVisibility(View.VISIBLE);
+                tvTitle.setText("Thống kê số lượng");
+                fragment = new FragmentStatisticsFood();
                 break;
             case R.id.mProfile:
                 toolbar.setVisibility(View.GONE);

@@ -17,7 +17,14 @@
         app:cnb_textColor="@color/white"/>
     <item
         android:id="@+id/mStatistics"
-        android:title="Thống kê"
+        android:title="Doanh thu"
+        android:icon="@drawable/icon_line_chart"
+        app:cnb_iconColor="@color/white"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white"/>
+    <item
+        android:id="@+id/mStatisticsFood"
+        android:title="Số lượng"
         android:icon="@drawable/icon_statistics"
         app:cnb_iconColor="@color/white"
         app:cnb_backgroundColor="@color/blue"

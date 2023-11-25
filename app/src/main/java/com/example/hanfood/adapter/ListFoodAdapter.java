@@ -46,8 +46,6 @@ public class ListFoodAdapter extends RecyclerView.Adapter<ListFoodAdapter.HomeVi
         ItemFood itemFood = list.get(position);
         holder.tvName.setText(itemFood.getProductName());
         holder.tvQuantity.setText(itemFood.getTotalQuantity() + "x   ");
-//        holder.tvPrice.setText(decimalFormat.format(cart.getTotalPrice()) + " VNĐ");
-//        holder.tvPriceSale.setText(decimalFormat.format(cart.getProductPriceSalse()) + " VNĐ");
 
         if (itemFood.getProductPriceSale() < itemFood.getProductPrice()) {
             holder.tvPrice.setText(decimalFormat.format(itemFood.getProductPrice()) + " VNĐ");

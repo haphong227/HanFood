@@ -80,7 +80,7 @@
 <!--            android:drawableRight="@drawable/ic_more"-->
 <!--            android:drawablePadding="20dp"-->
 <!--            android:gravity="center_vertical"-->
-<!--            android:text="Thống kê doanh thu"-->
+<!--            android:text="Thống kê số lượng món ăn"-->
 <!--            android:textColor="#000"-->
 <!--            android:textSize="15sp"-->
 <!--            android:textStyle="bold" />-->

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -35,9 +36,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FragmentHome extends Fragment implements View.OnClickListener {
@@ -45,12 +48,10 @@ public class FragmentHome extends Fragment implements View.OnClickListener {
     SliderAdapter sliderAdapter;
     EditText searchView;
     TextView tvNameUser;
-    RecyclerView recyclerView_category, recyclerView_food;
+    RecyclerView recyclerView_category, recyclerView_food, recycleView_foodSale, recycleView_foodRate;
     CategoryAdapter categoryAdapter;
-    FoodAdapter foodAdapter;
+    FoodAdapter foodAdapter, foodRateAdapter, foodSaleAdapter;
     ArrayList<Category> dataCategory;
-    ArrayList<Food> dataFood;
-    ArrayList<Food> dataSlide;
     DatabaseReference myCate, myFood;
 
     //    Slider truot ve anh dau khi o slide cuoi
@@ -84,67 +85,9 @@ public class FragmentHome extends Fragment implements View.OnClickListener {
         displaySlider();
         displayListCategory();
         displayListFood();
+        displayListFoodSale();
+        displayListFoodRate();
         displayNameUser();
-    }
-
-    private void displayListCategory() {
-
-        GridLayoutManager manager_category = new GridLayoutManager(getContext(), 4);
-        recyclerView_category.setLayoutManager(manager_category);
-
-        myCate = FirebaseDatabase.getInstance().getReference("Category");
-        myCate.child("").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataCategory = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Category category = data.getValue(Category.class);
-                    dataCategory.add(category);
-//                    System.out.println(category.getName()+ ","+category.getImage()+"\n");
-                }
-                categoryAdapter = new CategoryAdapter(dataCategory, getContext());
-                recyclerView_category.setAdapter(categoryAdapter);
-                recyclerView_category.setHasFixedSize(true);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    private void displayListFood() {
-        GridLayoutManager manager_food = new GridLayoutManager(getContext(), 2);
-        recyclerView_food.setLayoutManager(manager_food);
-
-        myFood = FirebaseDatabase.getInstance().getReference("Food");
-        myFood.child("").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataFood = new ArrayList<>();
-                dataSlide = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Food food = data.getValue(Food.class);
-                    dataFood.add(food);
-                    if (food.getPercentSale() != 0) {
-                        dataSlide.add(food);
-                    }
-
-//                    System.out.println(food.getName()+ ","+food.getPrice()+","+food.getImage()+"\n");
-                }
-                foodAdapter = new FoodAdapter(dataFood, getContext());
-                recyclerView_food.setAdapter(foodAdapter);
-                recyclerView_food.setHasFixedSize(true);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void displaySlider() {
@@ -201,6 +144,126 @@ public class FragmentHome extends Fragment implements View.OnClickListener {
         return imageUrls;
     }
 
+
+    private void displayListCategory() {
+
+        GridLayoutManager manager_category = new GridLayoutManager(getContext(), 4);
+        recyclerView_category.setLayoutManager(manager_category);
+
+        myCate = FirebaseDatabase.getInstance().getReference("Category");
+        myCate.child("").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataCategory = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Category category = data.getValue(Category.class);
+                    dataCategory.add(category);
+//                    System.out.println(category.getName()+ ","+category.getImage()+"\n");
+                }
+                categoryAdapter = new CategoryAdapter(dataCategory, getContext());
+                recyclerView_category.setAdapter(categoryAdapter);
+                recyclerView_category.setHasFixedSize(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private void displayListFoodRate() {
+        LinearLayoutManager manager_food = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recycleView_foodRate.setLayoutManager(manager_food);
+
+        myFood = FirebaseDatabase.getInstance().getReference("Food");
+        Query query = myFood.orderByChild("rate").limitToLast(10); // Sắp xếp theo rate giảm dần
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Food> dataFood = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Food food = data.getValue(Food.class);
+                    dataFood.add(food);
+                }
+
+                // Đảo ngược danh sách để hiển thị theo rate giảm dần
+                Collections.reverse(dataFood);
+
+                foodRateAdapter = new FoodAdapter(dataFood, getContext());
+                recycleView_foodRate.setAdapter(foodRateAdapter);
+                recycleView_foodRate.setHasFixedSize(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void displayListFoodSale() {
+        LinearLayoutManager manager_food = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recycleView_foodSale.setLayoutManager(manager_food);
+
+        myFood = FirebaseDatabase.getInstance().getReference("Food");
+        Query query = myFood.orderByChild("percentSale"); // Sắp xếp theo percentSale giảm dần
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Food> dataFood = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Food food = data.getValue(Food.class);
+                    if (food.getPercentSale() > 0) {
+                        dataFood.add(food);
+                    }
+                }
+
+                // Đảo ngược danh sách để hiển thị theo percentSale giảm dần
+                Collections.reverse(dataFood);
+
+                foodSaleAdapter = new FoodAdapter(dataFood, getContext());
+                recycleView_foodSale.setAdapter(foodSaleAdapter);
+                recycleView_foodSale.setHasFixedSize(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void displayListFood() {
+        GridLayoutManager manager_food = new GridLayoutManager(getContext(), 2);
+        recyclerView_food.setLayoutManager(manager_food);
+
+        myFood = FirebaseDatabase.getInstance().getReference("Food");
+        myFood.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Food> dataFood = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Food food = data.getValue(Food.class);
+                    dataFood.add(food);
+//                    System.out.println(food.getName()+ ","+food.getPrice()+","+food.getImage()+"\n");
+                }
+                foodAdapter = new FoodAdapter(dataFood, getContext());
+                recyclerView_food.setAdapter(foodAdapter);
+                recyclerView_food.setHasFixedSize(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private void displayNameUser() {
         FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User").child(auth.getUid());
@@ -229,6 +292,8 @@ public class FragmentHome extends Fragment implements View.OnClickListener {
         recyclerView_food = view.findViewById(R.id.recycleView_food);
         viewPager = view.findViewById(R.id.viewPager);
         tvNameUser = view.findViewById(R.id.tvNameUser);
+        recycleView_foodRate = view.findViewById(R.id.recycleView_foodRate);
+        recycleView_foodSale = view.findViewById(R.id.recycleView_foodSale);
     }
 
     @Override

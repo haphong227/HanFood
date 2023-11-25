@@ -2,12 +2,9 @@ package com.example.hanfood.fragment.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,17 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.hanfood.ChangePasswordActivity;
 import com.example.hanfood.EditProfileActivity;
-import com.example.hanfood.HistoryOrderActivity;
 import com.example.hanfood.LoginActivity;
 import com.example.hanfood.R;
-import com.example.hanfood.StatisticsActivity;
 import com.example.hanfood.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -22,15 +22,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class FragmentRegister extends Fragment {
     DatabaseReference databaseReference;
-    DatabaseReference myRef;
     EditText eEmail, ePassword, eName;
     Button btRegister;
     FirebaseAuth auth;
-    String email, password, confirmPassword, name;
+    String email, password, name;
 
     @Nullable
     @Override
@@ -66,39 +67,23 @@ public class FragmentRegister extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (!task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Đăng ký thất bại!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Email đã được đăng ký!", Toast.LENGTH_SHORT).show();
                     } else {
                         addUser();
-                        addAddress();
                     }
                 }
             });
         }
     }
 
-    private void addAddress() {
-        HashMap<String, Object> address = new HashMap<>();
-        address.put("idUser", auth.getUid());
-        address.put("nameUser", name);
-        address.put("phoneNumber", null);
-        address.put("address", null);
-        myRef.child(auth.getUid()).updateChildren(address).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    System.out.println("Thêm địa chỉ thành công");
-                }
-            }
-        });
-    }
 
     private void addUser() {
         HashMap<String, Object> user = new HashMap<>();
-        user.put("address", null);
         user.put("email", email);
         user.put("password", password);
         user.put("name", name);
         user.put("phone", null);
+        user.put("birthday", null);
         user.put("idUser", auth.getUid());
         user.put("image", null);
         databaseReference.child(auth.getUid()).updateChildren(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -119,6 +104,5 @@ public class FragmentRegister extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
-        myRef = FirebaseDatabase.getInstance().getReference("Address");
     }
 }

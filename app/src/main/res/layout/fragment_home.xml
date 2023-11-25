@@ -18,6 +18,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
@@ -52,7 +53,48 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Siêu giảm giá "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+            <ImageView
+                android:background="@drawable/icon_sale"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+        </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView_foodSale"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:text="Có thể bạn thích"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView_foodRate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +102,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
             android:text="Danh sách món ăn"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold" />
 

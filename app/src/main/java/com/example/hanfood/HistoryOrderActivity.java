@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HistoryOrderActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -66,6 +67,9 @@ public class HistoryOrderActivity extends AppCompatActivity {
                     Bill bill = data.getValue(Bill.class);
                     billArrayList.add(bill);
                 }
+                //sortBill theo IdBill
+                Collections.sort(billArrayList, Bill.BillIdCompare);
+
                 billAdapter = new BillAdapter(billArrayList, HistoryOrderActivity.this);
                 recyclerView_bill.setAdapter(billAdapter);
                 recyclerView_bill.setHasFixedSize(true);
