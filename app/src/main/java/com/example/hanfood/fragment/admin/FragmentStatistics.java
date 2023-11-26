@@ -65,8 +65,19 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         initView(view);
 
-        //chart allBill
-        statistic();
+        //chart 30 ngày gần đây
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String date2= dateFormat.format(calendar.getTime());
+
+        calendar.add(Calendar.DAY_OF_YEAR, -30);
+        String date1=dateFormat.format(calendar.getTime());
+
+        toDate.setText(date2);
+        fromDate.setText(date1);
+        toD = toDate.getText().toString().trim();
+        fromD = fromDate.getText().toString().trim();
+        statisticsByDate(fromD, toD);
 
         toDate.setOnClickListener(this);
         fromDate.setOnClickListener(this);
@@ -196,8 +207,7 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
                     if (daysBetween > 30) {
                         Toast.makeText(getContext(), "Hai ngày chỉ có thể cách nhau 30 ngày!", Toast.LENGTH_SHORT).show();
                     } else {
-//                        statistisByFood();
-                        statisticsByDate();
+                        statisticsByDate(fromD, toD);
                     }
 
                 } catch (ParseException e) {
@@ -249,7 +259,7 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
         }
     }
 
-    private void statisticsByDate() {
+    private void statisticsByDate(String fromD, String toD) {
         myUser = FirebaseDatabase.getInstance().getReference("User");
         myUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -259,7 +269,7 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     User user = userSnapshot.getValue(User.class);
                     String idUser = user.getIdUser();
-                    addBill(idUser, billList);
+                    addBill(idUser, billList, fromD, toD);
                 }
             }
 
@@ -271,16 +281,16 @@ public class FragmentStatistics extends Fragment implements View.OnClickListener
 
     }
 
-    private void addBill(String idUser, List<Bill> billList) {
+    private void addBill(String idUser, List<Bill> billList, String fromD, String toD) {
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
-            // Chuyển đổi từ chuỗi ngày sang Date
+            // Chuyển đổi từ ngày sang Date "dd-MM-yyyy"
             Date fromDate = inputFormat.parse(fromD);
             Date toDate = inputFormat.parse(toD);
 
-            // Chuyển đổi thành chuỗi ngày mới
+            // Chuyển đổi thành ngày "yyyy-MM-dd"
             from = outputFormat.format(fromDate);
             to = outputFormat.format(toDate);
 

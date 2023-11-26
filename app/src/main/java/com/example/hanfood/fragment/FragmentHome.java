@@ -61,7 +61,7 @@ public class FragmentHome extends Fragment implements View.OnClickListener {
         public void run() {
             int currentPosition = viewPager.getCurrentItem();
             if (currentPosition == dataCategory.size() - 1) {
-                viewPager.setCurrentItem(0, true); // Set true để có hiệu ứng chuyển đổi mượt mà
+                viewPager.setCurrentItem(0, true);
             } else {
                 viewPager.setCurrentItem(currentPosition + 1, true);
             }

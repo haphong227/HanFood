@@ -50,7 +50,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     DatabaseReference myRef;
     private FirebaseUser auth;
     String name, idFood, des, img, idCate;
-    int quantity = 0, quantitySold=0;
+    int quantity = 0, quantitySold = 0, q = 0;
     double priceFoodSale = 0, percentSale = 0, price = 0;
     int totalQuantity = 0;
     double totalPrice = 0;
@@ -119,7 +119,7 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
                     tvPercentSale.setVisibility(View.GONE);
                     tvPriceSale.setText(decimalFormat.format(price) + " VNĐ");
                 } else {
-                    System.out.println("percentSale"+percentSale );
+                    System.out.println("percentSale" + percentSale);
                     tvPercentSale.setText("Giảm " + decimalFormat.format(percentSale) + "%");
                     tvPrice.setText(decimalFormat.format(price) + " VNĐ");
                     tvPriceSale.setText(decimalFormat.format(priceFoodSale) + " VNĐ");
@@ -177,9 +177,9 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
             if (totalQuantity > 0) {
                 totalQuantity--;
                 tvSl.setText(String.valueOf(totalQuantity));
-                if (percentSale == 0){
+                if (percentSale == 0) {
                     totalPrice = price * totalQuantity;
-                }else {
+                } else {
                     totalPrice = priceFoodSale * totalQuantity;
                 }
             }
@@ -188,19 +188,25 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
             if (totalQuantity < 10) {
                 totalQuantity++;
                 tvSl.setText(String.valueOf(totalQuantity));
-                if (percentSale == 0){
+                if (percentSale == 0) {
                     totalPrice = price * totalQuantity;
-                }else {
+                } else {
                     totalPrice = priceFoodSale * totalQuantity;
                 }
             }
         }
         if (view == btAdd) {
             if (totalQuantity > 0) {
-                if (quantity != 0) addToCart();
-                else Toast.makeText(this, "Sản phẩm đã hết!", Toast.LENGTH_SHORT).show();
+                System.out.println("Số lượnggggggggggg" + quantity);
+                if (quantity == 0) {
+                    Toast.makeText(this, "Món ăn đã hết!", Toast.LENGTH_SHORT).show();
+                } else if (totalQuantity > quantity){
+                    Toast.makeText(this, "Món ăn không đủ số lượng!", Toast.LENGTH_SHORT).show();
+                }else {
+                    addToCart();
+                }
             } else {
-                Toast.makeText(this, "Vui lòng chọn số lượng sản phẩm!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Vui lòng chọn số lượng món ăn!", Toast.LENGTH_SHORT).show();
             }
         }
         if (view == tvComment) {

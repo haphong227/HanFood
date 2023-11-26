@@ -197,7 +197,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.exists()) {
                                                 String quantity = snapshot.child("quantityFood").getValue().toString();
+                                                String nameFood = snapshot.child("nameFood").getValue().toString();
                                                 int newQuantity = Integer.parseInt(quantity) - itemFood.getTotalQuantity();
+
                                                 HashMap<String, Object> food = new HashMap<>();
                                                 food.put("quantityFood", newQuantity);
                                                 myFood = FirebaseDatabase.getInstance().getReference().child("Food").child(idFood);
@@ -241,8 +243,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                 Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(PaymentActivity.this, MainActivity.class);
                                 startActivity(i);
+
                             }
                         });
+
             }
 
         }

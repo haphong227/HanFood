@@ -17,13 +17,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hanfood.R;
+import com.example.hanfood.model.Food;
 import com.example.hanfood.model.ItemFood;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -35,9 +39,12 @@ import java.util.Locale;
 public class ItemFoodCartAdapter extends RecyclerView.Adapter<ItemFoodCartAdapter.HomeViewHolder> {
     private List<ItemFood> list;
     Context context;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, myFood;
     private FirebaseUser auth;
-    int totalQuantity = 0;
+    private int totalQuantity = 0;
+    private String idFood = "";
+    private String nameFood = "";
+    int quantity;
 
     public ItemFoodCartAdapter(List<ItemFood> list, Context context) {
         this.list = list;
@@ -75,47 +82,50 @@ public class ItemFoodCartAdapter extends RecyclerView.Adapter<ItemFoodCartAdapte
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                idFood = list.get(position).getIdFood();
                 totalQuantity = list.get(position).getTotalQuantity();
+                nameFood = list.get(position).getProductName();
                 if (totalQuantity < 10) {
                     totalQuantity++;
-                    holder.tvSl.setText(new StringBuilder().append(totalQuantity));
-                    saveData(position);
+                    myFood = FirebaseDatabase.getInstance().getReference("Food");
+                    myFood.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot orderSnapshot : dataSnapshot.getChildren()) {
+                                Food food = orderSnapshot.getValue(Food.class);
+                                if (food.getIdFood().equalsIgnoreCase(idFood)) {
+                                    quantity = 0;
+                                    quantity = food.getQuantityFood();
+                                }
+                            }
+                            System.out.println("Quantityyyyyy: " + quantity);
+                            if (quantity < totalQuantity) {
+                                Toast.makeText(context, nameFood + " không đủ số lượng!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                holder.tvSl.setText(new StringBuilder().append(totalQuantity));
+                                saveData(position);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
                 }
             }
         });
         holder.sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                idFood = list.get(position).getIdFood();
                 totalQuantity = list.get(position).getTotalQuantity();
                 if (totalQuantity > 0) {
                     totalQuantity--;
+                    // Đảm bảo totalQuantity không nhỏ hơn 1
+                    totalQuantity = Math.max(totalQuantity, 1);
                     holder.tvSl.setText(String.valueOf(totalQuantity));
                     saveData(position);
-                }
-                if (totalQuantity == 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setTitle("Xóa món ăn");
-                    builder.setMessage("Bạn có chắc muốn xóa món ăn này?");
-                    builder.setIcon(R.drawable.remove);
-                    builder.setNegativeButton("Bỏ qua", null);
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            myRef.child(itemFood.getProductName()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    list.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, list.size());
-                                    Toast.makeText(context.getApplicationContext(),
-                                            "Xóa thành công!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
                 }
             }
         });
@@ -154,7 +164,7 @@ public class ItemFoodCartAdapter extends RecyclerView.Adapter<ItemFoodCartAdapte
     }
 
     private void saveData(int position) {
-        double price=0;
+        double price = 0;
         if (list.get(position).getProductPrice() > list.get(position).getProductPriceSale()) {
             price = list.get(position).getProductPriceSale();
         } else price = list.get(position).getProductPrice();
